@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -367,7 +367,7 @@ public:
             GetCreatureListWithEntryInGrid(triggers, GetHitUnit(), NPC_BAD_INTENTIONS_TARGET, 100.0f);
             if (!triggers.empty())
             {
-                triggers.sort(Trinity::ObjectDistanceOrderPred(GetHitUnit(), true));
+                triggers.sort(monster::ObjectDistanceOrderPred(GetHitUnit(), true));
                 Creature* trigger = triggers.front();
                 GetHitUnit()->CastSpell(trigger, uint32(GetEffectValue()), true);
             }

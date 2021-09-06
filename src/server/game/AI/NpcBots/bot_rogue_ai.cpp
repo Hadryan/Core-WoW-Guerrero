@@ -409,7 +409,7 @@ public:
                 //base damage
                 fdamage = frand(damageMin, damageMax) + (damageMin + damageMax) * comboPoints;
 
-                //ap bonus (Trinity-based)
+                //ap bonus (monster-based)
                 fdamage += frand(ap * comboPoints * 0.03f, ap * comboPoints * 0.07f);
             }
 
@@ -430,7 +430,7 @@ public:
                     //434 temp formula - placeholder
                     float flat_mod = float(urand(me->getLevel() * 17, me->getLevel() * 22) * comboPoints);
 
-                    float AP_per_combo[6] = { 0.0f, 0.015f, 0.024f, 0.03f, 0.03428571f, 0.0375f }; //Trinity-based
+                    float AP_per_combo[6] = { 0.0f, 0.015f, 0.024f, 0.03f, 0.03428571f, 0.0375f }; //monster-based
                     float divider[6] = { 0.0f, 4.f, 5.f, 6.f, 7.f, 8.f }; //base duration/2 = number of ticks
 
                     value += flat_mod / divider[comboPoints] + ap * AP_per_combo[comboPoints];

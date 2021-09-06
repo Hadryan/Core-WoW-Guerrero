@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013-2014 OMFG.GG Network <http://www.omfg.gg/>
- * Copyright (C) 2008-2014 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2014 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -1306,7 +1306,7 @@ class spell_sha_efflorescence_heal : public SpellScriptLoader
                         temp.push_back(unit);
 
                 targets.clear();
-                temp.sort(Trinity::HealthPctOrderPred());
+                temp.sort(monster::HealthPctOrderPred());
                 if (temp.size() > 3)
                     temp.resize(3);
                 for (std::list<Unit*>::iterator itr = temp.begin(); itr != temp.end(); itr++)
@@ -2073,7 +2073,7 @@ class spell_dru_starfall_dummy : public SpellScriptLoader
 
             void FilterTargets(std::list<WorldObject*>& targets)
             {
-                Trinity::Containers::RandomResizeList(targets, 2);
+                monster::Containers::RandomResizeList(targets, 2);
             }
 
             void HandleDummy(SpellEffIndex /*effIndex*/)
@@ -2323,7 +2323,7 @@ class spell_dru_t10_restoration_4p_bonus : public SpellScriptLoader
                         return;
                     }
 
-                    Unit* target = Trinity::Containers::SelectRandomContainerElement(tempTargets);
+                    Unit* target = monster::Containers::SelectRandomContainerElement(tempTargets);
                     targets.clear();
                     targets.push_back(target);
                 }

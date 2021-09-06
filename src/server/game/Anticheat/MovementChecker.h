@@ -1,5 +1,5 @@
-#ifndef TRINITY_MOVEMENTCHECKER_H
-#define TRINITY_MOVEMENTCHECKER_H
+#ifndef monster_MOVEMENTCHECKER_H
+#define monster_MOVEMENTCHECKER_H
 
 #include "WorldSession.h"
 #include "Vehicle.h"

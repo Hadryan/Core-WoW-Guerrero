@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -110,7 +110,7 @@ std::string GetScriptCommandName(ScriptCommands command)
         case SCRIPT_COMMAND_LOAD_PATH: res = "SCRIPT_COMMAND_LOAD_PATH"; break;
         case SCRIPT_COMMAND_CALLSCRIPT_TO_UNIT: res = "SCRIPT_COMMAND_CALLSCRIPT_TO_UNIT"; break;
         case SCRIPT_COMMAND_KILL: res = "SCRIPT_COMMAND_KILL"; break;
-        // TrinityCore only
+        // monsterCore only
         case SCRIPT_COMMAND_ORIENTATION: res = "SCRIPT_COMMAND_ORIENTATION"; break;
         case SCRIPT_COMMAND_EQUIP: res = "SCRIPT_COMMAND_EQUIP"; break;
         case SCRIPT_COMMAND_MODEL: res = "SCRIPT_COMMAND_MODEL"; break;
@@ -1976,7 +1976,7 @@ void ObjectMgr::AddCreatureToGrid(uint32 guid, CreatureData const* data)
     {
         if (mask & 1)
         {
-            CellCoord cellCoord = Trinity::ComputeCellCoord(data->posX, data->posY);
+            CellCoord cellCoord = monster::ComputeCellCoord(data->posX, data->posY);
             CellObjectGuids& cell_guids = _mapObjectGuidsStore[MAKE_PAIR32(data->mapid, i)][cellCoord.GetId()];
             cell_guids.creatures.insert(guid);
         }
@@ -1990,7 +1990,7 @@ void ObjectMgr::RemoveCreatureFromGrid(uint32 guid, CreatureData const* data)
     {
         if (mask & 1)
         {
-            CellCoord cellCoord = Trinity::ComputeCellCoord(data->posX, data->posY);
+            CellCoord cellCoord = monster::ComputeCellCoord(data->posX, data->posY);
             CellObjectGuids& cell_guids = _mapObjectGuidsStore[MAKE_PAIR32(data->mapid, i)][cellCoord.GetId()];
             cell_guids.creatures.erase(guid);
         }
@@ -2296,7 +2296,7 @@ void ObjectMgr::AddGameobjectToGrid(uint32 guid, GameObjectData const* data)
     {
         if (mask & 1)
         {
-            CellCoord cellCoord = Trinity::ComputeCellCoord(data->posX, data->posY);
+            CellCoord cellCoord = monster::ComputeCellCoord(data->posX, data->posY);
             CellObjectGuids& cell_guids = _mapObjectGuidsStore[MAKE_PAIR32(data->mapid, i)][cellCoord.GetId()];
             cell_guids.gameobjects.insert(guid);
         }
@@ -2310,7 +2310,7 @@ void ObjectMgr::RemoveGameobjectFromGrid(uint32 guid, GameObjectData const* data
     {
         if (mask & 1)
         {
-            CellCoord cellCoord = Trinity::ComputeCellCoord(data->posX, data->posY);
+            CellCoord cellCoord = monster::ComputeCellCoord(data->posX, data->posY);
             CellObjectGuids& cell_guids = _mapObjectGuidsStore[MAKE_PAIR32(data->mapid, i)][cellCoord.GetId()];
             cell_guids.gameobjects.erase(guid);
         }
@@ -4895,7 +4895,7 @@ void ObjectMgr::LoadScripts(ScriptsType type)
                     continue;
                 }
 
-                if (!Trinity::IsValidMapCoord(tmp.TeleportTo.DestX, tmp.TeleportTo.DestY, tmp.TeleportTo.DestZ, tmp.TeleportTo.Orientation))
+                if (!monster::IsValidMapCoord(tmp.TeleportTo.DestX, tmp.TeleportTo.DestY, tmp.TeleportTo.DestZ, tmp.TeleportTo.Orientation))
                 {
                     TC_LOG_ERROR("sql.sql", "Table `%s` has invalid coordinates (X: %f Y: %f Z: %f O: %f) in SCRIPT_COMMAND_TELEPORT_TO for script id %u",
                         tableName.c_str(), tmp.TeleportTo.DestX, tmp.TeleportTo.DestY, tmp.TeleportTo.DestZ, tmp.TeleportTo.Orientation, tmp.id);
@@ -4994,7 +4994,7 @@ void ObjectMgr::LoadScripts(ScriptsType type)
 
             case SCRIPT_COMMAND_TEMP_SUMMON_CREATURE:
             {
-                if (!Trinity::IsValidMapCoord(tmp.TempSummonCreature.PosX, tmp.TempSummonCreature.PosY, tmp.TempSummonCreature.PosZ, tmp.TempSummonCreature.Orientation))
+                if (!monster::IsValidMapCoord(tmp.TempSummonCreature.PosX, tmp.TempSummonCreature.PosY, tmp.TempSummonCreature.PosZ, tmp.TempSummonCreature.Orientation))
                 {
                     TC_LOG_ERROR("sql.sql", "Table `%s` has invalid coordinates (X: %f Y: %f Z: %f O: %f) in SCRIPT_COMMAND_TEMP_SUMMON_CREATURE for script id %u",
                         tableName.c_str(), tmp.TempSummonCreature.PosX, tmp.TempSummonCreature.PosY, tmp.TempSummonCreature.PosZ, tmp.TempSummonCreature.Orientation, tmp.id);
@@ -7506,7 +7506,7 @@ void ObjectMgr::LoadPointsOfInterest()
         POI.data = fields[5].GetUInt32();
         POI.icon_name = fields[6].GetString();
 
-        if (!Trinity::IsValidMapCoord(POI.x, POI.y))
+        if (!monster::IsValidMapCoord(POI.x, POI.y))
         {
             TC_LOG_ERROR("sql.sql", "Table `points_of_interest` (Entry: %u) have invalid coordinates (X: %f Y: %f), ignored.", point_id, POI.x, POI.y);
             continue;
@@ -8050,7 +8050,7 @@ void ObjectMgr::LoadGameObjectForQuests()
     TC_LOG_INFO("server.loading", ">> Loaded %u GameObjects for quests in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
 }
 
-bool ObjectMgr::LoadTrinityStrings(const char* table, int32 min_value, int32 max_value)
+bool ObjectMgr::LoadmonsterStrings(const char* table, int32 min_value, int32 max_value)
 {
     uint32 oldMSTime = getMSTime();
 
@@ -8080,10 +8080,10 @@ bool ObjectMgr::LoadTrinityStrings(const char* table, int32 min_value, int32 max
     }
 
     // cleanup affected map part for reloading case
-    for (TrinityStringLocaleContainer::iterator itr = _trinityStringLocaleStore.begin(); itr != _trinityStringLocaleStore.end();)
+    for (monsterStringLocaleContainer::iterator itr = _monsterStringLocaleStore.begin(); itr != _monsterStringLocaleStore.end();)
     {
         if (itr->first >= start_value && itr->first < end_value)
-            _trinityStringLocaleStore.erase(itr++);
+            _monsterStringLocaleStore.erase(itr++);
         else
             ++itr;
     }
@@ -8092,8 +8092,8 @@ bool ObjectMgr::LoadTrinityStrings(const char* table, int32 min_value, int32 max
 
     if (!result)
     {
-        if (min_value == MIN_TRINITY_STRING_ID)              // error only in case internal strings
-            TC_LOG_ERROR("server.loading", ">> Loaded 0 trinity strings. DB table `%s` is empty. Cannot continue.", table);
+        if (min_value == MIN_monster_STRING_ID)              // error only in case internal strings
+            TC_LOG_ERROR("server.loading", ">> Loaded 0 monster strings. DB table `%s` is empty. Cannot continue.", table);
         else
             TC_LOG_INFO("server.loading", ">> Loaded 0 string templates. DB table `%s` is empty.", table);
 
@@ -8119,7 +8119,7 @@ bool ObjectMgr::LoadTrinityStrings(const char* table, int32 min_value, int32 max
             continue;
         }
 
-        TrinityStringLocale& data = _trinityStringLocaleStore[entry];
+        monsterStringLocale& data = _monsterStringLocaleStore[entry];
 
         if (!data.Content.empty())
         {
@@ -8134,17 +8134,17 @@ bool ObjectMgr::LoadTrinityStrings(const char* table, int32 min_value, int32 max
             AddLocaleString(fields[i + 1].GetString(), LocaleConstant(i), data.Content);
     } while (result->NextRow());
 
-    if (min_value == MIN_TRINITY_STRING_ID)
-        TC_LOG_INFO("server.loading", ">> Loaded %u Trinity strings from table %s in %u ms", count, table, GetMSTimeDiffToNow(oldMSTime));
+    if (min_value == MIN_monster_STRING_ID)
+        TC_LOG_INFO("server.loading", ">> Loaded %u monster strings from table %s in %u ms", count, table, GetMSTimeDiffToNow(oldMSTime));
     else
         TC_LOG_INFO("server.loading", ">> Loaded %u string templates from %s in %u ms", count, table, GetMSTimeDiffToNow(oldMSTime));
 
     return true;
 }
 
-const char *ObjectMgr::GetTrinityString(int32 entry, LocaleConstant locale_idx) const
+const char *ObjectMgr::GetmonsterString(int32 entry, LocaleConstant locale_idx) const
 {
-    if (TrinityStringLocale const* msl = GetTrinityStringLocale(entry))
+    if (monsterStringLocale const* msl = GetmonsterStringLocale(entry))
     {
         if (msl->Content.size() > size_t(locale_idx) && !msl->Content[locale_idx].empty())
             return msl->Content[locale_idx].c_str();
@@ -8153,9 +8153,9 @@ const char *ObjectMgr::GetTrinityString(int32 entry, LocaleConstant locale_idx) 
     }
 
     if (entry > 0)
-        TC_LOG_ERROR("sql.sql", "Entry %i not found in `trinity_string` table.", entry);
+        TC_LOG_ERROR("sql.sql", "Entry %i not found in `monster_string` table.", entry);
     else
-        TC_LOG_ERROR("sql.sql", "Trinity string entry %i not found in DB.", entry);
+        TC_LOG_ERROR("sql.sql", "monster string entry %i not found in DB.", entry);
     return "<error>";
 }
 
@@ -8622,7 +8622,7 @@ void ObjectMgr::LoadMailLevelRewards()
 
 void ObjectMgr::AddSpellToTrainer(uint32 entry, uint32 spell, uint32 spellCost, uint32 reqSkill, uint32 reqSkillValue, uint32 reqLevel, uint32 Index)
 {
-    if (entry >= TRINITY_TRAINER_START_REF)
+    if (entry >= monster_TRAINER_START_REF)
         return;
 
     CreatureTemplate const* cInfo = GetCreatureTemplate(entry);
@@ -9486,7 +9486,7 @@ void ObjectMgr::CheckScripts(ScriptsType type, std::set<int32>& ids)
             {
                 case SCRIPT_COMMAND_TALK:
                 {
-                    if (!GetTrinityStringLocale (itrM->second.Talk.TextID))
+                    if (!GetmonsterStringLocale (itrM->second.Talk.TextID))
                         TC_LOG_ERROR("sql.sql", "Table `%s` references invalid text id %u from `db_script_string`, script id: %u.", GetScriptsTableNameByType(type).c_str(), itrM->second.Talk.TextID, itrMM->first);
 
                     if (ids.find(itrM->second.Talk.TextID) != ids.end())
@@ -9501,12 +9501,12 @@ void ObjectMgr::CheckScripts(ScriptsType type, std::set<int32>& ids)
 
 void ObjectMgr::LoadDbScriptStrings()
 {
-    LoadTrinityStrings("db_script_string", MIN_DB_SCRIPT_STRING_ID, MAX_DB_SCRIPT_STRING_ID);
+    LoadmonsterStrings("db_script_string", MIN_DB_SCRIPT_STRING_ID, MAX_DB_SCRIPT_STRING_ID);
 
     std::set<int32> ids;
 
     for (int32 i = MIN_DB_SCRIPT_STRING_ID; i < MAX_DB_SCRIPT_STRING_ID; ++i)
-        if (GetTrinityStringLocale(i))
+        if (GetmonsterStringLocale(i))
             ids.insert(i);
 
     for (int type = SCRIPTS_FIRST; type < SCRIPTS_LAST; ++type)
@@ -9516,17 +9516,17 @@ void ObjectMgr::LoadDbScriptStrings()
         TC_LOG_ERROR("sql.sql", "Table `db_script_string` has unused string id  %u", *itr);
 }
 
-bool LoadTrinityStrings(const char* table, int32 start_value, int32 end_value)
+bool LoadmonsterStrings(const char* table, int32 start_value, int32 end_value)
 {
     // MAX_DB_SCRIPT_STRING_ID is max allowed negative value for scripts (scrpts can use only more deep negative values
     // start/end reversed for negative values
     if (start_value > MAX_DB_SCRIPT_STRING_ID || end_value >= start_value)
     {
-        TC_LOG_ERROR("sql.sql", "Table '%s' load attempted with range (%d - %d) reserved by Trinity, strings not loaded.", table, start_value, end_value+1);
+        TC_LOG_ERROR("sql.sql", "Table '%s' load attempted with range (%d - %d) reserved by monster, strings not loaded.", table, start_value, end_value+1);
         return false;
     }
 
-    return sObjectMgr->LoadTrinityStrings(table, start_value, end_value);
+    return sObjectMgr->LoadmonsterStrings(table, start_value, end_value);
 }
 
 CreatureBaseStats const* ObjectMgr::GetCreatureBaseStats(uint8 level, uint8 unitClass)

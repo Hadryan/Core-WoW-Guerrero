@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,7 +15,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Reordenada, trinity codestyle y limpieza de CRLF por Eilo
+// Reordenada, monster codestyle y limpieza de CRLF por Eilo
 /* ScriptData
 SDName: Argent Challenge Encounter.
 SD%Complete: 80%

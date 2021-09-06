@@ -775,7 +775,7 @@ public:
                 GetCreatureListWithEntryInGrid(targetList, me, NPC_CONGAELING_BLOOD_TARGET, 200.0f);
 
                 if (!targetList.empty() && targetList.size() > 1)
-                    Trinity::Containers::RandomResizeList(targetList, 1);
+                    monster::Containers::RandomResizeList(targetList, 1);
 
                 if (Creature* bloodTarget = targetList.front())
                     bloodTarget->AddAura(SPELL_CONGAELING_BLOOD_SUMMON, bloodTarget);
@@ -1414,10 +1414,10 @@ public:
                     case EVENT_IMPALE:
                     {
                         std::list<WorldObject*> playerList;
-                        Trinity::AllWorldObjectsInRange objects(me, 200.0f);
-                        Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, playerList, objects, GRID_MAP_TYPE_MASK_PLAYER);
+                        monster::AllWorldObjectsInRange objects(me, 200.0f);
+                        monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, playerList, objects, GRID_MAP_TYPE_MASK_PLAYER);
                         me->VisitNearbyObject(200.0f, searcher);
-                        playerList.sort(Trinity::ObjectDistanceOrderPred(me));
+                        playerList.sort(monster::ObjectDistanceOrderPred(me));
                         if (WorldObject* target = playerList.front())
                             DoCast(target->ToPlayer(), SPELL_IMPALE, false);
                         events.ScheduleEvent(EVENT_IMPALE, 35000);
@@ -2109,7 +2109,7 @@ public:
             {
                 return target->GetDistance2d(caster) < 50.0f && !target->HasInArc(M_PI, caster);
             });
-            creatureList.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+            creatureList.sort(monster::ObjectDistanceOrderPred(GetCaster()));
             creatureList.pop_front();
             if (creatureList.size() > 1)
                 creatureList.resize(1);
@@ -2266,7 +2266,7 @@ public:
         {
             WorldObject* target = nullptr;
             if (!targets.empty())
-                target = Trinity::Containers::SelectRandomContainerElement(targets);
+                target = monster::Containers::SelectRandomContainerElement(targets);
             targets.clear();
             targets.push_back(target);
         }
@@ -2474,7 +2474,7 @@ public:
             });
 
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void HandleDummy(SpellEffIndex effIndex)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -448,7 +448,7 @@ class boss_professor_putricide : public CreatureScript
                             list.remove_if(RotfaceHeightCheck(rotface));
                             if (list.size() > 4)
                             {
-                                list.sort(Trinity::ObjectDistanceOrderPred(rotface));
+                                list.sort(monster::ObjectDistanceOrderPred(rotface));
                                 do
                                 {
                                     list.pop_back();
@@ -894,7 +894,7 @@ class spell_putricide_ooze_channel : public SpellScriptLoader
             {
                 if (InstanceScript* instance = GetCaster()->GetInstanceScript())
                 {
-                    targets.remove_if(Trinity::ObjectGUIDCheck(instance->GetData64(DATA_ADD_TARGET)));
+                    targets.remove_if(monster::ObjectGUIDCheck(instance->GetData64(DATA_ADD_TARGET)));
                 }
 
                 if (targets.empty())
@@ -904,7 +904,7 @@ class spell_putricide_ooze_channel : public SpellScriptLoader
                     return;
                 }
 
-                WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+                WorldObject* target = monster::Containers::SelectRandomContainerElement(targets);
                 if (InstanceScript* instance = GetCaster()->GetInstanceScript())
                     instance->SetData64(DATA_ADD_TARGET, target->GetGUID());
                 targets.clear();
@@ -1155,8 +1155,8 @@ class spell_putricide_unbound_plague : public SpellScriptLoader
                 }
 
 
-                targets.remove_if(Trinity::UnitAuraCheck(true, sSpellMgr->GetSpellIdForDifficulty(SPELL_UNBOUND_PLAGUE, GetCaster())));
-                Trinity::Containers::RandomResizeList(targets, 1);
+                targets.remove_if(monster::UnitAuraCheck(true, sSpellMgr->GetSpellIdForDifficulty(SPELL_UNBOUND_PLAGUE, GetCaster())));
+                monster::Containers::RandomResizeList(targets, 1);
             }
 
             void HandleScript(SpellEffIndex /*effIndex*/)
@@ -1218,7 +1218,7 @@ class spell_putricide_eat_ooze : public SpellScriptLoader
                 if (targets.empty())
                     return;
 
-                targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+                targets.sort(monster::ObjectDistanceOrderPred(GetCaster()));
                 WorldObject* target = targets.front();
                 targets.clear();
                 targets.push_back(target);

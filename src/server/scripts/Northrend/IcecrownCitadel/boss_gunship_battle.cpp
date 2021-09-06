@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2014 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -1520,8 +1520,8 @@ struct npc_gunship_boarding_addAI : public gunship_npc_AI
             me->AddSpellCooldown(BurningPitchId, 0, time(NULL) + 3);
 
             std::list<Player*> players;
-            Trinity::UnitAuraCheck check(true, Instance->GetData(DATA_TEAM_IN_INSTANCE) == HORDE ? SPELL_ON_ORGRIMS_HAMMER_DECK : SPELL_ON_SKYBREAKER_DECK);
-            Trinity::PlayerListSearcher<Trinity::UnitAuraCheck> searcher(me, players, check);
+            monster::UnitAuraCheck check(true, Instance->GetData(DATA_TEAM_IN_INSTANCE) == HORDE ? SPELL_ON_ORGRIMS_HAMMER_DECK : SPELL_ON_SKYBREAKER_DECK);
+            monster::PlayerListSearcher<monster::UnitAuraCheck> searcher(me, players, check);
             me->VisitNearbyWorldObject(200.0f, searcher);
 
             players.remove_if([this](Player* player)
@@ -1531,7 +1531,7 @@ struct npc_gunship_boarding_addAI : public gunship_npc_AI
 
             if (!players.empty())
             {
-                players.sort(Trinity::ObjectDistanceOrderPred(me));
+                players.sort(monster::ObjectDistanceOrderPred(me));
                 for (std::list<Player*>::iterator itr = players.begin(); itr != players.end(); ++itr)
                     me->AddThreat(*itr, 1.0f);
 
@@ -1584,8 +1584,8 @@ struct npc_gunship_boarding_addAI : public gunship_npc_AI
     bool HasAttackablePlayerNearby()
     {
         std::list<Player*> players;
-        Trinity::UnitAuraCheck check(true, Instance->GetData(DATA_TEAM_IN_INSTANCE) == HORDE ? SPELL_ON_ORGRIMS_HAMMER_DECK : SPELL_ON_SKYBREAKER_DECK);
-        Trinity::PlayerListSearcher<Trinity::UnitAuraCheck> searcher(me, players, check);
+        monster::UnitAuraCheck check(true, Instance->GetData(DATA_TEAM_IN_INSTANCE) == HORDE ? SPELL_ON_ORGRIMS_HAMMER_DECK : SPELL_ON_SKYBREAKER_DECK);
+        monster::PlayerListSearcher<monster::UnitAuraCheck> searcher(me, players, check);
         me->VisitNearbyWorldObject(200.0f, searcher);
 
         players.remove_if([this](Player* player)
@@ -2252,7 +2252,7 @@ class spell_igb_burning_pitch_selector : public SpellScriptLoader
 
                 if (!targets.empty())
                 {
-                    WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+                    WorldObject* target = monster::Containers::SelectRandomContainerElement(targets);
                     targets.clear();
                     targets.push_back(target);
                 }
@@ -2318,7 +2318,7 @@ class spell_igb_rocket_artillery : public SpellScriptLoader
             {
                 if (!targets.empty())
                 {
-                    WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+                    WorldObject* target = monster::Containers::SelectRandomContainerElement(targets);
                     targets.clear();
                     targets.push_back(target);
                 }

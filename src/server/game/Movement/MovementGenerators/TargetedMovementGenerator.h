@@ -1,11 +1,11 @@
 /*
 * Copyright (C) 2016+     AzerothCore <www.azerothcore.org>, released under GNU GPL v2 license: http://github.com/azerothcore/azerothcore-wotlk/LICENSE-GPL2
-* Copyright (C) 2008-2016 TrinityCore <http://www.trinitycore.org/>
+* Copyright (C) 2008-2016 monsterCore <http://www.monstercore.org/>
 * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
 */
 
-#ifndef TRINITY_TARGETEDMOVEMENTGENERATOR_H
-#define TRINITY_TARGETEDMOVEMENTGENERATOR_H
+#ifndef monster_TARGETEDMOVEMENTGENERATOR_H
+#define monster_TARGETEDMOVEMENTGENERATOR_H
 
 #include "MovementGenerator.h"
 #include "FollowerReference.h"

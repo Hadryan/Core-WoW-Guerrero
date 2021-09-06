@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -16,8 +16,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRINITYCORE_PATH_H
-#define TRINITYCORE_PATH_H
+#ifndef monsterCORE_PATH_H
+#define monsterCORE_PATH_H
 
 #include "Common.h"
 #include <deque>

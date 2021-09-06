@@ -1,5 +1,5 @@
-#ifndef __TRINITY_ARCHEOLOGY_MGR_H
-#define __TRINITY_ARCHEOLOGY_MGR_H
+#ifndef __monster_ARCHEOLOGY_MGR_H
+#define __monster_ARCHEOLOGY_MGR_H
 
 #include <map>
 #include <string>
@@ -142,4 +142,4 @@ class ArcheologyMgr
         std::map<uint32 /*projectId*/, ResearchHistoryEntry > m_researchHistory;
 };
 
-#endif //__TRINITY_ARCHEOLOGY_MGR_H
+#endif //__monster_ARCHEOLOGY_MGR_H

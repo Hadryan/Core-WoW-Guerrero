@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2014 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -26,7 +26,7 @@
 #include <ace/Thread_Mutex.h>
 #include <AutoPtr.h>
 
-typedef Trinity::AutoPtr<ACE_Configuration_Heap, ACE_Null_Mutex> Config;
+typedef monster::AutoPtr<ACE_Configuration_Heap, ACE_Null_Mutex> Config;
 
 class ConfigMgr
 {

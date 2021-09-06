@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -846,13 +846,13 @@ void Creature::DoFleeToGetAssistance()
     {
         Creature* creature = NULL;
 
-        CellCoord p(Trinity::ComputeCellCoord(GetPositionX(), GetPositionY()));
+        CellCoord p(monster::ComputeCellCoord(GetPositionX(), GetPositionY()));
         Cell cell(p);
         cell.SetNoCreate();
-        Trinity::NearestAssistCreatureInCreatureRangeCheck u_check(this, getVictim(), radius);
-        Trinity::CreatureLastSearcher<Trinity::NearestAssistCreatureInCreatureRangeCheck> searcher(this, creature, u_check);
+        monster::NearestAssistCreatureInCreatureRangeCheck u_check(this, getVictim(), radius);
+        monster::CreatureLastSearcher<monster::NearestAssistCreatureInCreatureRangeCheck> searcher(this, creature, u_check);
 
-        TypeContainerVisitor<Trinity::CreatureLastSearcher<Trinity::NearestAssistCreatureInCreatureRangeCheck>, GridTypeMapContainer > grid_creature_searcher(searcher);
+        TypeContainerVisitor<monster::CreatureLastSearcher<monster::NearestAssistCreatureInCreatureRangeCheck>, GridTypeMapContainer > grid_creature_searcher(searcher);
 
         cell.Visit(p, grid_creature_searcher, *GetMap(), *this, radius);
 
@@ -2075,14 +2075,14 @@ void Creature::CallAssistance()
             std::list<Creature*> assistList;
 
             {
-                CellCoord p(Trinity::ComputeCellCoord(GetPositionX(), GetPositionY()));
+                CellCoord p(monster::ComputeCellCoord(GetPositionX(), GetPositionY()));
                 Cell cell(p);
                 cell.SetNoCreate();
 
-                Trinity::AnyAssistCreatureInRangeCheck u_check(this, getVictim(), radius);
-                Trinity::CreatureListSearcher<Trinity::AnyAssistCreatureInRangeCheck> searcher(this, assistList, u_check);
+                monster::AnyAssistCreatureInRangeCheck u_check(this, getVictim(), radius);
+                monster::CreatureListSearcher<monster::AnyAssistCreatureInRangeCheck> searcher(this, assistList, u_check);
 
-                TypeContainerVisitor<Trinity::CreatureListSearcher<Trinity::AnyAssistCreatureInRangeCheck>, GridTypeMapContainer >  grid_creature_searcher(searcher);
+                TypeContainerVisitor<monster::CreatureListSearcher<monster::AnyAssistCreatureInRangeCheck>, GridTypeMapContainer >  grid_creature_searcher(searcher);
 
                 cell.Visit(p, grid_creature_searcher, *GetMap(), *this, radius);
             }
@@ -2107,14 +2107,14 @@ void Creature::CallForHelp(float radius)
     if (radius <= 0.0f || !getVictim() || isPet() || isCharmed())
         return;
 
-    CellCoord p(Trinity::ComputeCellCoord(GetPositionX(), GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(GetPositionX(), GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
-    Trinity::CallOfHelpCreatureInRangeDo u_do(this, getVictim(), radius);
-    Trinity::CreatureWorker<Trinity::CallOfHelpCreatureInRangeDo> worker(this, u_do);
+    monster::CallOfHelpCreatureInRangeDo u_do(this, getVictim(), radius);
+    monster::CreatureWorker<monster::CallOfHelpCreatureInRangeDo> worker(this, u_do);
 
-    TypeContainerVisitor<Trinity::CreatureWorker<Trinity::CallOfHelpCreatureInRangeDo>, GridTypeMapContainer >  grid_creature_searcher(worker);
+    TypeContainerVisitor<monster::CreatureWorker<monster::CallOfHelpCreatureInRangeDo>, GridTypeMapContainer >  grid_creature_searcher(worker);
 
     cell.Visit(p, grid_creature_searcher, *GetMap(), *this, radius);
 }
@@ -2645,7 +2645,7 @@ void Creature::FarTeleportTo(Map* map, float X, float Y, float Z, float O)
 void Creature::SetPosition(float x, float y, float z, float o)
 {
     // prevent crash when a bad coord is sent by the client
-    if (!Trinity::IsValidMapCoord(x, y, z, o))
+    if (!monster::IsValidMapCoord(x, y, z, o))
     {
         TC_LOG_DEBUG("entities.unit", "Creature::SetPosition(%f, %f, %f) .. bad coordinates!", x, y, z);
         return;

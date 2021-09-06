@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2010 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -358,7 +358,7 @@ class boss_sindragosa : public CreatureScript
                                     if ((*itr)->getTarget()->GetTypeId() == TYPEID_PLAYER)
                                         targetList.push_back((*itr)->getTarget());
 
-                                Trinity::Containers::RandomResizeList(targetList, RAID_MODE<uint8>(2, 5, 2, 6));
+                                monster::Containers::RandomResizeList(targetList, RAID_MODE<uint8>(2, 5, 2, 6));
                                 for (std::list<Unit*>::iterator it = targetList.begin(); it != targetList.end(); ++it)
                                 {
                                     Talk(EMOTE_WARN_FROZEN_ORB, (*it)->GetGUID());
@@ -1200,7 +1200,7 @@ class spell_sindragosa_unchained_magic : public SpellScriptLoader
                 unitList.remove_if(UnchainedMagicTargetSelector());
                 uint32 maxSize = uint32(GetCaster()->GetMap()->GetSpawnMode() & 1 ? 6 : 2);
                 if (unitList.size() > maxSize)
-                    Trinity::Containers::RandomResizeList(unitList, maxSize);
+                    monster::Containers::RandomResizeList(unitList, maxSize);
             }
 
             void Register()
@@ -1566,11 +1566,11 @@ class spell_frostwarden_handler_order_whelp : public SpellScriptLoader
 
             void FilterTargets(std::list<WorldObject*>& targets)
             {
-                targets.remove_if(Trinity::ObjectTypeIdCheck(TYPEID_PLAYER, false));
+                targets.remove_if(monster::ObjectTypeIdCheck(TYPEID_PLAYER, false));
                 if (targets.empty())
                     return;
 
-                WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+                WorldObject* target = monster::Containers::SelectRandomContainerElement(targets);
                 targets.clear();
                 targets.push_back(target);
             }
@@ -1588,7 +1588,7 @@ class spell_frostwarden_handler_order_whelp : public SpellScriptLoader
                     return;
 
                 if (!unitList.empty() && GetHitUnit())
-                    Trinity::Containers::SelectRandomContainerElement(unitList)->CastSpell(GetHitUnit(), uint32(GetEffectValue()), true);
+                    monster::Containers::SelectRandomContainerElement(unitList)->CastSpell(GetHitUnit(), uint32(GetEffectValue()), true);
             }
 
             void Register()

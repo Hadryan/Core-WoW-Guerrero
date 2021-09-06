@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -105,8 +105,8 @@ class boss_ammunae : public CreatureScript
             void RampartSummon(uint32 entry, float distance)
             {
                 std::list<Creature*> CreatureList;
-                Trinity::AllCreaturesOfEntryInRange checker(me, entry, distance);
-                Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(me, CreatureList, checker);
+                monster::AllCreaturesOfEntryInRange checker(me, entry, distance);
+                monster::CreatureListSearcher<monster::AllCreaturesOfEntryInRange> searcher(me, CreatureList, checker);
                 me->VisitNearbyObject(distance, searcher);
                 if (CreatureList.empty())
                     return;

@@ -597,7 +597,7 @@ public:
             if (unitList.size() > 1)
                 unitList.remove_if(NonPreviousTarget(previousTarget));
             if (!unitList.empty())
-                Trinity::Containers::RandomResizeList(unitList, 1);
+                monster::Containers::RandomResizeList(unitList, 1);
         }
 
 

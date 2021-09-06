@@ -425,7 +425,7 @@ struct twilight_casterAI : public ScriptedAI
         if (tmpTargets.empty())
             return 0;
 
-        tmpTargets.sort(Trinity::HealthPctOrderPred());
+        tmpTargets.sort(monster::HealthPctOrderPred());
 
         if (Creature* lowestTarget = tmpTargets.front())
             return lowestTarget->GetGUID();

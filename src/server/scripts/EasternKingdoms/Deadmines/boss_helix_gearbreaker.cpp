@@ -468,7 +468,7 @@ public:
                 targets.remove_if(BombTargetSelector(oaf));
             }
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void HandleDummy(SpellEffIndex /*effIndex*/)
@@ -515,7 +515,7 @@ public:
                 targets.remove_if(BombTargetSelector(oaf));
             }
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void HandleDummy(SpellEffIndex effIndex)
@@ -630,7 +630,7 @@ public:
                 targets.remove_if(BombTargetSelector(oaf));
             }
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void HandleDummy(SpellEffIndex effIndex)

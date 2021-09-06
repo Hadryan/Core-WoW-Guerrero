@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -124,7 +124,7 @@ public:
         bool first = true;
         bool footer = false;
 
-        TRINITY_READ_GUARD(HashMapHolder<Player>::LockType, *HashMapHolder<Player>::GetLock());
+        monster_READ_GUARD(HashMapHolder<Player>::LockType, *HashMapHolder<Player>::GetLock());
         HashMapHolder<Player>::MapType const& m = sObjectAccessor->GetPlayers();
         for (HashMapHolder<Player>::MapType::const_iterator itr = m.begin(); itr != m.end(); ++itr)
         {
@@ -201,7 +201,7 @@ public:
     {
         if (!*args)
         {
-            handler->PSendSysMessage(LANG_YOU_ARE, handler->GetSession()->GetPlayer()->isGMVisible() ? handler->GetTrinityString(LANG_VISIBLE) : handler->GetTrinityString(LANG_INVISIBLE));
+            handler->PSendSysMessage(LANG_YOU_ARE, handler->GetSession()->GetPlayer()->isGMVisible() ? handler->GetmonsterString(LANG_VISIBLE) : handler->GetmonsterString(LANG_INVISIBLE));
             return true;
         }
 

@@ -465,7 +465,7 @@ class boss_sinestra : public CreatureScript
                             if (targetList.size() < 2)
                                 return;
 
-                            Trinity::Containers::RandomResizeList(targetList, 2);
+                            monster::Containers::RandomResizeList(targetList, 2);
 
                             std::list<Unit*>::const_iterator iter = targetList.begin();
                             pOrb1 = me->SummonCreature(NPC_SHADOW_ORB, (*iter)->GetPositionX(), (*iter)->GetPositionY(), (*iter)->GetPositionZ(), (*iter)->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 14000);
@@ -1124,10 +1124,10 @@ class spell_sinestra_wrack : public SpellScriptLoader
                     return;
 
                 std::list<Player*> targets;
-                Trinity::AnyPlayerInObjectRangeCheck checker(GetTarget(), 100.0f, true);
-                Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(GetTarget(), targets, checker); 
+                monster::AnyPlayerInObjectRangeCheck checker(GetTarget(), 100.0f, true);
+                monster::PlayerListSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(GetTarget(), targets, checker); 
                 GetTarget()->VisitNearbyWorldObject(100.0f, searcher);
-                targets.sort(Trinity::ObjectDistanceOrderPred(GetTarget()));
+                targets.sort(monster::ObjectDistanceOrderPred(GetTarget()));
                 uint8 count = 0;
                 if (!targets.empty())
                     for (auto&& target : targets)

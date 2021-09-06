@@ -622,8 +622,8 @@ public:
         void setCannonsCombatState(bool active, bool phaseTwo = false)
         {
             std::list<WorldObject*> targetList;
-            Trinity::AllWorldObjectsInRange objects(me, 70.0f);
-            Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, targetList, objects);
+            monster::AllWorldObjectsInRange objects(me, 70.0f);
+            monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, targetList, objects);
             me->VisitNearbyObject(70.0f, searcher);
             for (std::list<WorldObject*>::const_iterator i = targetList.begin(); i != targetList.end(); ++i)
                 if (Creature* cannon = (*i)->ToCreature())
@@ -761,7 +761,7 @@ public:
 
                     if (!triggers.empty())
                     {
-                        auto trigger = Trinity::Containers::SelectRandomContainerElement(triggers);
+                        auto trigger = monster::Containers::SelectRandomContainerElement(triggers);
                         Position pos;
                         Position triggerPos(*trigger);
                         deckFireController->GetRandomPoint(triggerPos, 6.0f, pos);
@@ -790,8 +790,8 @@ public:
                                         Position pos;
                                         lastDynObj->GetFirstCollisionPosition(pos, spawnDist, tempAngle);
                                         std::list<WorldObject*> targetList;
-                                        Trinity::AllWorldObjectsInRange objects(lastDynObj, 8.0f);
-                                        Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(lastDynObj, targetList, objects, GRID_MAP_TYPE_MASK_DYNAMICOBJECT);
+                                        monster::AllWorldObjectsInRange objects(lastDynObj, 8.0f);
+                                        monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(lastDynObj, targetList, objects, GRID_MAP_TYPE_MASK_DYNAMICOBJECT);
                                         me->VisitNearbyObject(10.0f, searcher);
 
                                         bool validPos = true;
@@ -933,7 +933,7 @@ public:
                         setCannonsCombatState(true);
                         break;
                     case EVENT_MASSIVE_EXPLOSION:
-                        if (Creature* explosion = Trinity::Containers::SelectRandomContainerElement(massiveExplosion))
+                        if (Creature* explosion = monster::Containers::SelectRandomContainerElement(massiveExplosion))
                             explosion->CastSpell(explosion, SPELL_MASSIVE_EXPLOSION, true);
                         events.ScheduleEvent(EVENT_MASSIVE_EXPLOSION, 1000);
                         break;
@@ -952,8 +952,8 @@ public:
                                     targetList.push_back(summoned);
 
                         std::list<WorldObject*> dynObjList;
-                        Trinity::AllWorldObjectsInRange objects(me, 200.0f);
-                        Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, dynObjList, objects, GRID_MAP_TYPE_MASK_DYNAMICOBJECT);
+                        monster::AllWorldObjectsInRange objects(me, 200.0f);
+                        monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, dynObjList, objects, GRID_MAP_TYPE_MASK_DYNAMICOBJECT);
                         me->VisitNearbyObject(200.0f, searcher);
 
                         if (targetList.empty())
@@ -1319,8 +1319,8 @@ public:
                         if (IsHeroic())
                         {
                             std::list<WorldObject*> dynObjList;
-                            Trinity::AllWorldObjectsInRange objects(me, 200.0f);
-                            Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, dynObjList, objects, GRID_MAP_TYPE_MASK_DYNAMICOBJECT);
+                            monster::AllWorldObjectsInRange objects(me, 200.0f);
+                            monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, dynObjList, objects, GRID_MAP_TYPE_MASK_DYNAMICOBJECT);
                             me->VisitNearbyObject(200.0f, searcher);
                             for (uint8 i = 0; i < 56; i++)
                             {
@@ -1502,8 +1502,8 @@ public:
                         if (IsHeroic())
                         {
                             std::list<WorldObject*> dynObjList;
-                            Trinity::AllWorldObjectsInRange objects(me, 200.0f);
-                            Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, dynObjList, objects, GRID_MAP_TYPE_MASK_DYNAMICOBJECT);
+                            monster::AllWorldObjectsInRange objects(me, 200.0f);
+                            monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, dynObjList, objects, GRID_MAP_TYPE_MASK_DYNAMICOBJECT);
                             me->VisitNearbyObject(200.0f, searcher);
                             for (uint8 i = 0; i < 56; i++)
                             {
@@ -2066,13 +2066,13 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Trinity::UnitAuraCheck(true, sSpellMgr->GetSpellIdForDifficulty(SPELL_CONSUMING_SHROUD, GetCaster())));
+            targets.remove_if(monster::UnitAuraCheck(true, sSpellMgr->GetSpellIdForDifficulty(SPELL_CONSUMING_SHROUD, GetCaster())));
             targets.remove_if([](WorldObject* target){
                 return target->ToPlayer() && target->ToPlayer()->HasTankSpec();
             });
 
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void Register() override
@@ -2087,15 +2087,15 @@ public:
     }
 };
 
-struct DeckFireTargetCheck : public Trinity::WorldObjectSpellAreaTargetCheck
+struct DeckFireTargetCheck : public monster::WorldObjectSpellAreaTargetCheck
 {
     DeckFireTargetCheck(float range, Position const* position, Unit* caster, Unit* referer, SpellInfo const* spellInfo)
-        : Trinity::WorldObjectSpellAreaTargetCheck(range, position, caster, referer, spellInfo, TARGET_CHECK_ALLY, nullptr)
+        : monster::WorldObjectSpellAreaTargetCheck(range, position, caster, referer, spellInfo, TARGET_CHECK_ALLY, nullptr)
     {}
 
     bool operator()(Unit* target)
     {
-        if (!Trinity::WorldObjectSpellAreaTargetCheck::operator()(target))
+        if (!monster::WorldObjectSpellAreaTargetCheck::operator()(target))
             return false;
 
         return target->ToPlayer() && (target->HasAura(SPELL_DECK_FIRE_INITIAL_SPAWN) || target->HasAura(SPELL_DECK_FIRE));
@@ -2118,7 +2118,7 @@ public:
             std::list<Unit*> targets;
             Unit* me = GetTarget();
             DeckFireTargetCheck check(200.0f, me, me, me, GetSpellInfo());
-            Trinity::UnitListSearcher<DeckFireTargetCheck> searcher(me, targets, check);
+            monster::UnitListSearcher<DeckFireTargetCheck> searcher(me, targets, check);
             me->VisitNearbyWorldObject(200.0f, searcher);
 
             for (Unit* target : targets)

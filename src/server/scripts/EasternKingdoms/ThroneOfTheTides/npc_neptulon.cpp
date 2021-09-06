@@ -229,8 +229,8 @@ public:
             {
                 _wipeCheckTimer = 5000;
                 Player* player = NULL;
-                Trinity::AnyPlayerInObjectRangeCheck check(me, 60.0f);
-                Trinity::PlayerSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(me, player, check);
+                monster::AnyPlayerInObjectRangeCheck check(me, 60.0f);
+                monster::PlayerSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(me, player, check);
                 me->VisitNearbyWorldObject(60.0f, searcher);
                 if (!player)
                     Reset();
@@ -466,8 +466,8 @@ public:
                 instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_MAREE_POWER);
                 instance->SetData(DATA_OZUMAT, DONE);
                 Player* player = NULL;
-                Trinity::AnyPlayerInObjectRangeCheck check(player, 60.0f);
-                Trinity::PlayerSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(me, player, check);
+                monster::AnyPlayerInObjectRangeCheck check(player, 60.0f);
+                monster::PlayerSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(me, player, check);
                 me->CombatStop();
                 me->ClearInCombat();
             }

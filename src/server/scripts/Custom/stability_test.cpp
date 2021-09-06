@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+* Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
 * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
 * Copyright (C) 2014-2018 RoG_WoW Source  <http://wow.rog.snet
 *

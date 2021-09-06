@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -18,15 +18,15 @@
 
 // THIS FILE IS DEPRECATED
 
-#ifndef TRINITY_SYSTEMCONFIG_H
-#define TRINITY_SYSTEMCONFIG_H
+#ifndef monster_SYSTEMCONFIG_H
+#define monster_SYSTEMCONFIG_H
 
 #include "Define.h"
 #include "revision.h"
 
-#define _PACKAGENAME "TrinityCore"
+#define _PACKAGENAME "monsterCore"
 
-#if TRINITY_ENDIAN == TRINITY_BIGENDIAN
+#if monster_ENDIAN == monster_BIGENDIAN
 # define _ENDIAN_STRING "big-endian"
 #else
 # define _ENDIAN_STRING "little-endian"

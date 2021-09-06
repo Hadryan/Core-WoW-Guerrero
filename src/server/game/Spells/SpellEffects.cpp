@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -267,7 +267,7 @@ void Spell::EffectNULL(SpellEffIndex /*effIndex*/)
 
 void Spell::EffectUnused(SpellEffIndex /*effIndex*/)
 {
-    // NOT USED BY ANY SPELL OR USELESS OR IMPLEMENTED IN DIFFERENT WAY IN TRINITY
+    // NOT USED BY ANY SPELL OR USELESS OR IMPLEMENTED IN DIFFERENT WAY IN monster
 }
 
 void Spell::EffectResurrectNew(SpellEffIndex effIndex)
@@ -845,7 +845,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             uint32 maxTargets = std::min<uint32>(3, attackers.size());
             for (uint32 i = 0; i < maxTargets; ++i)
             {
-                Unit* attacker = Trinity::Containers::SelectRandomContainerElement(attackers);
+                Unit* attacker = monster::Containers::SelectRandomContainerElement(attackers);
                 // usually this should be executed in effect 1 but since the order
                 // for executing is currently random this is here
                 m_caster->CastSpell(attacker, 31790, true);
@@ -2230,7 +2230,7 @@ void Spell::EffectEnergize(SpellEffIndex effIndex)
         if (!avalibleElixirs.empty())
         {
             // cast random elixir on target
-            m_caster->CastSpell(unitTarget, Trinity::Containers::SelectRandomContainerElement(avalibleElixirs), true, m_CastItem);
+            m_caster->CastSpell(unitTarget, monster::Containers::SelectRandomContainerElement(avalibleElixirs), true, m_CastItem);
         }
     }
 }
@@ -5483,8 +5483,8 @@ void Spell::EffectForceDeselect(SpellEffIndex /*effIndex*/)
     WorldPacket data(SMSG_CLEAR_TARGET, 8);
     data << uint64(m_caster->GetGUID());
     std::list<Unit*> targets;
-    Trinity::AnyUnfriendlyUnitInObjectRangeCheck u_check(m_caster, m_caster, m_caster->GetMap()->GetVisibilityRange());
-    Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(m_caster, targets, u_check);
+    monster::AnyUnfriendlyUnitInObjectRangeCheck u_check(m_caster, m_caster, m_caster->GetMap()->GetVisibilityRange());
+    monster::UnitListSearcher<monster::AnyUnfriendlyUnitInObjectRangeCheck> searcher(m_caster, targets, u_check);
     m_caster->VisitNearbyObject(m_caster->GetMap()->GetVisibilityRange(), searcher);
     for (std::list<Unit*>::iterator iter = targets.begin(); iter != targets.end(); ++iter)
         if ((*iter)->ToPlayer() && (*iter)->isAlive())

@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+* Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
 * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
 *
 * This program is free software; you can redistribute it and/or modify it
@@ -52,7 +52,7 @@ class Aura;
 // AURA_EFFECT_HANDLE_CHANGE_AMOUNT_MASK set - aura is recalculated or is just applied/removed - need to redo all things related to m_amount
 // AURA_EFFECT_HANDLE_CHANGE_AMOUNT_SEND_FOR_CLIENT_MASK - logical or of above conditions
 // AURA_EFFECT_HANDLE_STAT - set when stats are reapplied
-// such checks will speedup trinity change amount/send for client operations
+// such checks will speedup monster change amount/send for client operations
 // because for change amount operation packets will not be send
 // aura effect handlers shouldn't contain any AuraEffect or Aura object modifications
 
@@ -2482,8 +2482,8 @@ void AuraEffect::HandleFeignDeath(AuraApplication const* aurApp, uint8 mode, boo
         */
 
         UnitList targets;
-        Trinity::AnyUnfriendlyUnitInObjectRangeCheck u_check(target, target, target->GetMap()->GetVisibilityRange());
-        Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(target, targets, u_check);
+        monster::AnyUnfriendlyUnitInObjectRangeCheck u_check(target, target, target->GetMap()->GetVisibilityRange());
+        monster::UnitListSearcher<monster::AnyUnfriendlyUnitInObjectRangeCheck> searcher(target, targets, u_check);
         target->VisitNearbyObject(target->GetMap()->GetVisibilityRange(), searcher);
         for (UnitList::iterator iter = targets.begin(); iter != targets.end(); ++iter)
         {
@@ -6170,14 +6170,14 @@ void AuraEffect::HandlePeriodicDummyAuraTick(Unit* target, Unit* caster) const
                         // eff_radius == 0
                         float radius = GetSpellInfo()->GetMaxRange(false);
 
-                        CellCoord p(Trinity::ComputeCellCoord(target->GetPositionX(), target->GetPositionY()));
+                        CellCoord p(monster::ComputeCellCoord(target->GetPositionX(), target->GetPositionY()));
                         Cell cell(p);
 
-                        Trinity::AnyUnfriendlyAttackableVisibleUnitInObjectRangeCheck u_check(target, radius);
-                        Trinity::UnitListSearcher<Trinity::AnyUnfriendlyAttackableVisibleUnitInObjectRangeCheck> checker(target, targets, u_check);
+                        monster::AnyUnfriendlyAttackableVisibleUnitInObjectRangeCheck u_check(target, radius);
+                        monster::UnitListSearcher<monster::AnyUnfriendlyAttackableVisibleUnitInObjectRangeCheck> checker(target, targets, u_check);
 
-                        TypeContainerVisitor<Trinity::UnitListSearcher<Trinity::AnyUnfriendlyAttackableVisibleUnitInObjectRangeCheck>, GridTypeMapContainer > grid_object_checker(checker);
-                        TypeContainerVisitor<Trinity::UnitListSearcher<Trinity::AnyUnfriendlyAttackableVisibleUnitInObjectRangeCheck>, WorldTypeMapContainer > world_object_checker(checker);
+                        TypeContainerVisitor<monster::UnitListSearcher<monster::AnyUnfriendlyAttackableVisibleUnitInObjectRangeCheck>, GridTypeMapContainer > grid_object_checker(checker);
+                        TypeContainerVisitor<monster::UnitListSearcher<monster::AnyUnfriendlyAttackableVisibleUnitInObjectRangeCheck>, WorldTypeMapContainer > world_object_checker(checker);
 
                         cell.Visit(p, grid_object_checker,  *GetBase()->GetOwner()->GetMap(), *target, radius);
                         cell.Visit(p, world_object_checker, *GetBase()->GetOwner()->GetMap(), *target, radius);
@@ -6186,7 +6186,7 @@ void AuraEffect::HandlePeriodicDummyAuraTick(Unit* target, Unit* caster) const
                     if (targets.empty())
                         return;
 
-                    Unit* spellTarget = Trinity::Containers::SelectRandomContainerElement(targets);
+                    Unit* spellTarget = monster::Containers::SelectRandomContainerElement(targets);
 
                     int32 killingSpreeTeleport = 57840;
 

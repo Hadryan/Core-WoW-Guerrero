@@ -1575,8 +1575,8 @@ struct npc_voljin_38225 : public AncientEnemyAI
                 {
                     std::vector<Object*> l_Objects;
 
-                    Trinity::AllWorldObjectsInRange u_check(me, 50.0f);
-                    Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, l_Objects, u_check);
+                    monster::AllWorldObjectsInRange u_check(me, 50.0f);
+                    monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, l_Objects, u_check);
                     Cell::VisitAllObjects(me, searcher, 50.0f);
 
                     for (auto l_Object : l_Objects)
@@ -1613,8 +1613,8 @@ struct npc_voljin_38225 : public AncientEnemyAI
                 {
                     std::vector<Object*> l_Objects;
 
-                    Trinity::AllWorldObjectsInRange u_check(me, 90.0f);
-                    Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, l_Objects, u_check);
+                    monster::AllWorldObjectsInRange u_check(me, 90.0f);
+                    monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, l_Objects, u_check);
                     Cell::VisitAllObjects(me, searcher, 90.0f);
 
                     for (auto l_Object : l_Objects)

@@ -331,7 +331,7 @@ public:
                                     if (pl->isAlive())
                                         targets.push_back(pl);
                             if (!targets.empty())
-                                Trinity::Containers::RandomResizeList(targets, 1);
+                                monster::Containers::RandomResizeList(targets, 1);
                             target = targets.front();
                         }
                         if (target)
@@ -580,7 +580,7 @@ public:
                         me->GetCreatureListWithEntryInGrid(triggerList, NPC_DARKWEB_DEVOURER, 100.0f);
                         me->GetCreatureListWithEntryInGrid(triggerList, NPC_CHATTERING_HORROR, 100.0f);
                         me->GetCreatureListWithEntryInGrid(triggerList, NPC_NIGHTMARE_SKITTERLING, 100.0f);
-                        Trinity::Containers::RandomResizeList(triggerList, std::max(1, rand() % 2));
+                        monster::Containers::RandomResizeList(triggerList, std::max(1, rand() % 2));
                         for (std::list<Creature* >::iterator itr = triggerList.begin(); itr != triggerList.end(); itr++)
                             if (Creature *spider = *itr)
                                 if (spider->HasReactState(REACT_PASSIVE))
@@ -1935,8 +1935,8 @@ class npc_ogre_henchman : public CreatureScript
             void JustDied(Unit* killer)
             {
                 std::list<Unit*> targets;
-                Trinity::AnyUnitInObjectRangeCheck u_check(me, 100.00f);
-                Trinity::UnitListSearcher<Trinity::AnyUnitInObjectRangeCheck> searcher(me, targets, u_check);
+                monster::AnyUnitInObjectRangeCheck u_check(me, 100.00f);
+                monster::UnitListSearcher<monster::AnyUnitInObjectRangeCheck> searcher(me, targets, u_check);
                 me->VisitNearbyObject(100.00f, searcher);
 
                 for (Unit* unit : targets)
@@ -2030,7 +2030,7 @@ class go_heavy_door : public GameObjectScript
             std::list<Creature*> creature_list;
             me->GetCreatureListWithEntryInGrid(creature_list, entry, ragne);
 
-            creature_list.sort(Trinity::ObjectDistanceOrderPred(me));
+            creature_list.sort(monster::ObjectDistanceOrderPred(me));
             for (std::list<Creature*>::iterator itr = creature_list.begin(); itr != creature_list.end(); ++itr)
             {
                 if ((*itr) && (*itr)->isAlive() && (*itr)->GetTypeId() == TYPEID_UNIT && (*itr)->HasAura(78087))

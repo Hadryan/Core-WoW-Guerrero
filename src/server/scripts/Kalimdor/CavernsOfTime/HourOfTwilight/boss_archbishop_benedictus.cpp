@@ -1244,7 +1244,7 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            Trinity::Containers::RandomResizeList(targets, 1);
+            monster::Containers::RandomResizeList(targets, 1);
         }
 
         void HandleDummy(SpellEffIndex effIndex)
@@ -1313,7 +1313,7 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Trinity::ObjectTypeIdCheck(TYPEID_PLAYER, false));
+            targets.remove_if(monster::ObjectTypeIdCheck(TYPEID_PLAYER, false));
             _targets = targets;
         }
 
@@ -1332,7 +1332,7 @@ public:
                     continue;
                 }
 
-                if (WorldObject* target = Trinity::Containers::SelectRandomContainerElement(_targets))
+                if (WorldObject* target = monster::Containers::SelectRandomContainerElement(_targets))
                 {
                     orb->CastSpell(target->ToUnit(), orb->GetEntry() == NPC_PURIFYING_LIGHT ? SPELL_PURIFYING_ORB_EXPLOSION : SPELL_SHADOW_ORB_EXPLOSION, true);
                     _targets.remove(target);

@@ -75,7 +75,7 @@ public:
         std::list<Creature*> stalker;
         _lockmaw->GetCreatureListWithEntryInGrid(stalker, NPC_ADD_STALKER, 200.0f);
         if (!stalker.empty())
-            if (Unit* trigger = Trinity::Containers::SelectRandomContainerElement(stalker))
+            if (Unit* trigger = monster::Containers::SelectRandomContainerElement(stalker))
                 trigger->CastSpell(trigger, SPELL_SUMMON_AUGH);
         return true;
     }
@@ -212,7 +212,7 @@ public:
                         std::list<Creature*> stalker;
                         me->GetCreatureListWithEntryInGrid(stalker, NPC_ADD_STALKER, 200.0f);
                         if (!stalker.empty())
-                            if (Unit* trigger = Trinity::Containers::SelectRandomContainerElement(stalker))
+                            if (Unit* trigger = monster::Containers::SelectRandomContainerElement(stalker))
                                 trigger->CastSpell(trigger, SPELL_SUMMON_AUGH);
                         break;
                     }

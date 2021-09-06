@@ -253,7 +253,7 @@ class boss_high_priestess_azil : public CreatureScript
                                 else if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 200.0f, true))
                                     shardGUID = target->GetGUID();
 
-                                Trinity::Containers::SelectRandomContainerElement(shardsList)->AI()->DoAction(ACTION_LAUNCH_SHARD);
+                                monster::Containers::SelectRandomContainerElement(shardsList)->AI()->DoAction(ACTION_LAUNCH_SHARD);
                                 context.Repeat(Milliseconds(6700));
                             }
                             else

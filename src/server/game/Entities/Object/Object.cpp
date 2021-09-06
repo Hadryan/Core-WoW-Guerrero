@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -2133,8 +2133,8 @@ void WorldObject::GetRandomPoint(const Position &pos, float distance, float &ran
     rand_y = pos.m_positionY + new_dist * std::sin(angle);
     rand_z = pos.m_positionZ;
 
-    Trinity::NormalizeMapCoord(rand_x);
-    Trinity::NormalizeMapCoord(rand_y);
+    monster::NormalizeMapCoord(rand_x);
+    monster::NormalizeMapCoord(rand_y);
     UpdateGroundPositionZ(rand_x, rand_y, rand_z);            // update to LOS height if available
 }
 
@@ -2255,7 +2255,7 @@ void WorldObject::UpdateAllowedPositionZ(float x, float y, float &z) const
 
 bool Position::IsPositionValid() const
 {
-    return Trinity::IsValidMapCoord(m_positionX, m_positionY, m_positionZ, m_orientation);
+    return monster::IsValidMapCoord(m_positionX, m_positionY, m_positionZ, m_orientation);
 }
 
 float WorldObject::GetGridActivationRange() const
@@ -2555,7 +2555,7 @@ void Object::ForceValuesUpdateAtIndex(uint32 i)
     }
 }
 
-namespace Trinity
+namespace monster
 {
     class MonsterChatBuilder
     {
@@ -2564,7 +2564,7 @@ namespace Trinity
                 : i_object(obj), i_msgtype(msgtype), i_textId(textId), i_language(language), i_targetGUID(targetGUID) {}
             void operator()(WorldPacket& data, LocaleConstant loc_idx)
             {
-                char const* text = sObjectMgr->GetTrinityString(i_textId, loc_idx);
+                char const* text = sObjectMgr->GetmonsterString(i_textId, loc_idx);
 
                 // TODO: i_object.GetName() also must be localized?
                 i_object.BuildMonsterChat(&data, i_msgtype, text, i_language, i_object.GetNameForLocaleIdx(loc_idx), i_targetGUID);
@@ -2596,68 +2596,68 @@ namespace Trinity
             uint32 i_language;
             uint64 i_targetGUID;
     };
-}                                                           // namespace Trinity
+}                                                           // namespace monster
 
 void WorldObject::MonsterSay(const char* text, uint32 language, uint64 TargetGuid)
 {
-    CellCoord p = Trinity::ComputeCellCoord(GetPositionX(), GetPositionY());
+    CellCoord p = monster::ComputeCellCoord(GetPositionX(), GetPositionY());
 
     Cell cell(p);
     cell.SetNoCreate();
 
-    Trinity::MonsterCustomChatBuilder say_build(*this, CHAT_MSG_MONSTER_SAY, text, language, TargetGuid);
-    Trinity::LocalizedPacketDo<Trinity::MonsterCustomChatBuilder> say_do(say_build);
-    Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::MonsterCustomChatBuilder> > say_worker(this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY), say_do);
-    TypeContainerVisitor<Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::MonsterCustomChatBuilder> >, WorldTypeMapContainer > message(say_worker);
+    monster::MonsterCustomChatBuilder say_build(*this, CHAT_MSG_MONSTER_SAY, text, language, TargetGuid);
+    monster::LocalizedPacketDo<monster::MonsterCustomChatBuilder> say_do(say_build);
+    monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::MonsterCustomChatBuilder> > say_worker(this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY), say_do);
+    TypeContainerVisitor<monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::MonsterCustomChatBuilder> >, WorldTypeMapContainer > message(say_worker);
     cell.Visit(p, message, *GetMap(), *this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY));
 }
 
 void WorldObject::MonsterSay(int32 textId, uint32 language, uint64 TargetGuid)
 {
-    CellCoord p = Trinity::ComputeCellCoord(GetPositionX(), GetPositionY());
+    CellCoord p = monster::ComputeCellCoord(GetPositionX(), GetPositionY());
 
     Cell cell(p);
     cell.SetNoCreate();
 
-    Trinity::MonsterChatBuilder say_build(*this, CHAT_MSG_MONSTER_SAY, textId, language, TargetGuid);
-    Trinity::LocalizedPacketDo<Trinity::MonsterChatBuilder> say_do(say_build);
-    Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::MonsterChatBuilder> > say_worker(this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY), say_do);
-    TypeContainerVisitor<Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::MonsterChatBuilder> >, WorldTypeMapContainer > message(say_worker);
+    monster::MonsterChatBuilder say_build(*this, CHAT_MSG_MONSTER_SAY, textId, language, TargetGuid);
+    monster::LocalizedPacketDo<monster::MonsterChatBuilder> say_do(say_build);
+    monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::MonsterChatBuilder> > say_worker(this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY), say_do);
+    TypeContainerVisitor<monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::MonsterChatBuilder> >, WorldTypeMapContainer > message(say_worker);
     cell.Visit(p, message, *GetMap(), *this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY));
 }
 
 void WorldObject::MonsterYell(const char* text, uint32 language, uint64 TargetGuid)
 {
-    CellCoord p = Trinity::ComputeCellCoord(GetPositionX(), GetPositionY());
+    CellCoord p = monster::ComputeCellCoord(GetPositionX(), GetPositionY());
 
     Cell cell(p);
     cell.SetNoCreate();
 
-    Trinity::MonsterCustomChatBuilder say_build(*this, CHAT_MSG_MONSTER_YELL, text, language, TargetGuid);
-    Trinity::LocalizedPacketDo<Trinity::MonsterCustomChatBuilder> say_do(say_build);
-    Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::MonsterCustomChatBuilder> > say_worker(this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_YELL), say_do);
-    TypeContainerVisitor<Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::MonsterCustomChatBuilder> >, WorldTypeMapContainer > message(say_worker);
+    monster::MonsterCustomChatBuilder say_build(*this, CHAT_MSG_MONSTER_YELL, text, language, TargetGuid);
+    monster::LocalizedPacketDo<monster::MonsterCustomChatBuilder> say_do(say_build);
+    monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::MonsterCustomChatBuilder> > say_worker(this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_YELL), say_do);
+    TypeContainerVisitor<monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::MonsterCustomChatBuilder> >, WorldTypeMapContainer > message(say_worker);
     cell.Visit(p, message, *GetMap(), *this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_YELL));
 }
 
 void WorldObject::MonsterYell(int32 textId, uint32 language, uint64 TargetGuid)
 {
-    CellCoord p = Trinity::ComputeCellCoord(GetPositionX(), GetPositionY());
+    CellCoord p = monster::ComputeCellCoord(GetPositionX(), GetPositionY());
 
     Cell cell(p);
     cell.SetNoCreate();
 
-    Trinity::MonsterChatBuilder say_build(*this, CHAT_MSG_MONSTER_YELL, textId, language, TargetGuid);
-    Trinity::LocalizedPacketDo<Trinity::MonsterChatBuilder> say_do(say_build);
-    Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::MonsterChatBuilder> > say_worker(this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_YELL), say_do);
-    TypeContainerVisitor<Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::MonsterChatBuilder> >, WorldTypeMapContainer > message(say_worker);
+    monster::MonsterChatBuilder say_build(*this, CHAT_MSG_MONSTER_YELL, textId, language, TargetGuid);
+    monster::LocalizedPacketDo<monster::MonsterChatBuilder> say_do(say_build);
+    monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::MonsterChatBuilder> > say_worker(this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_YELL), say_do);
+    TypeContainerVisitor<monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::MonsterChatBuilder> >, WorldTypeMapContainer > message(say_worker);
     cell.Visit(p, message, *GetMap(), *this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_YELL));
 }
 
 void WorldObject::MonsterYellToZone(int32 textId, uint32 language, uint64 TargetGuid)
 {
-    Trinity::MonsterChatBuilder say_build(*this, CHAT_MSG_MONSTER_YELL, textId, language, TargetGuid);
-    Trinity::LocalizedPacketDo<Trinity::MonsterChatBuilder> say_do(say_build);
+    monster::MonsterChatBuilder say_build(*this, CHAT_MSG_MONSTER_YELL, textId, language, TargetGuid);
+    monster::LocalizedPacketDo<monster::MonsterChatBuilder> say_do(say_build);
 
     uint32 zoneid = GetZoneId();
 
@@ -2676,15 +2676,15 @@ void WorldObject::MonsterTextEmote(const char* text, uint64 TargetGuid, bool IsB
 
 void WorldObject::MonsterTextEmote(int32 textId, uint64 TargetGuid, bool IsBossEmote)
 {
-    CellCoord p = Trinity::ComputeCellCoord(GetPositionX(), GetPositionY());
+    CellCoord p = monster::ComputeCellCoord(GetPositionX(), GetPositionY());
 
     Cell cell(p);
     cell.SetNoCreate();
 
-    Trinity::MonsterChatBuilder say_build(*this, IsBossEmote ? CHAT_MSG_RAID_BOSS_EMOTE : CHAT_MSG_MONSTER_EMOTE, textId, LANG_UNIVERSAL, TargetGuid);
-    Trinity::LocalizedPacketDo<Trinity::MonsterChatBuilder> say_do(say_build);
-    Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::MonsterChatBuilder> > say_worker(this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_TEXTEMOTE), say_do);
-    TypeContainerVisitor<Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::MonsterChatBuilder> >, WorldTypeMapContainer > message(say_worker);
+    monster::MonsterChatBuilder say_build(*this, IsBossEmote ? CHAT_MSG_RAID_BOSS_EMOTE : CHAT_MSG_MONSTER_EMOTE, textId, LANG_UNIVERSAL, TargetGuid);
+    monster::LocalizedPacketDo<monster::MonsterChatBuilder> say_do(say_build);
+    monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::MonsterChatBuilder> > say_worker(this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_TEXTEMOTE), say_do);
+    TypeContainerVisitor<monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::MonsterChatBuilder> >, WorldTypeMapContainer > message(say_worker);
     cell.Visit(p, message, *GetMap(), *this, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_TEXTEMOTE));
 }
 
@@ -2709,7 +2709,7 @@ void WorldObject::MonsterWhisper(int32 textId, uint64 receiver, bool IsBossWhisp
         return;
 
     LocaleConstant loc_idx = player->GetSession()->GetSessionDbLocaleIndex();
-    char const* text = sObjectMgr->GetTrinityString(textId, loc_idx);
+    char const* text = sObjectMgr->GetmonsterString(textId, loc_idx);
 
     WorldPacket data(SMSG_MESSAGECHAT, 200);
     BuildMonsterChat(&data, IsBossWhisper ? CHAT_MSG_RAID_BOSS_WHISPER : CHAT_MSG_MONSTER_WHISPER, text, LANG_UNIVERSAL, GetNameForLocaleIdx(loc_idx), receiver);
@@ -2749,13 +2749,13 @@ void WorldObject::SendMessageToSet(WorldPacket* data, bool self)
 
 void WorldObject::SendMessageToSetInRange(WorldPacket* data, float dist, bool /*self*/)
 {
-    Trinity::MessageDistDeliverer notifier(this, data, dist);
+    monster::MessageDistDeliverer notifier(this, data, dist);
     VisitNearbyWorldObject(dist, notifier);
 }
 
 void WorldObject::SendMessageToSet(WorldPacket* data, Player const* skipped_rcvr)
 {
-    Trinity::MessageDistDeliverer notifier(this, data, GetVisibilityRange(), false, skipped_rcvr);
+    monster::MessageDistDeliverer notifier(this, data, GetVisibilityRange(), false, skipped_rcvr);
     VisitNearbyWorldObject(GetVisibilityRange(), notifier);
 }
 
@@ -3085,8 +3085,8 @@ void WorldObject::SummonCreatureGroup(uint8 group, std::list<TempSummon*>* list 
 Creature* WorldObject::FindNearestCreature(uint32 entry, float range, bool alive) const
 {
     Creature* creature = NULL;
-    Trinity::NearestCreatureDistinctEntryWithLiveStateInObjectRangeCheck checker(*this, entry, alive, range);
-    Trinity::CreatureLastSearcher<Trinity::NearestCreatureDistinctEntryWithLiveStateInObjectRangeCheck> searcher(this, creature, checker);
+    monster::NearestCreatureDistinctEntryWithLiveStateInObjectRangeCheck checker(*this, entry, alive, range);
+    monster::CreatureLastSearcher<monster::NearestCreatureDistinctEntryWithLiveStateInObjectRangeCheck> searcher(this, creature, checker);
     VisitNearbyObject(range, searcher);
     return creature;
 }
@@ -3094,8 +3094,8 @@ Creature* WorldObject::FindNearestCreature(uint32 entry, float range, bool alive
 GameObject* WorldObject::FindNearestGameObject(uint32 entry, float range) const
 {
     GameObject* go = NULL;
-    Trinity::NearestGameObjectEntryInObjectRangeCheck checker(*this, entry, range);
-    Trinity::GameObjectLastSearcher<Trinity::NearestGameObjectEntryInObjectRangeCheck> searcher(this, go, checker);
+    monster::NearestGameObjectEntryInObjectRangeCheck checker(*this, entry, range);
+    monster::GameObjectLastSearcher<monster::NearestGameObjectEntryInObjectRangeCheck> searcher(this, go, checker);
     VisitNearbyGridObject(range, searcher);
     return go;
 }
@@ -3103,8 +3103,8 @@ GameObject* WorldObject::FindNearestGameObject(uint32 entry, float range) const
 GameObject* WorldObject::FindNearestGameObjectOfType(GameobjectTypes type, float range) const
 {
     GameObject* go = NULL;
-    Trinity::NearestGameObjectTypeInObjectRangeCheck checker(*this, type, range);
-    Trinity::GameObjectLastSearcher<Trinity::NearestGameObjectTypeInObjectRangeCheck> searcher(this, go, checker);
+    monster::NearestGameObjectTypeInObjectRangeCheck checker(*this, type, range);
+    monster::GameObjectLastSearcher<monster::NearestGameObjectTypeInObjectRangeCheck> searcher(this, go, checker);
     VisitNearbyGridObject(range, searcher);
     return go;
 }
@@ -3113,8 +3113,8 @@ Player* WorldObject::FindNearestPlayer(float range) const
 {
     Player* target = NULL;
 
-    Trinity::NearestPlayerInObjectRangeCheck checker(this, range);
-    Trinity::PlayerLastSearcher<Trinity::NearestPlayerInObjectRangeCheck> searcher(this, target, checker);
+    monster::NearestPlayerInObjectRangeCheck checker(this, range);
+    monster::PlayerLastSearcher<monster::NearestPlayerInObjectRangeCheck> searcher(this, target, checker);
     VisitNearbyObject(range, searcher);
 
     return target;
@@ -3123,60 +3123,60 @@ Player* WorldObject::FindNearestPlayer(float range) const
 std::list<Player*> WorldObject::GetPlayersInRange(float range, bool alive, bool withGamemaster) const
 {
     std::list<Player*> players;
-    Trinity::AnyPlayerInObjectRangeCheck checker(this, range, alive, withGamemaster);
-    Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(this, players, checker);
+    monster::AnyPlayerInObjectRangeCheck checker(this, range, alive, withGamemaster);
+    monster::PlayerListSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(this, players, checker);
     VisitNearbyWorldObject(range, searcher);
     return players;
 }
 
 void WorldObject::GetGameObjectListWithEntryInGrid(std::list<GameObject*>& gameobjectList, uint32 entry, float maxSearchRange) const
 {
-    CellCoord pair(Trinity::ComputeCellCoord(this->GetPositionX(), this->GetPositionY()));
+    CellCoord pair(monster::ComputeCellCoord(this->GetPositionX(), this->GetPositionY()));
     Cell cell(pair);
     cell.SetNoCreate();
 
-    Trinity::AllGameObjectsWithEntryInRange check(this, entry, maxSearchRange);
-    Trinity::GameObjectListSearcher<Trinity::AllGameObjectsWithEntryInRange> searcher(this, gameobjectList, check);
-    TypeContainerVisitor<Trinity::GameObjectListSearcher<Trinity::AllGameObjectsWithEntryInRange>, GridTypeMapContainer> visitor(searcher);
+    monster::AllGameObjectsWithEntryInRange check(this, entry, maxSearchRange);
+    monster::GameObjectListSearcher<monster::AllGameObjectsWithEntryInRange> searcher(this, gameobjectList, check);
+    TypeContainerVisitor<monster::GameObjectListSearcher<monster::AllGameObjectsWithEntryInRange>, GridTypeMapContainer> visitor(searcher);
 
     cell.Visit(pair, visitor, *(this->GetMap()), *this, maxSearchRange);
 }
 
 void WorldObject::GetCreatureListWithEntryInGrid(std::list<Creature*>& creatureList, uint32 entry, float maxSearchRange) const
 {
-    CellCoord pair(Trinity::ComputeCellCoord(this->GetPositionX(), this->GetPositionY()));
+    CellCoord pair(monster::ComputeCellCoord(this->GetPositionX(), this->GetPositionY()));
     Cell cell(pair);
     cell.SetNoCreate();
 
-    Trinity::AllCreaturesOfEntryInRange check(this, entry, maxSearchRange);
-    Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(this, creatureList, check);
-    TypeContainerVisitor<Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange>, GridTypeMapContainer> visitor(searcher);
+    monster::AllCreaturesOfEntryInRange check(this, entry, maxSearchRange);
+    monster::CreatureListSearcher<monster::AllCreaturesOfEntryInRange> searcher(this, creatureList, check);
+    TypeContainerVisitor<monster::CreatureListSearcher<monster::AllCreaturesOfEntryInRange>, GridTypeMapContainer> visitor(searcher);
 
     cell.Visit(pair, visitor, *(this->GetMap()), *this, maxSearchRange);
 }
 
 void WorldObject::GetCreatureListWithEntryInGrid(std::list<Creature*>& creatureList, uint32 entry, float x, float y, float maxSearchRange) const
 {
-    CellCoord pair(Trinity::ComputeCellCoord(x, y));
+    CellCoord pair(monster::ComputeCellCoord(x, y));
     Cell cell(pair);
     cell.SetNoCreate();
 
-    Trinity::AllCreaturesOfEntryInRange check(this, entry, maxSearchRange);
-    Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(this, creatureList, check);
-    TypeContainerVisitor<Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange>, GridTypeMapContainer> visitor(searcher);
+    monster::AllCreaturesOfEntryInRange check(this, entry, maxSearchRange);
+    monster::CreatureListSearcher<monster::AllCreaturesOfEntryInRange> searcher(this, creatureList, check);
+    TypeContainerVisitor<monster::CreatureListSearcher<monster::AllCreaturesOfEntryInRange>, GridTypeMapContainer> visitor(searcher);
 
     cell.Visit(pair, visitor, *(this->GetMap()), *this, maxSearchRange);
 }
 
 void WorldObject::GetPlayerListInGrid(std::list<Player*>& playerList, float maxSearchRange) const
 {
-	Trinity::AnyPlayerInObjectRangeCheck checker(this, maxSearchRange);
-	Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(this, playerList, checker);
+	monster::AnyPlayerInObjectRangeCheck checker(this, maxSearchRange);
+	monster::PlayerListSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(this, playerList, checker);
 	this->VisitNearbyWorldObject(maxSearchRange, searcher);
 }
 
 /*
-namespace Trinity
+namespace monster
 {
     class NearUsedPosDo
     {
@@ -3245,7 +3245,7 @@ namespace Trinity
             float              i_angle;
             ObjectPosSelector& i_selector;
     };
-}                                                           // namespace Trinity
+}                                                           // namespace monster
 */
 
 //===================================================================================================
@@ -3255,8 +3255,8 @@ void WorldObject::GetNearPoint2D(float &x, float &y, float distance2d, float abs
     x = GetPositionX() + (GetObjectSize() + distance2d) * std::cos(absAngle);
     y = GetPositionY() + (GetObjectSize() + distance2d) * std::sin(absAngle);
 
-    Trinity::NormalizeMapCoord(x);
-    Trinity::NormalizeMapCoord(y);
+    monster::NormalizeMapCoord(x);
+    monster::NormalizeMapCoord(y);
 }
 
 bool WorldObject::GetClosePointJC(float &x, float &y, float &z, float size, float distance2d, float angle, const WorldObject* forWho, bool force) const
@@ -3343,7 +3343,7 @@ void WorldObject::MovePosition(Position &pos, float dist, float angle, bool limi
     pos.m_positionY += dist * std::sin(angle);
 
     // Prevent invalid coordinates here, position is unchanged
-    if (!Trinity::IsValidMapCoord(pos.m_positionX, pos.m_positionY, pos.m_positionZ))
+    if (!monster::IsValidMapCoord(pos.m_positionX, pos.m_positionY, pos.m_positionZ))
     {
         TC_LOG_FATAL("misc", "WorldObject::MovePosition invalid coordinates X: %f and Y: %f were passed!", pos.m_positionX, pos.m_positionY);
         return;
@@ -3395,8 +3395,8 @@ void WorldObject::MovePosition(Position &pos, float dist, float angle, bool limi
             break;
     }
 
-    Trinity::NormalizeMapCoord(pos.m_positionX);
-    Trinity::NormalizeMapCoord(pos.m_positionY);
+    monster::NormalizeMapCoord(pos.m_positionX);
+    monster::NormalizeMapCoord(pos.m_positionY);
     UpdateGroundPositionZ(pos.m_positionX, pos.m_positionY, pos.m_positionZ);
     pos.SetOrientation(GetOrientation());
 }
@@ -3412,7 +3412,7 @@ void WorldObject::MoveBlink(Position &pos, float dist, float angle)
     float savey = pos.m_positionY;
     float savez = pos.m_positionZ;
 
-    if (!Trinity::IsValidMapCoord(destx, desty)) // Prevent invalid coordinates here, position is unchanged
+    if (!monster::IsValidMapCoord(destx, desty)) // Prevent invalid coordinates here, position is unchanged
     {
         TC_LOG_FATAL("misc", "WorldObject::MoveBlink invalid coordinates X: %f and Y: %f were passed!", destx, desty);
         return;
@@ -3477,8 +3477,8 @@ void WorldObject::MoveBlink(Position &pos, float dist, float angle)
         pos.Relocate(destx, desty, destz);
     }
 
-    Trinity::NormalizeMapCoord(pos.m_positionX);
-    Trinity::NormalizeMapCoord(pos.m_positionY);
+    monster::NormalizeMapCoord(pos.m_positionX);
+    monster::NormalizeMapCoord(pos.m_positionY);
     UpdateAllowedPositionZ(pos.m_positionX, pos.m_positionY, pos.m_positionZ);
     pos.m_orientation = m_orientation;
 }
@@ -3494,7 +3494,7 @@ void WorldObject::MovePositionToFirstCollision(Position &pos, float dist, float 
         destz += 2.0f;
 
     // Prevent invalid coordinates here, position is unchanged
-    if (!Trinity::IsValidMapCoord(destx, desty))
+    if (!monster::IsValidMapCoord(destx, desty))
     {
         TC_LOG_FATAL("misc", "WorldObject::MovePositionToFirstCollision invalid coordinates X: %f and Y: %f were passed!", destx, desty);
         return;
@@ -3563,8 +3563,8 @@ void WorldObject::MovePositionToFirstCollision(Position &pos, float dist, float 
             break;
     }
 
-    Trinity::NormalizeMapCoord(destx);
-    Trinity::NormalizeMapCoord(desty);
+    monster::NormalizeMapCoord(destx);
+    monster::NormalizeMapCoord(desty);
     UpdateAllowedPositionZ(destx, desty, destz);
 
     float ground = GetMap()->GetHeight(GetPhaseMask(), destx, desty, MAX_HEIGHT, true);
@@ -3640,8 +3640,8 @@ void WorldObject::DestroyForNearbyPlayers()
         return;
 
     std::list<Player*> targets;
-    Trinity::AnyPlayerInObjectRangeCheck check(this, GetVisibilityRange(), false, true);
-    Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(this, targets, check);
+    monster::AnyPlayerInObjectRangeCheck check(this, GetVisibilityRange(), false, true);
+    monster::PlayerListSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(this, targets, check);
     VisitNearbyWorldObject(GetVisibilityRange(), searcher);
     for (std::list<Player*>::const_iterator iter = targets.begin(); iter != targets.end(); ++iter)
     {
@@ -3671,7 +3671,7 @@ void WorldObject::DestroyForNearbyPlayers()
 void WorldObject::UpdateObjectVisibility(bool /*forced*/)
 {
     //updates object's visibility for nearby players
-    Trinity::VisibleChangesNotifier notifier(*this);
+    monster::VisibleChangesNotifier notifier(*this);
     VisitNearbyWorldObject(GetVisibilityRange(), notifier);
 }
 
@@ -3747,7 +3747,7 @@ struct WorldObjectChangeAccumulator
 
 void WorldObject::BuildUpdate(UpdateDataMapType& data_map)
 {
-    CellCoord p = Trinity::ComputeCellCoord(GetPositionX(), GetPositionY());
+    CellCoord p = monster::ComputeCellCoord(GetPositionX(), GetPositionY());
     Cell cell(p);
     cell.SetNoCreate();
     WorldObjectChangeAccumulator notifier(*this, data_map);

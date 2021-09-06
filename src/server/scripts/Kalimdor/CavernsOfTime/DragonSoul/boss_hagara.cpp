@@ -458,8 +458,8 @@ public:
                     summons.DespawnEntry(NPC_LIGHTNING_ELEMENTAL);
                     summons.DespawnEntry(NPC_ICE_WAVE);
                     std::list<WorldObject*> targetList;
-                    Trinity::AllWorldObjectsInRange objects(me, 100.0f);
-                    Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, targetList, objects);
+                    monster::AllWorldObjectsInRange objects(me, 100.0f);
+                    monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, targetList, objects);
                     me->VisitNearbyObject(100.0f, searcher);
                     for (std::list<WorldObject*>::const_iterator i = targetList.begin(); i != targetList.end(); ++i)
                         if (AreaTrigger* areatrigger = (*i)->ToAreaTrigger())
@@ -651,8 +651,8 @@ public:
                     {
                         Unit* caster = me;
                         std::list<WorldObject*> targetList;
-                        Trinity::AllWorldObjectsInRange objects(me, 40.0f);
-                        Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, targetList, objects, GRID_MAP_TYPE_MASK_PLAYER);
+                        monster::AllWorldObjectsInRange objects(me, 40.0f);
+                        monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, targetList, objects, GRID_MAP_TYPE_MASK_PLAYER);
                         me->VisitNearbyObject(40.0f, searcher);
                         targetList.remove_if([caster](WorldObject* target){
                             return !caster->isInFront(target);
@@ -662,7 +662,7 @@ public:
                             DoCastRandom(SPELL_SHATTERED_ICE, 40.0f, false);
                         else
                         {
-                            if (WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targetList))
+                            if (WorldObject* target = monster::Containers::SelectRandomContainerElement(targetList))
                                 DoCast(target->ToPlayer(), SPELL_SHATTERED_ICE);
                         }
                         events.ScheduleEvent(EVENT_SHATTERED_ICE, urand(10500, 14000), 0, PHASE_NORMAL);
@@ -701,8 +701,8 @@ public:
                     {
                         std::list<WorldObject*> targetList;
                         std::list<AreaTrigger*> triggerList;
-                        Trinity::AllWorldObjectsInRange objects(me, 100.0f);
-                        Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, targetList, objects);
+                        monster::AllWorldObjectsInRange objects(me, 100.0f);
+                        monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, targetList, objects);
                         me->VisitNearbyObject(100.0f, searcher);
                         for (std::list<WorldObject*>::const_iterator i = targetList.begin(); i != targetList.end(); ++i)
                             if (AreaTrigger* areatrigger = (*i)->ToAreaTrigger())
@@ -1186,7 +1186,7 @@ public:
                 }
 
                 if (!targets.empty())
-                    targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+                    targets.sort(monster::ObjectDistanceOrderPred(GetCaster()));
 
                 if (targets.size() > 1)
                     targets.resize(1);
@@ -1256,7 +1256,7 @@ public:
                     targetCount = 6;
             }
 
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_ICE_TOMB_MISSILE));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_ICE_TOMB_MISSILE));
 
             if (targets.size() > targetCount)
                 targets.remove_if([](WorldObject* target){
@@ -1264,7 +1264,7 @@ public:
             });
 
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, targetCount);
+                monster::Containers::RandomResizeList(targets, targetCount);
         }
 
         void HandleDummy(SpellEffIndex effIndex)
@@ -1360,10 +1360,10 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_FROSTFLAKE));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_FROSTFLAKE));
 
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void Register()
@@ -1467,8 +1467,8 @@ public:
                             GetTarget()->CastSpell(player, SPELL_LIGHTNING_CONDUIT_DAMAGE, true);
 
             std::list<Creature*> CreatureList;
-            Trinity::AllCreaturesOfEntryInRange checker(GetTarget(), NPC_CRYSTAL_CONDUCTOR, 12.00f);
-            Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(GetTarget(), CreatureList, checker);
+            monster::AllCreaturesOfEntryInRange checker(GetTarget(), NPC_CRYSTAL_CONDUCTOR, 12.00f);
+            monster::CreatureListSearcher<monster::AllCreaturesOfEntryInRange> searcher(GetTarget(), CreatureList, checker);
             GetTarget()->VisitNearbyObject(12.00f, searcher);
             if (!CreatureList.empty())
                 for (std::list<Creature*>::iterator iter = CreatureList.begin(); iter != CreatureList.end(); ++iter)
@@ -1558,7 +1558,7 @@ public:
         void FilterTarget(std::list<WorldObject*>& targets)
         {
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void HandleDummy(SpellEffIndex effIndex)

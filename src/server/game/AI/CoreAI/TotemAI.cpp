@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -88,8 +88,8 @@ void TotemAI::UpdateAI(uint32 const /*diff*/)
         }
 
         std::list<Unit*> targets;
-        Trinity::AnyUnfriendlyUnitInObjectRangeCheck u_check(me, me, max_range);
-        Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
+        monster::AnyUnfriendlyUnitInObjectRangeCheck u_check(me, me, max_range);
+        monster::UnitListSearcher<monster::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
         me->VisitNearbyObject(max_range, searcher);
 
         for (std::list<Unit*>::const_iterator iter = targets.begin(); iter != targets.end(); ++iter)
@@ -107,8 +107,8 @@ void TotemAI::UpdateAI(uint32 const /*diff*/)
             else if (!(*iter)->HasAura(8050, me->ToTotem()->GetOwnerGUID()) && !(*iter)->HasAura(17364, me->ToTotem()->GetOwnerGUID()))
             {
                 Unit* victim = i_victimGuid ? ObjectAccessor::GetUnit(*me, i_victimGuid) : NULL;
-                Trinity::NearestAttackableUnitInObjectRangeCheck u_check(me, me, max_range);
-                Trinity::UnitLastSearcher<Trinity::NearestAttackableUnitInObjectRangeCheck> checker(me, victim, u_check);
+                monster::NearestAttackableUnitInObjectRangeCheck u_check(me, me, max_range);
+                monster::UnitLastSearcher<monster::NearestAttackableUnitInObjectRangeCheck> checker(me, victim, u_check);
                 me->VisitNearbyObject(max_range, checker);
 
                 if (victim)
@@ -134,8 +134,8 @@ void TotemAI::UpdateAI(uint32 const /*diff*/)
             me->IsFriendlyTo(victim) || !me->canSeeOrDetect(victim))
         {
             victim = NULL;
-            Trinity::NearestAttackableUnitInObjectRangeCheck u_check(me, me, max_range);
-            Trinity::UnitLastSearcher<Trinity::NearestAttackableUnitInObjectRangeCheck> checker(me, victim, u_check);
+            monster::NearestAttackableUnitInObjectRangeCheck u_check(me, me, max_range);
+            monster::UnitLastSearcher<monster::NearestAttackableUnitInObjectRangeCheck> checker(me, victim, u_check);
             me->VisitNearbyObject(max_range, checker);
         }
 

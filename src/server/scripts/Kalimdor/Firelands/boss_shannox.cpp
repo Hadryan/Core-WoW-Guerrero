@@ -842,10 +842,10 @@ public:
                     case EVENT_CRYSTAL_TRAP_TRIGGER:
                     {
                         std::list<WorldObject*> targetList;
-                        Trinity::AllWorldObjectsInRange objects(me, 0.5f);
-                        Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, targetList, objects);
+                        monster::AllWorldObjectsInRange objects(me, 0.5f);
+                        monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, targetList, objects);
                         me->VisitNearbyObject(0.5f, searcher);
-                        targetList.sort(Trinity::ObjectDistanceOrderPred(me));
+                        targetList.sort(monster::ObjectDistanceOrderPred(me));
                         for (std::list<WorldObject*>::const_iterator i = targetList.begin(); i != targetList.end(); ++i)
                         {
                             if (Unit* target = (*i)->ToUnit())
@@ -925,10 +925,10 @@ public:
                     case EVENT_IMMOLATION_TRAP_TRIGGER:
                     {
                         std::list<WorldObject*> targetList;
-                        Trinity::AllWorldObjectsInRange objects(me, 0.5f);
-                        Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, targetList, objects);
+                        monster::AllWorldObjectsInRange objects(me, 0.5f);
+                        monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, targetList, objects);
                         me->VisitNearbyObject(0.5f, searcher);
-                        targetList.sort(Trinity::ObjectDistanceOrderPred(me));
+                        targetList.sort(monster::ObjectDistanceOrderPred(me));
                         for (std::list<WorldObject*>::const_iterator i = targetList.begin(); i != targetList.end(); ++i)
                         {
                             if (Unit* target = (*i)->ToUnit())

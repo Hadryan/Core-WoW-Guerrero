@@ -495,7 +495,7 @@ class spell_erudax_shield_of_nightmares : public SpellScript
         targets.remove_if([=](WorldObject* target) { return target->GetEntry() != NPC_FACELESS_CORRUPTOR; });
 
         if (targets.size() > 1)
-            Trinity::Containers::RandomResizeList(targets, 1);
+            monster::Containers::RandomResizeList(targets, 1);
     }
 
     void Register() override

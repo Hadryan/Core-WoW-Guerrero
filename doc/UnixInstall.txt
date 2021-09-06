@@ -1,17 +1,17 @@
-= TrinityCore -- Linux installation =
-Copyright (C) 2008-2013 TrinityCore (http://www.trinitycore.org)
+= monsterCore -- Linux installation =
+Copyright (C) 2008-2013 monsterCore (http://www.monstercore.org)
 
 =========================================================
 WARNING: THIS DOCUMENTATION IS NOT ALWAYS UP TO DATE.
-FOR MORE UP-TO-DATE INFORMATION, CHECK THE TRINITY WIKI.
+FOR MORE UP-TO-DATE INFORMATION, CHECK THE monster WIKI.
 =========================================================
 
-CHECK http://www.trinitycore.info/How-to:Linux FOR FURTHER HELP
+CHECK http://www.monstercore.info/How-to:Linux FOR FURTHER HELP
 
 These are instructions for installation in a Linux environment, if you are
-using Windows refer to http://www.trinitycore.info/How-to:Win
+using Windows refer to http://www.monstercore.info/How-to:Win
 
-Installing TrinityCore is fairly simple on a Linux machine, assuming you 
+Installing monsterCore is fairly simple on a Linux machine, assuming you 
 have all required applications
 
 The most important ones are:
@@ -37,10 +37,10 @@ to install by your self. Please check your distro's repos.
 Make a directory to build in, you can call it anything you want like 
 build or bin etc, then go into the directory and cmake and make. E.G. 
 you created a dir named build ad want to have your finalcompiled product 
-installed in /home/trinity/server, an example sequence of commands can 
+installed in /home/monster/server, an example sequence of commands can 
 be :
 
-    cmake ../ -DPREFIX=/home/trinity/server -DTOOLS=1 -DWITH_WARNINGS=1
+    cmake ../ -DPREFIX=/home/monster/server -DTOOLS=1 -DWITH_WARNINGS=1
     make
     make install
     
@@ -66,9 +66,9 @@ flags like
                         Release, MinSizeRel, RelWithDebInfo, Debug
 
 Of course, replace the paths in PREFIX, CONF_DIR and LIBSDIR with the
-directories you wish to install TrinityCore to. The datadir is where maps,
+directories you wish to install monsterCore to. The datadir is where maps,
 DBCs, and SQLs are stored. The sysconfdir is where configuration files are stored.
 
-Once TrinityCore is installed you will need to apply database updates 
+Once monsterCore is installed you will need to apply database updates 
 where necessary. Furthermore, you must configure your installation by 
 editing the config files in the sysconfdir.

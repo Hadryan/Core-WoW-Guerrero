@@ -162,7 +162,7 @@ class boss_grand_vizier_ertan : public CreatureScript
                             if (_vortexes.empty())
                                 break;
 
-                            if (Creature* m_vortex = ObjectAccessor::GetCreature(*me, Trinity::Containers::SelectRandomContainerElement(_vortexes)))
+                            if (Creature* m_vortex = ObjectAccessor::GetCreature(*me, monster::Containers::SelectRandomContainerElement(_vortexes)))
                                 _distance = me->GetDistance2d(m_vortex);
 
                             if (me->GetMap()->GetPlayers().isEmpty())
@@ -174,7 +174,7 @@ class boss_grand_vizier_ertan : public CreatureScript
                                 {
                                     if (me->GetDistance2d(player) > _distance)
                                     {
-                                        if (uint64 m_vGuid = Trinity::Containers::SelectRandomContainerElement(_vortexes))
+                                        if (uint64 m_vGuid = monster::Containers::SelectRandomContainerElement(_vortexes))
                                             if (Creature* m_vortex = ObjectAccessor::GetCreature(*me, m_vGuid))
                                                 m_vortex->CastSpell(player, SPELL_STORM_EDGE, true);
 

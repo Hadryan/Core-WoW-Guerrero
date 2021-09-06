@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -2283,8 +2283,8 @@ public:
             {
                 init = true;
                 std::list<Unit*> targets;
-                Trinity::AnyUnfriendlyUnitInObjectRangeCheck u_check(me, me, 30.00f);
-                Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
+                monster::AnyUnfriendlyUnitInObjectRangeCheck u_check(me, me, 30.00f);
+                monster::UnitListSearcher<monster::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
                 me->VisitNearbyObject(30.00f, searcher);
                 bool targetFound = false;
 
@@ -2303,7 +2303,7 @@ public:
                 {
                     if (!targets.empty())
                     {
-                        targets.sort(Trinity::ObjectDistanceOrderPred(me));
+                        targets.sort(monster::ObjectDistanceOrderPred(me));
                         me->Attack(targets.front(), false);
                         me->GetMotionMaster()->MoveChase(targets.front(), 20.00f, 0.00f);
                     }
@@ -4128,11 +4128,11 @@ public:
                         {
                             Unit* auraTarget = NULL;
                             std::list<Unit*> targets;
-                            Trinity::AnyUnfriendlyUnitInObjectRangeCheck u_check(me, me, 20.0f);
-                            Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
+                            monster::AnyUnfriendlyUnitInObjectRangeCheck u_check(me, me, 20.0f);
+                            monster::UnitListSearcher<monster::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
                             me->VisitNearbyObject(20.0f, searcher);
                             if (!targets.empty())
-                                targets.sort(Trinity::ObjectDistanceOrderPred(me));
+                                targets.sort(monster::ObjectDistanceOrderPred(me));
 
                             // Order of preference: 1) Stormstrike + Flame SHock debuff 2) Flame Shock Debuff 3) Any other target
                             // Look for StormStrike + flameshock
@@ -4236,8 +4236,8 @@ public:
                 {
                     targetFound = false;
                     std::list<Unit*> targets;
-                    Trinity::AnyUnfriendlyUnitInObjectRangeCheck u_check(me, me, range);
-                    Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
+                    monster::AnyUnfriendlyUnitInObjectRangeCheck u_check(me, me, range);
+                    monster::UnitListSearcher<monster::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
                     me->VisitNearbyObject(range, searcher);
                     for (std::list<Unit*>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
                     {
@@ -4300,8 +4300,8 @@ public:
                 {
                     targetFound = false;
                     std::list<Unit*> targets;
-                    Trinity::AnyUnfriendlyUnitInObjectRangeCheck u_check(me, me, 40);
-                    Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
+                    monster::AnyUnfriendlyUnitInObjectRangeCheck u_check(me, me, 40);
+                    monster::UnitListSearcher<monster::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
                     me->VisitNearbyObject(40, searcher);
                     for (std::list<Unit*>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
                     {
@@ -4778,8 +4778,8 @@ public:
                     Unit* closestTarget = NULL;
                     float closestDistance = 40.0f;
                     std::list<Unit*> targets;
-                    Trinity::AnyUnfriendlyUnitInObjectRangeCheck u_check(me, me, 40.0f);
-                    Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
+                    monster::AnyUnfriendlyUnitInObjectRangeCheck u_check(me, me, 40.0f);
+                    monster::UnitListSearcher<monster::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
                     me->VisitNearbyObject(40.0f, searcher);
                     me->GetPosition(&casterPos);
                     for (Unit* target : targets)

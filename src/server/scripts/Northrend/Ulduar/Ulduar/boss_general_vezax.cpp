@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -286,7 +286,7 @@ class boss_general_vezax : public CreatureScript
                     if (PlayerList.empty() || PlayerList.size()<playersMin)
                         return SelectTarget(SELECT_TARGET_RANDOM, 0, 150.0f, true);
 
-                    return Trinity::Containers::SelectRandomContainerElement(PlayerList);
+                    return monster::Containers::SelectRandomContainerElement(PlayerList);
                 }
                 return 0;
             }

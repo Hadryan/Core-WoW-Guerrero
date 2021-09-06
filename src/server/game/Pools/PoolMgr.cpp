@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -323,7 +323,7 @@ void PoolGroup<T>::SpawnObject(ActivePoolData& spawns, uint32 limit, uint32 trig
                     return object.guid == triggerFrom || !spawns.IsActiveObject<T>(object.guid);
                 });
 
-            Trinity::Containers::RandomResize(rolledObjects, count);
+            monster::Containers::RandomResize(rolledObjects, count);
         }
 
         // try to spawn rolled objects
@@ -477,7 +477,7 @@ void PoolGroup<Quest>::SpawnObject(ActivePoolData& spawns, uint32 limit, uint32 
     {
         do
         {
-            uint32 questId = Trinity::Containers::SelectRandomContainerElement(currentQuests);
+            uint32 questId = monster::Containers::SelectRandomContainerElement(currentQuests);
             newQuests.insert(questId);
             currentQuests.erase(questId);
         } while (newQuests.size() < limit && !currentQuests.empty()); // failsafe
@@ -489,7 +489,7 @@ void PoolGroup<Quest>::SpawnObject(ActivePoolData& spawns, uint32 limit, uint32 
     // activate <limit> random quests
     do
     {
-        uint32 questId = Trinity::Containers::SelectRandomContainerElement(newQuests);
+        uint32 questId = monster::Containers::SelectRandomContainerElement(newQuests);
         spawns.ActivateObject<Quest>(questId, poolId);
         PoolObject tempObj(questId, 0.0f);
         Spawn1Object(&tempObj);

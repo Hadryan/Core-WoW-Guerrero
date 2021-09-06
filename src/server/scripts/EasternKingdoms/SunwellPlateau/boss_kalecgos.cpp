@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -831,7 +831,7 @@ public:
                         }
                     }
                     if (!targets.empty())
-                        if (Unit* newTarget = Trinity::Containers::SelectRandomContainerElement(targets))
+                        if (Unit* newTarget = monster::Containers::SelectRandomContainerElement(targets))
                             caster->AddAura(SPELL_AGONY_CURSE, newTarget);
                 }
         }

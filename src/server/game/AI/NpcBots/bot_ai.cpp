@@ -1,6 +1,6 @@
 /*
 NpcBot System by Graff (onlysuffering@gmail.com)
-Original patch from: LordPsyan https://bitbucket.org/lordpsyan/trinitycore-patches/src/3b8b9072280e/Individual/11185-BOTS-NPCBots.patch
+Original patch from: LordPsyan https://bitbucket.org/lordpsyan/monstercore-patches/src/3b8b9072280e/Individual/11185-BOTS-NPCBots.patch
 TODO:
 Convert doCast events (CD etc.) into SpellHit()- and SpellHitTarget()-based
 Implement heal/tank/DD modes
@@ -2094,12 +2094,12 @@ Unit* bot_ai::getTarget(bool byspell, bool ranged, bool &reset) const
         {
             bool attackCC = i;
 
-            CellCoord p(Trinity::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
+            CellCoord p(monster::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
             Cell cell(p);
             cell.SetNoCreate();
 
             NearestHostileUnitCheck check(me, maxdist, byspell, this, attackCC);
-            Trinity::UnitLastSearcher <NearestHostileUnitCheck> searcher(master, t, check);
+            monster::UnitLastSearcher <NearestHostileUnitCheck> searcher(master, t, check);
             me->VisitNearbyObject(maxdist, searcher);
         }
     }
@@ -2444,17 +2444,17 @@ bool bot_ai::InDuel(Unit* target) const
 //Returns dispellable/stealable 'Any Hostile Unit Attacking BotParty'
 Unit* bot_minion_ai::FindHostileDispelTarget(float dist, bool stealable) const
 {
-    CellCoord p(Trinity::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
     Unit* unit = NULL;
 
     HostileDispelTargetCheck check(me, dist, stealable, this);
-    Trinity::UnitLastSearcher <HostileDispelTargetCheck> searcher(me, unit, check);
+    monster::UnitLastSearcher <HostileDispelTargetCheck> searcher(me, unit, check);
 
-    TypeContainerVisitor<Trinity::UnitLastSearcher <HostileDispelTargetCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
-    TypeContainerVisitor<Trinity::UnitLastSearcher <HostileDispelTargetCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <HostileDispelTargetCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <HostileDispelTargetCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, world_unit_searcher, *me->GetMap(), *me, dist);
     cell.Visit(p, grid_unit_searcher, *me->GetMap(), *me, dist);
@@ -2473,17 +2473,17 @@ Unit* bot_minion_ai::FindAffectedTarget(uint32 spellId, uint64 caster, float dis
     if (master->GetMap()->Instanceable())
         dist = DEFAULT_VISIBILITY_INSTANCE;
 
-    CellCoord p(Trinity::ComputeCellCoord(master->GetPositionX(), master->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(master->GetPositionX(), master->GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
     Unit* unit = NULL;
 
     AffectedTargetCheck check(caster, dist, spellId, master, hostile);
-    Trinity::UnitLastSearcher <AffectedTargetCheck> searcher(master, unit, check);
+    monster::UnitLastSearcher <AffectedTargetCheck> searcher(master, unit, check);
 
-    TypeContainerVisitor<Trinity::UnitLastSearcher <AffectedTargetCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
-    TypeContainerVisitor<Trinity::UnitLastSearcher <AffectedTargetCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <AffectedTargetCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <AffectedTargetCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, world_unit_searcher, *master->GetMap(), *master, dist);
     cell.Visit(p, grid_unit_searcher, *master->GetMap(), *master, dist);
@@ -2496,17 +2496,17 @@ Unit* bot_minion_ai::FindPolyTarget(float dist, Unit* currTarget) const
     if (!currTarget)
         return NULL;
 
-    CellCoord p(Trinity::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
     Unit* unit = NULL;
 
     PolyUnitCheck check(me, dist, currTarget);
-    Trinity::UnitLastSearcher <PolyUnitCheck> searcher(me, unit, check);
+    monster::UnitLastSearcher <PolyUnitCheck> searcher(me, unit, check);
 
-    TypeContainerVisitor<Trinity::UnitLastSearcher <PolyUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
-    TypeContainerVisitor<Trinity::UnitLastSearcher <PolyUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <PolyUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <PolyUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, world_unit_searcher, *me->GetMap(), *me, dist);
     cell.Visit(p, grid_unit_searcher, *me->GetMap(), *me, dist);
@@ -2516,17 +2516,17 @@ Unit* bot_minion_ai::FindPolyTarget(float dist, Unit* currTarget) const
 //Finds target for direct fear (warlock)
 Unit* bot_minion_ai::FindFearTarget(float dist) const
 {
-    CellCoord p(Trinity::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
     Unit* unit = NULL;
 
     FearUnitCheck check(me, dist);
-    Trinity::UnitLastSearcher <FearUnitCheck> searcher(me, unit, check);
+    monster::UnitLastSearcher <FearUnitCheck> searcher(me, unit, check);
 
-    TypeContainerVisitor<Trinity::UnitLastSearcher <FearUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
-    TypeContainerVisitor<Trinity::UnitLastSearcher <FearUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <FearUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <FearUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, world_unit_searcher, *me->GetMap(), *me, dist);
     cell.Visit(p, grid_unit_searcher, *me->GetMap(), *me, dist);
@@ -2536,17 +2536,17 @@ Unit* bot_minion_ai::FindFearTarget(float dist) const
 //Finds target for paladin's repentance
 Unit* bot_minion_ai::FindStunTarget(float dist) const
 {
-    CellCoord p(Trinity::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
     Unit* unit = NULL;
 
     StunUnitCheck check(me, dist);
-    Trinity::UnitLastSearcher <StunUnitCheck> searcher(me, unit, check);
+    monster::UnitLastSearcher <StunUnitCheck> searcher(me, unit, check);
 
-    TypeContainerVisitor<Trinity::UnitLastSearcher <StunUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
-    TypeContainerVisitor<Trinity::UnitLastSearcher <StunUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <StunUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <StunUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, world_unit_searcher, *me->GetMap(), *me, dist);
     cell.Visit(p, grid_unit_searcher, *me->GetMap(), *me, dist);
@@ -2556,17 +2556,17 @@ Unit* bot_minion_ai::FindStunTarget(float dist) const
 //Finds target for priest's shackles
 Unit* bot_minion_ai::FindUndeadCCTarget(float dist, uint32 spellId/* = 0*/) const
 {
-    CellCoord p(Trinity::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
     Unit* unit = NULL;
 
     UndeadCCUnitCheck check(me, dist, spellId);
-    Trinity::UnitLastSearcher <UndeadCCUnitCheck> searcher(me, unit, check);
+    monster::UnitLastSearcher <UndeadCCUnitCheck> searcher(me, unit, check);
 
-    TypeContainerVisitor<Trinity::UnitLastSearcher <UndeadCCUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
-    TypeContainerVisitor<Trinity::UnitLastSearcher <UndeadCCUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <UndeadCCUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <UndeadCCUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, world_unit_searcher, *me->GetMap(), *me, dist);
     cell.Visit(p, grid_unit_searcher, *me->GetMap(), *me, dist);
@@ -2576,17 +2576,17 @@ Unit* bot_minion_ai::FindUndeadCCTarget(float dist, uint32 spellId/* = 0*/) cons
 //Finds target for druid's Entangling Roots
 Unit* bot_minion_ai::FindRootTarget(float dist, uint32 spellId) const
 {
-    CellCoord p(Trinity::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
     Unit* unit = NULL;
 
     RootUnitCheck check(me, me->getVictim(), dist, spellId);
-    Trinity::UnitLastSearcher <RootUnitCheck> searcher(me, unit, check);
+    monster::UnitLastSearcher <RootUnitCheck> searcher(me, unit, check);
 
-    TypeContainerVisitor<Trinity::UnitLastSearcher <RootUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
-    TypeContainerVisitor<Trinity::UnitLastSearcher <RootUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <RootUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <RootUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, world_unit_searcher, *me->GetMap(), *me, dist);
     cell.Visit(p, grid_unit_searcher, *me->GetMap(), *me, dist);
@@ -2596,17 +2596,17 @@ Unit* bot_minion_ai::FindRootTarget(float dist, uint32 spellId) const
 //Finds casting target (friend or enemy)
 Unit* bot_minion_ai::FindCastingTarget(float maxdist, float mindist, bool isFriend, uint32 spellId) const
 {
-    CellCoord p(Trinity::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
     Unit* unit = NULL;
 
     CastingUnitCheck check(me, mindist, maxdist, isFriend, spellId);
-    Trinity::UnitLastSearcher <CastingUnitCheck> searcher(me, unit, check);
+    monster::UnitLastSearcher <CastingUnitCheck> searcher(me, unit, check);
 
-    TypeContainerVisitor<Trinity::UnitLastSearcher <CastingUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
-    TypeContainerVisitor<Trinity::UnitLastSearcher <CastingUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <CastingUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <CastingUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, world_unit_searcher, *me->GetMap(), *me, maxdist);
     cell.Visit(p, grid_unit_searcher, *me->GetMap(), *me, maxdist);
@@ -2763,17 +2763,17 @@ Unit* bot_minion_ai::FindSplashTarget(float dist, Unit* To, float splashdist) co
     if (me->GetDistance(To) > dist)
         return NULL;
 
-    CellCoord p(Trinity::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
     Unit* unit = NULL;
 
     SecondEnemyCheck check(me, dist, splashdist, To, this);
-    Trinity::UnitLastSearcher <SecondEnemyCheck> searcher(me, unit, check);
+    monster::UnitLastSearcher <SecondEnemyCheck> searcher(me, unit, check);
 
-    TypeContainerVisitor<Trinity::UnitLastSearcher <SecondEnemyCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
-    TypeContainerVisitor<Trinity::UnitLastSearcher <SecondEnemyCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <SecondEnemyCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <SecondEnemyCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, world_unit_searcher, *me->GetMap(), *me, dist);
     cell.Visit(p, grid_unit_searcher, *me->GetMap(), *me, dist);
@@ -2783,17 +2783,17 @@ Unit* bot_minion_ai::FindSplashTarget(float dist, Unit* To, float splashdist) co
 
 Unit* bot_minion_ai::FindTranquilTarget(float mindist, float maxdist) const
 {
-    CellCoord p(Trinity::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
     Unit* unit = NULL;
 
     TranquilTargetCheck check(me, mindist, maxdist, this);
-    Trinity::UnitLastSearcher <TranquilTargetCheck> searcher(me, unit, check);
+    monster::UnitLastSearcher <TranquilTargetCheck> searcher(me, unit, check);
 
-    TypeContainerVisitor<Trinity::UnitLastSearcher <TranquilTargetCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
-    TypeContainerVisitor<Trinity::UnitLastSearcher <TranquilTargetCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <TranquilTargetCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher <TranquilTargetCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, world_unit_searcher, *me->GetMap(), *me, maxdist);
     cell.Visit(p, grid_unit_searcher, *me->GetMap(), *me, maxdist);
@@ -2803,15 +2803,15 @@ Unit* bot_minion_ai::FindTranquilTarget(float mindist, float maxdist) const
 
 void bot_minion_ai::GetNearbyTargetsList(std::list<Unit*> &targets, float maxdist, float mindist, bool forCC) const
 {
-    CellCoord p(Trinity::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
     NearbyHostileUnitCheck check(me, maxdist, mindist, this, forCC);
-    Trinity::UnitListSearcher <NearbyHostileUnitCheck> searcher(me, targets, check);
+    monster::UnitListSearcher <NearbyHostileUnitCheck> searcher(me, targets, check);
 
-    TypeContainerVisitor<Trinity::UnitListSearcher <NearbyHostileUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
-    TypeContainerVisitor<Trinity::UnitListSearcher <NearbyHostileUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitListSearcher <NearbyHostileUnitCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitListSearcher <NearbyHostileUnitCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, world_unit_searcher, *me->GetMap(), *me, maxdist);
     cell.Visit(p, grid_unit_searcher, *me->GetMap(), *me, maxdist);

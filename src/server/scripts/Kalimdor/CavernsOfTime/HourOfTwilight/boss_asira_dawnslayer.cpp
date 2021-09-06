@@ -969,7 +969,7 @@ public:
                 caster->SetFacingToObject(GetTarget());
 
                 std::list<Player *> players = caster->GetPlayersInRange(80.0f, true);
-                players.sort(Trinity::ObjectDistanceOrderPred(caster));
+                players.sort(monster::ObjectDistanceOrderPred(caster));
                 for (Player* player : players)
                 {
                     if (player == GetTarget() || player->IsInBetween(caster, GetTarget(), 5.00f))

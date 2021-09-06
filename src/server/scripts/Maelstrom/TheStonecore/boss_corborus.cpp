@@ -392,7 +392,7 @@ class spell_stonecore_thrashing_charge_selector : public SpellScript
         targets = m_targets;
 
         if (targets.size() > 1)
-            Trinity::Containers::RandomResizeList(targets, 1);
+            monster::Containers::RandomResizeList(targets, 1);
     }
 
     void Register() override

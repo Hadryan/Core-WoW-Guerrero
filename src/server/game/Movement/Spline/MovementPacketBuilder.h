@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2011 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,8 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef TRINITYSERVER_PACKET_BUILDER_H
-#define TRINITYSERVER_PACKET_BUILDER_H
+#ifndef monsterSERVER_PACKET_BUILDER_H
+#define monsterSERVER_PACKET_BUILDER_H
 
 #include "Define.h" // for uint32
 #include "G3D/Vector3.h"
@@ -41,4 +41,4 @@ namespace Movement
         static void WriteCreateData(MoveSpline const& moveSpline, ByteBuffer& data);
     };
 }
-#endif // TRINITYSERVER_PACKET_BUILDER_H
+#endif // monsterSERVER_PACKET_BUILDER_H

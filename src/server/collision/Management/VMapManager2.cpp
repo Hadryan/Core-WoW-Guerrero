@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2010 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -252,7 +252,7 @@ namespace VMAP
     WorldModel* VMapManager2::acquireModelInstance(const std::string& basepath, const std::string& filename, uint32 flags/* Only used when creating the model */)
     {
         //! Critical section, thread safe access to iLoadedModelFiles
-        TRINITY_GUARD(ACE_Thread_Mutex, LoadedModelFilesLock);
+        monster_GUARD(ACE_Thread_Mutex, LoadedModelFilesLock);
 
         ModelFileMap::iterator model = iLoadedModelFiles.find(filename);
         if (model == iLoadedModelFiles.end())
@@ -276,7 +276,7 @@ namespace VMAP
     void VMapManager2::releaseModelInstance(const std::string &filename)
     {
         //! Critical section, thread safe access to iLoadedModelFiles
-        TRINITY_GUARD(ACE_Thread_Mutex, LoadedModelFilesLock);
+        monster_GUARD(ACE_Thread_Mutex, LoadedModelFilesLock);
 
         ModelFileMap::iterator model = iLoadedModelFiles.find(filename);
         if (model == iLoadedModelFiles.end())

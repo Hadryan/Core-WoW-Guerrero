@@ -6,8 +6,8 @@
 ///
 //////////////////////////////////////////////////////////////////////////
 
-#ifndef TRINITY_SMARTSCRIPT_H
-#define TRINITY_SMARTSCRIPT_H
+#ifndef monster_SMARTSCRIPT_H
+#define monster_SMARTSCRIPT_H
 
 /// Common
 #include "Common.h"

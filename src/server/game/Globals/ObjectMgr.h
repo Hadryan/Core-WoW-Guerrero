@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -138,7 +138,7 @@ enum ScriptCommands
     SCRIPT_COMMAND_CALLSCRIPT_TO_UNIT    = 21,               // source = WorldObject (if present used as a search center), datalong = script id, datalong2 = unit lowguid, dataint = script table to use (see ScriptsType)
     SCRIPT_COMMAND_KILL                  = 22,               // source/target = Creature, dataint = remove corpse attribute
 
-    // TrinityCore only
+    // monsterCore only
     SCRIPT_COMMAND_ORIENTATION           = 30,               // source = Unit, target (datalong > 0) = Unit, datalong = > 0 turn source to face target, o = orientation
     SCRIPT_COMMAND_EQUIP                 = 31,               // soucre = Creature, datalong = equipment id
     SCRIPT_COMMAND_MODEL                 = 32,               // source = Creature, datalong = model id
@@ -486,18 +486,18 @@ struct CellObjectGuids
 typedef UNORDERED_MAP<uint32/*cell_id*/, CellObjectGuids> CellObjectGuidsMap;
 typedef UNORDERED_MAP<uint32/*(mapid, spawnMode) pair*/, CellObjectGuidsMap> MapObjectGuids;
 
-// Trinity string ranges
-#define MIN_TRINITY_STRING_ID           1                    // 'trinity_string'
-#define MAX_TRINITY_STRING_ID           2000000000
-#define MIN_DB_SCRIPT_STRING_ID        MAX_TRINITY_STRING_ID // 'db_script_string'
+// monster string ranges
+#define MIN_monster_STRING_ID           1                    // 'monster_string'
+#define MAX_monster_STRING_ID           2000000000
+#define MIN_DB_SCRIPT_STRING_ID        MAX_monster_STRING_ID // 'db_script_string'
 #define MAX_DB_SCRIPT_STRING_ID        2000010000
 #define MIN_CREATURE_AI_TEXT_STRING_ID (-1)                 // 'creature_ai_texts'
 #define MAX_CREATURE_AI_TEXT_STRING_ID (-1000000)
 
-// Trinity Trainer Reference start range
-#define TRINITY_TRAINER_START_REF      200000
+// monster Trainer Reference start range
+#define monster_TRAINER_START_REF      200000
 
-struct TrinityStringLocale
+struct monsterStringLocale
 {
     StringVector Content;
 };
@@ -514,7 +514,7 @@ typedef UNORDERED_MAP<uint32, ItemLocale> ItemLocaleContainer;
 typedef UNORDERED_MAP<uint32, QuestLocale> QuestLocaleContainer;
 typedef UNORDERED_MAP<uint32, NpcTextLocale> NpcTextLocaleContainer;
 typedef UNORDERED_MAP<uint32, PageTextLocale> PageTextLocaleContainer;
-typedef UNORDERED_MAP<int32, TrinityStringLocale> TrinityStringLocaleContainer;
+typedef UNORDERED_MAP<int32, monsterStringLocale> monsterStringLocaleContainer;
 typedef UNORDERED_MAP<uint32, GossipMenuItemsLocale> GossipMenuItemsLocaleContainer;
 typedef UNORDERED_MAP<uint32, PointOfInterestLocale> PointOfInterestLocaleContainer;
 
@@ -1039,8 +1039,8 @@ class ObjectMgr
         void LoadBroadcastTextLocales();
         void LoadBroadcastTextHelpers();
         void LoadBroadcastGroups();
-        bool LoadTrinityStrings(char const* table, int32 min_value, int32 max_value);
-        bool LoadTrinityStrings() { return LoadTrinityStrings("trinity_string", MIN_TRINITY_STRING_ID, MAX_TRINITY_STRING_ID); }
+        bool LoadmonsterStrings(char const* table, int32 min_value, int32 max_value);
+        bool LoadmonsterStrings() { return LoadmonsterStrings("monster_string", MIN_monster_STRING_ID, MAX_monster_STRING_ID); }
         void LoadDbScriptStrings();
         void LoadCreatureClassLevelStats();
         void LoadCreatureLocales();
@@ -1320,14 +1320,14 @@ class ObjectMgr
             return nullptr;
         }
 
-        TrinityStringLocale const* GetTrinityStringLocale(int32 entry) const
+        monsterStringLocale const* GetmonsterStringLocale(int32 entry) const
         {
-            TrinityStringLocaleContainer::const_iterator itr = _trinityStringLocaleStore.find(entry);
-            if (itr == _trinityStringLocaleStore.end()) return NULL;
+            monsterStringLocaleContainer::const_iterator itr = _monsterStringLocaleStore.find(entry);
+            if (itr == _monsterStringLocaleStore.end()) return NULL;
             return &itr->second;
         }
-        const char *GetTrinityString(int32 entry, LocaleConstant locale_idx) const;
-        const char *GetTrinityStringForDBCLocale(int32 entry) const { return GetTrinityString(entry, DBCLocaleIndex); }
+        const char *GetmonsterString(int32 entry, LocaleConstant locale_idx) const;
+        const char *GetmonsterStringForDBCLocale(int32 entry) const { return GetmonsterString(entry, DBCLocaleIndex); }
         LocaleConstant GetDBCLocaleIndex() const { return DBCLocaleIndex; }
         void SetDBCLocaleIndex(LocaleConstant locale) { DBCLocaleIndex = locale; }
 
@@ -1606,7 +1606,7 @@ class ObjectMgr
         QuestLocaleContainer _questLocaleStore;
         NpcTextLocaleContainer _npcTextLocaleStore;
         PageTextLocaleContainer _pageTextLocaleStore;
-        TrinityStringLocaleContainer _trinityStringLocaleStore;
+        monsterStringLocaleContainer _monsterStringLocaleStore;
         GossipMenuItemsLocaleContainer _gossipMenuItemsLocaleStore;
         PointOfInterestLocaleContainer _pointOfInterestLocaleStore;
 
@@ -1666,6 +1666,6 @@ class ObjectMgr
 #define sObjectMgr ACE_Singleton<ObjectMgr, ACE_Null_Mutex>::instance()
 
 // scripting access functions
-bool LoadTrinityStrings(char const* table, int32 start_value = MAX_CREATURE_AI_TEXT_STRING_ID, int32 end_value = std::numeric_limits<int32>::min());
+bool LoadmonsterStrings(char const* table, int32 start_value = MAX_CREATURE_AI_TEXT_STRING_ID, int32 end_value = std::numeric_limits<int32>::min());
 
 #endif

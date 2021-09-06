@@ -476,7 +476,7 @@ public:
 static void AlysrazorTrashEvaded(Creature* creature)
 {
     TrashRespawnWorker check;
-    Trinity::CreatureWorker<TrashRespawnWorker> worker(creature, check);
+    monster::CreatureWorker<TrashRespawnWorker> worker(creature, check);
     creature->VisitNearbyGridObject(SIZE_OF_GRIDS, worker);
 }
 
@@ -2611,7 +2611,7 @@ public:
         void FilterTargets(std::list<WorldObject*>& targets)
         {
             targets.remove_if(DistanceFilter(GetCaster()));
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_BLAZING_POWER_PREVENTION_AURA));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_BLAZING_POWER_PREVENTION_AURA));
             sharedTargets = targets;
         }
 
@@ -2648,7 +2648,7 @@ public:
         {
             targets.remove(GetCaster());
             targets.remove_if(DistanceFilter(GetCaster()));
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_BLAZING_POWER_PREVENTION_AURA));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_BLAZING_POWER_PREVENTION_AURA));
             sharedTargets = targets;
         }
 
@@ -2761,9 +2761,9 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_IMPRINTED));
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_IMPRINTED_2));
-            targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_IMPRINTED));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_IMPRINTED_2));
+            targets.sort(monster::ObjectDistanceOrderPred(GetCaster()));
             targets.resize(1);
         }
 
@@ -3115,11 +3115,11 @@ public:
                     {
                         std::list<Creature*> eggs;
                         MoltenEggCheck check(me);
-                        Trinity::CreatureListSearcher<MoltenEggCheck> searcher(me, eggs, check);
+                        monster::CreatureListSearcher<MoltenEggCheck> searcher(me, eggs, check);
                         me->VisitNearbyGridObject(20.0f, searcher);
                         if (!eggs.empty())
                         {
-                            Creature* egg = Trinity::Containers::SelectRandomContainerElement(eggs);
+                            Creature* egg = monster::Containers::SelectRandomContainerElement(eggs);
                             egg->CastSpell(egg, SPELL_SUMMON_SMOULDERING_HATCHLING, TRIGGERED_FULL_MASK);
                             egg->SetDisplayId(MODEL_INVISIBLE_STALKER);
                             egg->m_Events.AddEvent(new RespawnEggEvent(egg), egg->m_Events.CalculateTime(5000));

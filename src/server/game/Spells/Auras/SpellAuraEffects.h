@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -16,8 +16,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRINITY_SPELLAURAEFFECTS_H
-#define TRINITY_SPELLAURAEFFECTS_H
+#ifndef monster_SPELLAURAEFFECTS_H
+#define monster_SPELLAURAEFFECTS_H
 
 class Unit;
 class AuraEffect;
@@ -308,7 +308,7 @@ class AuraEffect
         void HandleRaidProcFromChargeWithValueAuraProc(AuraApplication* aurApp, ProcEventInfo& eventInfo);
 };
 
-namespace Trinity
+namespace monster
 {
     // Binary predicate for sorting the priority of absorption aura effects
     class AbsorbAuraOrderPred

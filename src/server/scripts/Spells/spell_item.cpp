@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -3138,7 +3138,7 @@ public:
                         temp.push_back(unit);
 
                 targets.clear();
-                temp.sort(Trinity::HealthPctOrderPred());
+                temp.sort(monster::HealthPctOrderPred());
                 if (temp.size() > 1)
                     temp.resize(1);
                 for (std::list<Unit*>::iterator itr = temp.begin(); itr != temp.end(); itr++)

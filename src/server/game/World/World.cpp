@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -422,7 +422,7 @@ void World::LoadConfigSettings(bool reload)
 
     ///- Read the player limit and the Message of the day from the config file
     SetPlayerAmountLimit(sConfigMgr->GetIntDefault("PlayerLimit", 100));
-    SetMotd(sConfigMgr->GetStringDefault("Motd", "Welcome to a Trinity Core Server."));
+    SetMotd(sConfigMgr->GetStringDefault("Motd", "Welcome to a monster Core Server."));
 
     ///- Read ticket system setting from the config file
     m_bool_configs[CONFIG_ALLOW_TICKETS] = sConfigMgr->GetBoolDefault("AllowTickets", true);
@@ -1475,8 +1475,8 @@ void World::SetInitialWorldSettings()
 
     ///- Loading strings. Getting no records means core load has to be canceled because no error message can be output.
 
-    TC_LOG_INFO("server.loading", "Loading Trinity strings...");
-    if (!sObjectMgr->LoadTrinityStrings())
+    TC_LOG_INFO("server.loading", "Loading monster strings...");
+    if (!sObjectMgr->LoadmonsterStrings())
         exit(1);                                            // Error message displayed in function already
 
     ///- Update the realm entry in the database with the realm type from the config file
@@ -2082,7 +2082,7 @@ void World::SetInitialWorldSettings()
         });
     }
 
-#ifdef TRINITY_DEBUG
+#ifdef monster_DEBUG
     TC_LOG_INFO("server.loading", "Validate all player spells...");
     VerificationMgr::CheckAllPlayerSpells();
 #endif
@@ -2512,7 +2512,7 @@ void World::SendGlobalGMMessage(WorldPacket* packet, WorldSession* self, uint32 
     }
 }
 
-namespace Trinity
+namespace monster
 {
     class WorldWorldTextBuilder
     {
@@ -2521,7 +2521,7 @@ namespace Trinity
         explicit WorldWorldTextBuilder(int32 textId, int32 broadcast = NULL, va_list* args = NULL) : i_textId(textId), i_broadcast(broadcast), i_args(args) {}
         void operator()(WorldPacketList& data_list, LocaleConstant loc_idx)
         {
-            char const* text = sObjectMgr->GetTrinityString(i_textId, loc_idx);
+            char const* text = sObjectMgr->GetmonsterString(i_textId, loc_idx);
             std::string broadcastText = "";
             if (AutobroadcastLocale const* locales = sWorld->GetAutobroadcastLocales(i_broadcast))
             {
@@ -2582,7 +2582,7 @@ namespace Trinity
         int32 i_broadcast;
         va_list* i_args;
     };
-}                                                       // namespace Trinity
+}                                                       // namespace monster
 
 /// Send a System Message to all players (except self if mentioned)
 void World::SendWorldText(int32 string_id, ...)
@@ -2590,8 +2590,8 @@ void World::SendWorldText(int32 string_id, ...)
     va_list ap;
     va_start(ap, string_id);
 
-    Trinity::WorldWorldTextBuilder wt_builder(string_id, 0, &ap);
-    Trinity::LocalizedPacketListDo<Trinity::WorldWorldTextBuilder> wt_do(wt_builder);
+    monster::WorldWorldTextBuilder wt_builder(string_id, 0, &ap);
+    monster::LocalizedPacketListDo<monster::WorldWorldTextBuilder> wt_do(wt_builder);
     for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
     {
         if (!itr->second || !itr->second->GetPlayer() || !itr->second->GetPlayer()->IsInWorld())
@@ -2605,8 +2605,8 @@ void World::SendWorldText(int32 string_id, ...)
 
 void World::SendBroadcastText(int32 string_id, int32 text)
 {
-    Trinity::WorldWorldTextBuilder wt_builder(string_id, text, NULL);
-    Trinity::LocalizedPacketListDo<Trinity::WorldWorldTextBuilder> wt_do(wt_builder);
+    monster::WorldWorldTextBuilder wt_builder(string_id, text, NULL);
+    monster::LocalizedPacketListDo<monster::WorldWorldTextBuilder> wt_do(wt_builder);
     for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
     {
         if (!itr->second || !itr->second->GetPlayer() || !itr->second->GetPlayer()->IsInWorld())
@@ -2622,8 +2622,8 @@ void World::SendGMText(int32 string_id, ...)
     va_list ap;
     va_start(ap, string_id);
 
-    Trinity::WorldWorldTextBuilder wt_builder(string_id, 0, &ap);
-    Trinity::LocalizedPacketListDo<Trinity::WorldWorldTextBuilder> wt_do(wt_builder);
+    monster::WorldWorldTextBuilder wt_builder(string_id, 0, &ap);
+    monster::LocalizedPacketListDo<monster::WorldWorldTextBuilder> wt_do(wt_builder);
     for (SessionMap::iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
     {
         if (!itr->second || !itr->second->GetPlayer() || !itr->second->GetPlayer()->IsInWorld())
@@ -3079,7 +3079,7 @@ void World::SendAutoBroadcast()
     else
     {
         if (!m_Autobroadcasts.empty())
-            id = Trinity::Containers::SelectRandomContainerElement(m_Autobroadcasts).first;
+            id = monster::Containers::SelectRandomContainerElement(m_Autobroadcasts).first;
     }
 
 

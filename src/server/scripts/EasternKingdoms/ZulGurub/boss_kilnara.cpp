@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -481,7 +481,7 @@ class spell_wave_of_agony_selector : public SpellScriptLoader
             void FilterTargets(std::list<WorldObject*>& unitList)
             {
                 if (!unitList.empty())
-                    Trinity::Containers::RandomResizeList(unitList, 1);
+                    monster::Containers::RandomResizeList(unitList, 1);
             }
 
             void TriggerSpell(SpellEffIndex effIndex)

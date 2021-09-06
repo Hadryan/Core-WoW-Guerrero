@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+* Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
 *
 * This program is free software; you can redistribute it and/or modify it
 * under the terms of the GNU General Public License as published by the
@@ -1067,7 +1067,7 @@ private:
         if (targets.empty())
             return 0;
 
-        return Trinity::Containers::SelectRandomContainerElement(targets)->GetGUID();
+        return monster::Containers::SelectRandomContainerElement(targets)->GetGUID();
     }
 };
 

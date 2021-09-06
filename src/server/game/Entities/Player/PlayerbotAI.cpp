@@ -48,8 +48,8 @@ void PlayerbotAI::MoveCalculate()
 	destY = respY + distanceY;
 
 	// prevent invalid coordinates generation
-	Trinity::NormalizeMapCoord(destX);
-	Trinity::NormalizeMapCoord(destY);
+	monster::NormalizeMapCoord(destX);
+	monster::NormalizeMapCoord(destY);
 
 	travelDistZ = range;                                    // sin^2+cos^2=1, so travelDistZ=range^2; no need for sqrt below
 

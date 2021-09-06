@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -707,11 +707,11 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_ALPHA_BEAMS_AURA));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_ALPHA_BEAMS_AURA));
             if (targets.empty())
                 return;
 
-            WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+            WorldObject* target = monster::Containers::SelectRandomContainerElement(targets);
             targets.clear();
             targets.push_back(target);
         }

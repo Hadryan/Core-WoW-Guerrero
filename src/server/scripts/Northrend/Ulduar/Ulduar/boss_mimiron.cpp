@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -1287,7 +1287,7 @@ class boss_leviathan_mk_turret : public CreatureScript
                     if (playerList.empty())
                         return SelectTarget(SELECT_TARGET_RANDOM, 0, 100.0f, true);
                     else
-                        return Trinity::Containers::SelectRandomContainerElement(playerList);
+                        return monster::Containers::SelectRandomContainerElement(playerList);
                 }
                 else
                     return 0;
@@ -2276,8 +2276,8 @@ class npc_mimiron_bomb_bot : public CreatureScript
             Unit* SelectPlayerTargetInRange(float range)
             {
                 Player* target = 0;
-                Trinity::AnyPlayerInObjectRangeCheck u_check(me, range, true);
-                Trinity::PlayerSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(me, target, u_check);
+                monster::AnyPlayerInObjectRangeCheck u_check(me, range, true);
+                monster::PlayerSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(me, target, u_check);
                 me->VisitNearbyObject(range, searcher);
                 return target;
             }

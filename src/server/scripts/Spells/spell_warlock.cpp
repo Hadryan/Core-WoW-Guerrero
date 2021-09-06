@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013-2014 OMFG.GG Network <http://www.omfg.gg/>
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -1358,7 +1358,7 @@ class spell_warl_jinx_coe : public SpellScriptLoader
 
             void FilterTargetsInitial(std::list<WorldObject*>& targets)
             {
-                targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_WARLOCK_CoE));
+                targets.remove_if(monster::UnitAuraCheck(true, SPELL_WARLOCK_CoE));
                 if (targets.size() > 15)
                     targets.resize(15);
 

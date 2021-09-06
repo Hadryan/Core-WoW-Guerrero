@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -426,9 +426,9 @@ void BattlefieldWG::OnBattleEnd(bool endByTimer)
     }
 
     if (!endByTimer) // win alli/horde
-        SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_WIN_KEEP, sObjectMgr->GetTrinityStringForDBCLocale((GetDefenderTeam() == TEAM_ALLIANCE) ? BATTLEFIELD_WG_TEXT_ALLIANCE : BATTLEFIELD_WG_TEXT_HORDE));
+        SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_WIN_KEEP, sObjectMgr->GetmonsterStringForDBCLocale((GetDefenderTeam() == TEAM_ALLIANCE) ? BATTLEFIELD_WG_TEXT_ALLIANCE : BATTLEFIELD_WG_TEXT_HORDE));
     else // defend alli/horde
-        SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_DEFEND_KEEP, sObjectMgr->GetTrinityStringForDBCLocale((GetDefenderTeam() == TEAM_ALLIANCE) ? BATTLEFIELD_WG_TEXT_ALLIANCE : BATTLEFIELD_WG_TEXT_HORDE));
+        SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_DEFEND_KEEP, sObjectMgr->GetmonsterStringForDBCLocale((GetDefenderTeam() == TEAM_ALLIANCE) ? BATTLEFIELD_WG_TEXT_ALLIANCE : BATTLEFIELD_WG_TEXT_HORDE));
 }
 
 // *******************************************************

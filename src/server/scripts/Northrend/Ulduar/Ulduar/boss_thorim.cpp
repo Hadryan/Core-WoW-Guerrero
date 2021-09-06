@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -332,8 +332,8 @@ class npc_thorim_controller : public CreatureScript
                             if (!gotActivated)
                             {
                                 Player* player = 0;
-                                Trinity::AnyPlayerInObjectRangeCheck u_check(me, 30.0f, true);
-                                Trinity::PlayerSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(me, player, u_check);
+                                monster::AnyPlayerInObjectRangeCheck u_check(me, 30.0f, true);
+                                monster::PlayerSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(me, player, u_check);
                                 me->VisitNearbyObject(30.0f, searcher);
                                 if (player)
                                     if (!player->isGameMaster())
@@ -563,7 +563,7 @@ class boss_thorim : public CreatureScript
                             events.ScheduleEvent(EVENT_STORMHAMMER, urand(15, 20) *IN_MILLISECONDS, 0, PHASE_1);
                             break;
                         case EVENT_CHARGE_ORB:
-                            if (Creature *orb = Trinity::Containers::SelectRandomContainerElement(orbList))
+                            if (Creature *orb = monster::Containers::SelectRandomContainerElement(orbList))
                             {
                                 //                  orb->CastSpell(orb, SPELL_CHARGE_ORB, true);
                                 orb->AddAura(SPELL_CHARGE_ORB, orb);
@@ -901,8 +901,8 @@ class npc_thorim_pre_phase_add : public CreatureScript
                             if (!me->isInCombat())
                             {
                                 Player* player = 0;
-                                Trinity::AnyPlayerInObjectRangeCheck u_check(me, 30.0f, true);
-                                Trinity::PlayerSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(me, player, u_check);
+                                monster::AnyPlayerInObjectRangeCheck u_check(me, 30.0f, true);
+                                monster::PlayerSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(me, player, u_check);
                                 me->VisitNearbyObject(30.0f, searcher);
                                 if (player)
                                     if (!player->isGameMaster())
@@ -1627,7 +1627,7 @@ class spell_stormhammer_targeting : public SpellScriptLoader
                 if (unitList.empty())
                     return;
 
-                _target = Trinity::Containers::SelectRandomContainerElement(unitList)->ToUnit();
+                _target = monster::Containers::SelectRandomContainerElement(unitList)->ToUnit();
                 SetTarget(unitList);
             }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,15 +15,15 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRINITY_CONTAINERS_H
-#define TRINITY_CONTAINERS_H
+#ifndef monster_CONTAINERS_H
+#define monster_CONTAINERS_H
 
 #include <list>
 
 //! Because circular includes are bad
 extern uint32 urand(uint32 min, uint32 max);
 
-namespace Trinity
+namespace monster
 {
     namespace Containers
     {
@@ -74,7 +74,7 @@ namespace Trinity
         template<class C>
         void RandomResize(C& container, std::size_t requestedSize)
         {
-            static_assert(std::is_base_of<std::forward_iterator_tag, typename std::iterator_traits<typename C::iterator>::iterator_category>::value, "Invalid container passed to Trinity::Containers::RandomResize");
+            static_assert(std::is_base_of<std::forward_iterator_tag, typename std::iterator_traits<typename C::iterator>::iterator_category>::value, "Invalid container passed to monster::Containers::RandomResize");
             if (Size(container) <= requestedSize)
                 return;
             auto keepIt = std::begin(container), curIt = std::begin(container);
@@ -118,6 +118,6 @@ namespace Trinity
     }
     //! namespace Containers
 }
-//! namespace Trinity
+//! namespace monster
 
-#endif //! #ifdef TRINITY_CONTAINERS_H
+#endif //! #ifdef monster_CONTAINERS_H

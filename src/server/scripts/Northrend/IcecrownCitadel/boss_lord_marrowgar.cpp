@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -569,12 +569,12 @@ class spell_marrowgar_bone_spike_graveyard : public SpellScriptLoader
                             playerSet.insert(tank->ToPlayer());
                         std::list<Player*> playerList;
                         float range = 5;
-                        Trinity::AnyPlayerInObjectRangeCheck checker(tank, range, true);
-                        Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(tank, playerList, checker);
+                        monster::AnyPlayerInObjectRangeCheck checker(tank, range, true);
+                        monster::PlayerListSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(tank, playerList, checker);
                         tank->VisitNearbyWorldObject(range, searcher);
                        // playerList = tank->GetNearestPlayersList(5);
                         playerList.remove_if(IsGameMaster());
-                        playerList.sort(Trinity::ObjectDistanceOrderPred(tank));
+                        playerList.sort(monster::ObjectDistanceOrderPred(tank));
                         if (playerList.size() > 3)
                         {
                             for (uint32 j = 0; j < playerList.size() - 3; ++j)
@@ -599,7 +599,7 @@ class spell_marrowgar_bone_spike_graveyard : public SpellScriptLoader
                     if (targets.empty())
                         return;
 
-                    Trinity::Containers::RandomResizeList(targets, boneSpikeCount);
+                    monster::Containers::RandomResizeList(targets, boneSpikeCount);
 
                     uint8 i = 0;
                     for (std::list<Player*>::iterator it = targets.begin(); it != targets.end(); ++i, ++it)

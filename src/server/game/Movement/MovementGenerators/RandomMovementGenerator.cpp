@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -55,8 +55,8 @@ void RandomMovementGenerator<Creature>::_setRandomLocation(Creature* creature)
     destY = respY + distanceY;
 
     // prevent invalid coordinates generation
-    Trinity::NormalizeMapCoord(destX);
-    Trinity::NormalizeMapCoord(destY);
+    monster::NormalizeMapCoord(destX);
+    monster::NormalizeMapCoord(destY);
 
     travelDistZ = distanceX*distanceX + distanceY*distanceY;
 

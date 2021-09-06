@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -346,7 +346,7 @@ void instance_karazhan::instance_karazhan_InstanceMapScript::DoPrepareChessEvent
     if (!pStatusBar)
         return;
 
-    lStalkers.sort(Trinity::ObjectDistanceOrderPred(pStatusBar));
+    lStalkers.sort(monster::ObjectDistanceOrderPred(pStatusBar));
     for (std::list<Creature*>::const_iterator itr = lStalkers.begin(); itr != lStalkers.end(); ++itr)
         m_vHordeStalkers.push_back((*itr)->GetGUID());
 
@@ -363,7 +363,7 @@ void instance_karazhan::instance_karazhan_InstanceMapScript::DoPrepareChessEvent
     if (!pStatusBar)
         return;
 
-    lStalkers.sort(Trinity::ObjectDistanceOrderPred(pStatusBar));
+    lStalkers.sort(monster::ObjectDistanceOrderPred(pStatusBar));
     for (std::list<Creature*>::const_iterator itr = lStalkers.begin(); itr != lStalkers.end(); ++itr)
         m_vAllianceStalkers.push_back((*itr)->GetGUID());
 }

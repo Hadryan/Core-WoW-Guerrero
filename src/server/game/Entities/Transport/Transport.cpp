@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -660,7 +660,7 @@ bool Transport::AddPassenger(WorldObject* passenger)
 
     TC_LOG_INFO("entities.transport", "Player %s boarded transport %s.", passenger->GetName().c_str(), GetName().c_str());
     {
-        TRINITY_GUARD(ACE_Thread_Mutex, Lock);
+        monster_GUARD(ACE_Thread_Mutex, Lock);
 
         switch (passenger->GetTypeId())
         {
@@ -688,7 +688,7 @@ bool Transport::AddPassenger(WorldObject* passenger)
 void Transport::RemovePetPassenger(Creature* passenger)
 {
     {
-        TRINITY_GUARD(ACE_Thread_Mutex, Lock);
+        monster_GUARD(ACE_Thread_Mutex, Lock);
         passenger->SetTransport(NULL);
         passenger->m_movementInfo.t_guid = 0;
         passenger->m_movementInfo.t_pos.Relocate(0.0f, 0.0f, 0.0f, 0.0f);
@@ -708,7 +708,7 @@ bool Transport::RemovePassenger(WorldObject* passenger)
         return success;
 
     {
-        TRINITY_GUARD(ACE_Thread_Mutex, Lock);
+        monster_GUARD(ACE_Thread_Mutex, Lock);
 
         switch (passenger->GetTypeId())
         {
@@ -1072,7 +1072,7 @@ void Transport::UpdatePassengersPositions()
     }
 
     {
-        TRINITY_GUARD(ACE_Thread_Mutex, Lock);
+        monster_GUARD(ACE_Thread_Mutex, Lock);
         std::list<uint64 > cleanUpPassengers;
 
         for (std::map<uint64, WorldObject *>::iterator itr = m_passengers.begin(); itr != m_passengers.end(); ++itr)
@@ -1348,7 +1348,7 @@ Creature* Transport::AddNPCPassengerInInstance(uint32 entry, float x, float y, f
 
 void Transport::BuildPassengersBlockForPlayer(Player *player, UpdateData *data)
 {
-    //    TRINITY_GUARD(ACE_Thread_Mutex, Lock);
+    //    monster_GUARD(ACE_Thread_Mutex, Lock);
     for (std::map<uint64, WorldObject *>::const_iterator itr = m_passengers.begin(); itr != m_passengers.end(); ++itr)
         if (WorldObject *passenger = ObjectAccessor::GetWorldObject(*this, itr->first))
             if (player != passenger && player->HaveAtClient(passenger))

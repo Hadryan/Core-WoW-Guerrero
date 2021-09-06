@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2014 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -49,8 +49,8 @@ void AppenderFile::_write(LogMessage const& message)
 
     if (dynamicName)
     {
-        char namebuf[TRINITY_PATH_MAX];
-        snprintf(namebuf, TRINITY_PATH_MAX, filename.c_str(), message.param1.c_str());
+        char namebuf[monster_PATH_MAX];
+        snprintf(namebuf, monster_PATH_MAX, filename.c_str(), message.param1.c_str());
         // always use "a" with dynamic name otherwise it could delete the log we wrote in last _write() call
         FILE* file = OpenFile(namebuf, "a", backup || exceedMaxSize);
         if (!file)

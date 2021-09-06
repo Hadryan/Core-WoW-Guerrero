@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2018 TrinityCore <https://www.trinitycore.org/>
+ * Copyright (C) 2008-2018 monsterCore <https://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -16,8 +16,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRINITY_TYPECONTAINER_H
-#define TRINITY_TYPECONTAINER_H
+#ifndef monster_TYPECONTAINER_H
+#define monster_TYPECONTAINER_H
 
 /*
  * Here, you'll find a series of containers that allow you to hold multiple
@@ -86,13 +86,13 @@ template<class OBJECT_TYPES>
 class TypeMapContainer
 {
     public:
-        template<class SPECIFIC_TYPE> size_t Count() const { return Trinity::Count(i_elements, (SPECIFIC_TYPE*)NULL); }
+        template<class SPECIFIC_TYPE> size_t Count() const { return monster::Count(i_elements, (SPECIFIC_TYPE*)NULL); }
 
         /// inserts a specific object into the container
         template<class SPECIFIC_TYPE>
         bool insert(SPECIFIC_TYPE *obj)
         {
-            SPECIFIC_TYPE* t = Trinity::Insert(i_elements, obj);
+            SPECIFIC_TYPE* t = monster::Insert(i_elements, obj);
             return (t != NULL);
         }
 
@@ -100,7 +100,7 @@ class TypeMapContainer
         //template<class SPECIFIC_TYPE>
         //bool remove(SPECIFIC_TYPE* obj)
         //{
-        //    SPECIFIC_TYPE* t = Trinity::Remove(i_elements, obj);
+        //    SPECIFIC_TYPE* t = monster::Remove(i_elements, obj);
         //    return (t != NULL);
         //}
 
@@ -118,19 +118,19 @@ public:
     template<class SPECIFIC_TYPE>
     bool Insert(KEY_TYPE const& handle, SPECIFIC_TYPE* obj)
     {
-        return Trinity::Insert(_elements, handle, obj);
+        return monster::Insert(_elements, handle, obj);
     }
 
     template<class SPECIFIC_TYPE>
     bool Remove(KEY_TYPE const& handle)
     {
-        return Trinity::Remove(_elements, handle, (SPECIFIC_TYPE*)NULL);
+        return monster::Remove(_elements, handle, (SPECIFIC_TYPE*)NULL);
     }
 
     template<class SPECIFIC_TYPE>
     SPECIFIC_TYPE* Find(KEY_TYPE const& handle)
     {
-        return Trinity::Find(_elements, handle, (SPECIFIC_TYPE*)NULL);
+        return monster::Find(_elements, handle, (SPECIFIC_TYPE*)NULL);
     }
 
     ContainerUnorderedMap<OBJECT_TYPES, KEY_TYPE>& GetElements() { return _elements; }

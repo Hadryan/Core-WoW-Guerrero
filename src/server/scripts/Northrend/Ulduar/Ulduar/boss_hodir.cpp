@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -543,8 +543,8 @@ public:
         void FlashFreeze()
         {
             std::list<Unit*> TargetList;
-            Trinity::AnyUnfriendlyUnitInObjectRangeCheck checker(me, me, 100.0f);
-            Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, TargetList, checker);
+            monster::AnyUnfriendlyUnitInObjectRangeCheck checker(me, me, 100.0f);
+            monster::UnitListSearcher<monster::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, TargetList, checker);
             me->VisitNearbyObject(100.0f, searcher);
             for (std::list<Unit*>::iterator itr = TargetList.begin(); itr != TargetList.end(); ++itr)
             {
@@ -719,8 +719,8 @@ public:
                 case EVENT_DISPEL_MAGIC:
                 {
                     std::list<Unit*> allies;
-                    Trinity::AnyFriendlyUnitInObjectRangeCheck checker(me, me, 30.0f);
-                    Trinity::UnitListSearcher<Trinity::AnyFriendlyUnitInObjectRangeCheck> searcher(me, allies, checker);
+                    monster::AnyFriendlyUnitInObjectRangeCheck checker(me, me, 30.0f);
+                    monster::UnitListSearcher<monster::AnyFriendlyUnitInObjectRangeCheck> searcher(me, allies, checker);
                     me->VisitNearbyObject(30.0f, searcher);
                     // TODO: Check if the below is intended: it will dispell freeze from every player
                     for (std::list<Unit*>::iterator itr = allies.begin(); itr != allies.end(); ++itr)
@@ -793,8 +793,8 @@ public:
                 case EVENT_STORM_CLOUD:
                 {
                     std::list<Unit*> allies;
-                    Trinity::AnyFriendlyUnitInObjectRangeCheck checker(me, me, 30.0f);
-                    Trinity::UnitListSearcher<Trinity::AnyFriendlyUnitInObjectRangeCheck> searcher(me, allies, checker);
+                    monster::AnyFriendlyUnitInObjectRangeCheck checker(me, me, 30.0f);
+                    monster::UnitListSearcher<monster::AnyFriendlyUnitInObjectRangeCheck> searcher(me, allies, checker);
                     me->VisitNearbyWorldObject(30.0f, searcher);
                     if (!allies.empty())
                     {

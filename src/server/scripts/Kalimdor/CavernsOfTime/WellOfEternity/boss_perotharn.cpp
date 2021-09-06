@@ -1960,10 +1960,10 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Trinity::UnitAuraCheck(false, SPELL_EASY_PREY));
+            targets.remove_if(monster::UnitAuraCheck(false, SPELL_EASY_PREY));
             // should never happen
             if (targets.size() > 1)
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void Register()

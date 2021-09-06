@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -16,8 +16,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRINITY_MAPMANAGER_H
-#define TRINITY_MAPMANAGER_H
+#ifndef monster_MAPMANAGER_H
+#define monster_MAPMANAGER_H
 
 #include "Define.h"
 #include <ace/Singleton.h>
@@ -87,17 +87,17 @@ class MapManager
 
         static bool IsValidMapCoord(uint32 mapid, float x, float y)
         {
-            return IsValidMAP(mapid, false) && Trinity::IsValidMapCoord(x, y);
+            return IsValidMAP(mapid, false) && monster::IsValidMapCoord(x, y);
         }
 
         static bool IsValidMapCoord(uint32 mapid, float x, float y, float z)
         {
-            return IsValidMAP(mapid, false) && Trinity::IsValidMapCoord(x, y, z);
+            return IsValidMAP(mapid, false) && monster::IsValidMapCoord(x, y, z);
         }
 
         static bool IsValidMapCoord(uint32 mapid, float x, float y, float z, float o)
         {
-            return IsValidMAP(mapid, false) && Trinity::IsValidMapCoord(x, y, z, o);
+            return IsValidMAP(mapid, false) && monster::IsValidMapCoord(x, y, z, o);
         }
 
         static bool IsValidMapCoord(WorldLocation const& loc)
@@ -199,7 +199,7 @@ class MapManager
 template<typename Worker>
 void MapManager::DoForAllMaps(Worker&& worker)
 {
-    TRINITY_GUARD(ACE_Thread_Mutex, Lock);
+    monster_GUARD(ACE_Thread_Mutex, Lock);
 
     for (auto& mapPair : i_maps)
     {
@@ -218,7 +218,7 @@ void MapManager::DoForAllMaps(Worker&& worker)
 template<typename Worker>
 inline void MapManager::DoForAllMapsWithMapId(uint32 mapId, Worker&& worker)
 {
-    TRINITY_GUARD(ACE_Thread_Mutex, Lock);
+    monster_GUARD(ACE_Thread_Mutex, Lock);
 
     auto itr = i_maps.find(mapId);
     if (itr != i_maps.end())

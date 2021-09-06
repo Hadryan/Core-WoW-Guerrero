@@ -441,7 +441,7 @@ public:
             if (tempTargets.empty())
                 return NULL;
 
-            return Trinity::Containers::SelectRandomContainerElement(tempTargets);
+            return monster::Containers::SelectRandomContainerElement(tempTargets);
         }
     };
 
@@ -747,7 +747,7 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+            targets.sort(monster::ObjectDistanceOrderPred(GetCaster()));
             if (targets.size() > 1)
                 targets.resize(1);
         }
@@ -913,14 +913,14 @@ public:
         {
             if (!targets.empty())
             {
-                WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+                WorldObject* target = monster::Containers::SelectRandomContainerElement(targets);
 
                 targets.remove_if([](WorldObject* target){
                     return target->GetTypeId() == TYPEID_PLAYER && target->ToPlayer()->HasTankSpec();
                 });
 
                 if (!targets.empty())
-                   target = Trinity::Containers::SelectRandomContainerElement(targets);
+                   target = monster::Containers::SelectRandomContainerElement(targets);
 
                 targets.clear();
                 targets.push_back(target);

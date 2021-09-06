@@ -1390,7 +1390,7 @@ public:
         void FilterTargets(std::list<WorldObject*>& targets)
         {
             if (targets.size() > 1)
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void DamageAmount(SpellEffIndex /*effIndex*/)
@@ -1469,7 +1469,7 @@ public:
             if (targets.empty())
                 return;
 
-            WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+            WorldObject* target = monster::Containers::SelectRandomContainerElement(targets);
             Unit* caster = GetCaster();
 
             targets.remove_if([caster](WorldObject* obj)
@@ -1478,7 +1478,7 @@ public:
             });
 
             if (!targets.empty())
-                target = Trinity::Containers::SelectRandomContainerElement(targets);
+                target = monster::Containers::SelectRandomContainerElement(targets);
 
             targets.clear();
             targets.push_back(target);
@@ -1541,7 +1541,7 @@ public:
             });
 
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, uint32(GetCaster()->GetMap()->Is25ManRaid() ? 6 : 3));
+                monster::Containers::RandomResizeList(targets, uint32(GetCaster()->GetMap()->Is25ManRaid() ? 6 : 3));
         }
 
         void HandleDummy(SpellEffIndex effIndex)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -556,7 +556,7 @@ class boss_the_lich_king : public CreatureScript
 
                 // Reset The Frozen Throne gameobjects
                 FrozenThroneResetWorker reset;
-                Trinity::GameObjectWorker<FrozenThroneResetWorker> worker(me, reset);
+                monster::GameObjectWorker<FrozenThroneResetWorker> worker(me, reset);
                 me->VisitNearbyGridObject(333.0f, worker);
 
                 // Reset any light override
@@ -1086,12 +1086,12 @@ class boss_the_lich_king : public CreatureScript
                                 GetCreatureListWithEntryInGrid(triggers, terenas, NPC_WORLD_TRIGGER_INFINITE_AOI, 100.0f);
                                 if (!triggers.empty())
                                 {
-                                    triggers.sort(Trinity::ObjectDistanceOrderPred(terenas, true));
+                                    triggers.sort(monster::ObjectDistanceOrderPred(terenas, true));
                                     Creature* spawner = triggers.front();
                                     spawner->CastSpell(spawner, SPELL_SUMMON_SPIRIT_BOMB_1, true);  // summons bombs randomly
                                     spawner->CastSpell(spawner, SPELL_SUMMON_SPIRIT_BOMB_2, true);  // summons bombs on players
 
-                                    triggers.sort(Trinity::ObjectDistanceOrderPred(terenas, true));
+                                    triggers.sort(monster::ObjectDistanceOrderPred(terenas, true));
                                     Creature* spawnerBack = triggers.back();
                                     spawnerBack->m_Events.AddEvent(new TriggerWickedSpirit(spawnerBack), spawnerBack->m_Events.CalculateTime(isFirstActivation ? 5000 : 3000)); // bei der ersten FM arena gibs nen 2 sec delay bis man alles sieht weshalb die gester schon runter kommen bevor man sie �berhaupt sieht
                                     isFirstActivation = false;
@@ -1629,7 +1629,7 @@ class npc_valkyr_shadowguard : public CreatureScript
                                 if (triggers.empty())
                                     return;
 
-                                triggers.sort(Trinity::ObjectDistanceOrderPred(me));
+                                triggers.sort(monster::ObjectDistanceOrderPred(me));
                                 DoCast(target, SPELL_VALKYR_CARRY);
                                 _dropPoint.Relocate(triggers.front());
                                 _events.ScheduleEvent(EVENT_MOVE_TO_DROP_POS, 1500);
@@ -2333,7 +2333,7 @@ class spell_the_lich_king_necrotic_plague_jump : public SpellScriptLoader
 
             void SelectTarget(std::list<Unit*>& targets)
             {
-                targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+                targets.sort(monster::ObjectDistanceOrderPred(GetCaster()));
                 if (targets.size() < 2)
                     return;
 
@@ -2759,11 +2759,11 @@ class spell_the_lich_king_valkyr_target_search : public SpellScriptLoader
                 if (targets.empty())
                     return;
 
-                targets.remove_if(Trinity::UnitAuraCheck(true, GetSpellInfo()->Id));
+                targets.remove_if(monster::UnitAuraCheck(true, GetSpellInfo()->Id));
                 if (targets.empty())
                     return;
 
-                _target = Trinity::Containers::SelectRandomContainerElement(targets);
+                _target = monster::Containers::SelectRandomContainerElement(targets);
                 targets.clear();
                 targets.push_back(_target);
                 GetCaster()->GetAI()->SetGUID(_target->GetGUID());
@@ -2975,7 +2975,7 @@ class spell_the_lich_king_vile_spirit_move_target_search : public SpellScriptLoa
                 if (targets.empty())
                     return;
 
-                _target = Trinity::Containers::SelectRandomContainerElement(targets);
+                _target = monster::Containers::SelectRandomContainerElement(targets);
             }
 
             void HandleScript(SpellEffIndex effIndex)

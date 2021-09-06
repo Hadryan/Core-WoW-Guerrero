@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+* Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
 *
 * This program is free software; you can redistribute it and/or modify it
 * under the terms of the GNU General Public License as published by the
@@ -425,8 +425,8 @@ public:
             }
 
             std::list<Unit*> targets;
-            Trinity::AnyUnitInObjectRangeCheck u_check(me, 1000.0f);
-            Trinity::UnitListSearcher<Trinity::AnyUnitInObjectRangeCheck> searcher(me, targets, u_check);
+            monster::AnyUnitInObjectRangeCheck u_check(me, 1000.0f);
+            monster::UnitListSearcher<monster::AnyUnitInObjectRangeCheck> searcher(me, targets, u_check);
             me->VisitNearbyObject(1000.0f, searcher);
 
             for (std::list<Unit*>::iterator itr = targets.begin(); itr != targets.end(); itr++)
@@ -620,8 +620,8 @@ public:
         void CastLavaStrike(bool addAura)
         {
             std::list<Creature*> pFireCyclonesList;
-            Trinity::AllCreaturesOfEntryInRange checker(me, NPC_FIRE_CYCLONE, 200.0f);
-            Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(me, pFireCyclonesList, checker);
+            monster::AllCreaturesOfEntryInRange checker(me, NPC_FIRE_CYCLONE, 200.0f);
+            monster::CreatureListSearcher<monster::AllCreaturesOfEntryInRange> searcher(me, pFireCyclonesList, checker);
             me->VisitNearbyObject(200.0f, searcher);
 
             if (pFireCyclonesList.empty())

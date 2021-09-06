@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TrintiyCore <http://www.trinitycore.org/>
+ * Copyright (C) 2011 TrintiyCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRINITY_DB2SFRM_H
-#define TRINITY_DB2SFRM_H
+#ifndef monster_DB2SFRM_H
+#define monster_DB2SFRM_H
 
 char const Itemfmt[]="niiiiiii";
 char const ItemCurrencyCostfmt[]="xn";

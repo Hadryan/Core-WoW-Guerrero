@@ -90,8 +90,8 @@ public:
         if (player->GetCurrency(CURRENCY_TYPE_CONQUEST_POINTS, true))
         {
             PreparedStatement* stmt = NULL;
-            uint32 capArena = Trinity::Currency::ConquestRatingCalculator(player->GetMaxPersonalArenaRatingRequirement(0)) * CURRENCY_PRECISION;
-            uint32 capRBG = Trinity::Currency::BgConquestRatingCalculator(player->GetRbgOrSoloQueueRatingForCapCalculation()) * CURRENCY_PRECISION;
+            uint32 capArena = monster::Currency::ConquestRatingCalculator(player->GetMaxPersonalArenaRatingRequirement(0)) * CURRENCY_PRECISION;
+            uint32 capRBG = monster::Currency::BgConquestRatingCalculator(player->GetRbgOrSoloQueueRatingForCapCalculation()) * CURRENCY_PRECISION;
             uint32 cap = std::max(capArena, capRBG);
             stmt = CharacterDatabase.GetPreparedStatement(CHAR_UPD_PLAYER_CURRENCY_NEW_CAP_OVERALL);
             stmt->setUInt32(0, cap);

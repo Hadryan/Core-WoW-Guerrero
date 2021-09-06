@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
+* Copyright (C) 2008-2010 monster <http://www.monstercore.org/>
 * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
 *
 * This program is free software; you can redistribute it and/or modify

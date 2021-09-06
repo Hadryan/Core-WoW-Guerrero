@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -114,7 +114,7 @@ class spell_sha_ancestral_awakening_proc : public SpellScriptLoader
                         temp.push_back(unit);
 
                 targets.clear();
-                temp.sort(Trinity::HealthPctOrderPred());
+                temp.sort(monster::HealthPctOrderPred());
                 if (temp.size() > 1)
                     temp.resize(1);
                 for (std::list<Unit*>::iterator itr = temp.begin(); itr != temp.end(); itr++)
@@ -444,8 +444,8 @@ class spell_sha_fire_nova : public SpellScriptLoader
             SpellCastResult CheckCast()
             {
                 std::list<Unit*> targets;
-                Trinity::AnyUnfriendlyUnitInObjectRangeCheck u_check(GetCaster(), GetCaster(), 100.0f);
-                Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(GetCaster(), targets, u_check);
+                monster::AnyUnfriendlyUnitInObjectRangeCheck u_check(GetCaster(), GetCaster(), 100.0f);
+                monster::UnitListSearcher<monster::AnyUnfriendlyUnitInObjectRangeCheck> searcher(GetCaster(), targets, u_check);
                 GetCaster()->VisitNearbyObject(100.0f, searcher);
                 for (std::list<Unit*>::const_iterator itr = targets.begin(); itr != targets.end();)
                 {
@@ -811,10 +811,10 @@ class spell_sha_lava_lash_trigger : public SpellScriptLoader
                 if (GetExplTargetUnit())
                     targets.remove(GetExplTargetUnit());
 
-                targets.remove_if(Trinity::UnitAuraCheck(true, 8050, GetCaster()->GetGUID()));
+                targets.remove_if(monster::UnitAuraCheck(true, 8050, GetCaster()->GetGUID()));
 
                 if (!targets.empty())
-                    Trinity::Containers::RandomResizeList(targets, 4);
+                    monster::Containers::RandomResizeList(targets, 4);
             }
 
             void HandleOnHit()

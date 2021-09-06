@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -115,7 +115,7 @@ EnumName<UnitFlags> const unitFlags[MAX_UNIT_FLAGS] =
     CREATE_NAMED_ENUM(UNIT_FLAG_UNK_31)
 };
 
-namespace Trinity
+namespace monster
 {
     class SaveAll
     {
@@ -208,14 +208,14 @@ public:
     {
         Player* l_Player = p_Handler->GetSession()->GetPlayer();
 
-        CellCoord p(Trinity::ComputeCellCoord(l_Player->GetPositionX(), l_Player->GetPositionY()));
+        CellCoord p(monster::ComputeCellCoord(l_Player->GetPositionX(), l_Player->GetPositionY()));
         Cell cell(p);
         cell.SetNoCreate();
 
-        Trinity::SaveAll u_do;
-        Trinity::WorldObjectWorker<Trinity::SaveAll> worker(l_Player, u_do);
+        monster::SaveAll u_do;
+        monster::WorldObjectWorker<monster::SaveAll> worker(l_Player, u_do);
 
-        TypeContainerVisitor<Trinity::WorldObjectWorker<Trinity::SaveAll>, GridTypeMapContainer > obj_worker(worker);
+        TypeContainerVisitor<monster::WorldObjectWorker<monster::SaveAll>, GridTypeMapContainer > obj_worker(worker);
         cell.Visit(p, obj_worker, *l_Player->GetMap(), *l_Player, 533.0f);
 
         return true;

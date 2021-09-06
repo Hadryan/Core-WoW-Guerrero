@@ -210,13 +210,13 @@ GameObject* SmartScript::FindGameObjectNear(WorldObject* searchObject, uint32 gu
 {
     GameObject* gameObject = nullptr;
 
-    CellCoord p(Trinity::ComputeCellCoord(searchObject->GetPositionX(), searchObject->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(searchObject->GetPositionX(), searchObject->GetPositionY()));
     Cell cell(p);
 
-    Trinity::GameObjectWithDbGUIDCheck goCheck(*searchObject, guid);
-    Trinity::GameObjectSearcher<Trinity::GameObjectWithDbGUIDCheck> checker(searchObject, gameObject, goCheck);
+    monster::GameObjectWithDbGUIDCheck goCheck(*searchObject, guid);
+    monster::GameObjectSearcher<monster::GameObjectWithDbGUIDCheck> checker(searchObject, gameObject, goCheck);
 
-    TypeContainerVisitor<Trinity::GameObjectSearcher<Trinity::GameObjectWithDbGUIDCheck>, GridTypeMapContainer > objectChecker(checker);
+    TypeContainerVisitor<monster::GameObjectSearcher<monster::GameObjectWithDbGUIDCheck>, GridTypeMapContainer > objectChecker(checker);
     cell.Visit(p, objectChecker, *searchObject->GetMap(), *searchObject, searchObject->GetGridActivationRange());
 
     return gameObject;
@@ -225,13 +225,13 @@ GameObject* SmartScript::FindGameObjectNear(WorldObject* searchObject, uint32 gu
 Creature* SmartScript::FindCreatureNear(WorldObject* searchObject, uint32 guid) const
 {
     Creature* creature = nullptr;
-    CellCoord p(Trinity::ComputeCellCoord(searchObject->GetPositionX(), searchObject->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(searchObject->GetPositionX(), searchObject->GetPositionY()));
     Cell cell(p);
 
-    Trinity::CreatureWithDbGUIDCheck target_check(searchObject, guid);
-    Trinity::CreatureSearcher<Trinity::CreatureWithDbGUIDCheck> checker(searchObject, creature, target_check);
+    monster::CreatureWithDbGUIDCheck target_check(searchObject, guid);
+    monster::CreatureSearcher<monster::CreatureWithDbGUIDCheck> checker(searchObject, creature, target_check);
 
-    TypeContainerVisitor<Trinity::CreatureSearcher <Trinity::CreatureWithDbGUIDCheck>, GridTypeMapContainer > unit_checker(checker);
+    TypeContainerVisitor<monster::CreatureSearcher <monster::CreatureWithDbGUIDCheck>, GridTypeMapContainer > unit_checker(checker);
     cell.Visit(p, unit_checker, *searchObject->GetMap(), *searchObject, searchObject->GetGridActivationRange());
 
     return creature;
@@ -555,7 +555,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& p_ScriptHolder, Unit* unit, u
             {
                 if (IsUnit(target))
                 {
-                    uint32 emote = Trinity::Containers::SelectRandomContainerElement(emotes);
+                    uint32 emote = monster::Containers::SelectRandomContainerElement(emotes);
                     target->ToUnit()->HandleEmoteCommand(emote);
                     TC_LOG_DEBUG("scripts.ai", "SmartScript::ProcessAction:: SMART_ACTION_RANDOM_EMOTE: Creature guidLow %u handle random emote %u",
                         target->GetGUIDLow(), emote);
@@ -656,7 +656,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& p_ScriptHolder, Unit* unit, u
                 break;
 
             if (p_ScriptHolder.action.cast.targetsLimit > 0 && targets.size() > p_ScriptHolder.action.cast.targetsLimit)
-                Trinity::Containers::RandomResize(targets, p_ScriptHolder.action.cast.targetsLimit);
+                monster::Containers::RandomResize(targets, p_ScriptHolder.action.cast.targetsLimit);
 
             for (WorldObject* target : targets)
             {
@@ -730,7 +730,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& p_ScriptHolder, Unit* unit, u
                 break;
 
             if (p_ScriptHolder.action.cast.targetsLimit)
-                Trinity::Containers::RandomResize(targets, p_ScriptHolder.action.cast.targetsLimit);
+                monster::Containers::RandomResize(targets, p_ScriptHolder.action.cast.targetsLimit);
 
             for (WorldObject* target : targets)
             {
@@ -1054,7 +1054,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& p_ScriptHolder, Unit* unit, u
             std::copy_if(std::begin(p_ScriptHolder.action.randomPhase.phases), std::end(p_ScriptHolder.action.randomPhase.phases),
                 std::back_inserter(phases), [](uint32 phase) { return phase != 0; });
 
-            uint32 phase = Trinity::Containers::SelectRandomContainerElement(phases);
+            uint32 phase = monster::Containers::SelectRandomContainerElement(phases);
             SetPhase(phase);
             TC_LOG_DEBUG("scripts.ai", "SmartScript::ProcessAction: SMART_ACTION_RANDOM_PHASE: Creature %u sets event phase to %u",
                 GetBaseObject()->GetGUIDLow(), phase);
@@ -1387,7 +1387,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& p_ScriptHolder, Unit* unit, u
                 break;
 
             // attack random target
-            if (Unit* target = Trinity::Containers::SelectRandomContainerElement(targets)->ToUnit())
+            if (Unit* target = monster::Containers::SelectRandomContainerElement(targets)->ToUnit())
                 l_Creature->AI()->AttackStart(target);
             break;
         }
@@ -1702,7 +1702,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& p_ScriptHolder, Unit* unit, u
             {
                 // we want to move to random element
                 if (!targets.empty())
-                    target = Trinity::Containers::SelectRandomContainerElement(targets);
+                    target = monster::Containers::SelectRandomContainerElement(targets);
             }
 
             if (p_ScriptHolder.GetTargetType() == SMART_TARGET_POSITION)
@@ -2069,7 +2069,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& p_ScriptHolder, Unit* unit, u
             std::copy_if(std::begin(p_ScriptHolder.action.randTimedActionList.actionLists), std::end(p_ScriptHolder.action.randTimedActionList.actionLists),
                 std::back_inserter(actionLists), [](uint32 actionList) { return actionList != 0; });
 
-            uint32 id = Trinity::Containers::SelectRandomContainerElement(actionLists);
+            uint32 id = monster::Containers::SelectRandomContainerElement(actionLists);
             if (p_ScriptHolder.GetTargetType() == SMART_TARGET_NONE)
             {
                 TC_LOG_ERROR("sql.sql", "SmartScript: Entry %d SourceType %u Event %u Action %u is using TARGET_NONE(0) for Script9 target. Please correct target_type in database.", p_ScriptHolder.entryOrGuid, p_ScriptHolder.GetScriptType(), p_ScriptHolder.GetEventType(), p_ScriptHolder.GetActionType());
@@ -2727,7 +2727,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& p_ScriptHolder, Unit* unit, u
             std::copy_if(std::begin(p_ScriptHolder.action.castRandom.spells), std::end(p_ScriptHolder.action.castRandom.spells),
                 std::back_inserter(l_Spells), [](uint32 p_SpellId) { return p_SpellId != 0; });
 
-            uint32 l_RandomId = Trinity::Containers::SelectRandomContainerElement(l_Spells);
+            uint32 l_RandomId = monster::Containers::SelectRandomContainerElement(l_Spells);
             
             for (WorldObject* l_Target : targets)
             {
@@ -2921,7 +2921,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& p_ScriptHolder, Unit* unit, u
             {
                 if (IsUnit(target))
                 {
-                    uint32 sound = Trinity::Containers::SelectRandomContainerElement(sounds);
+                    uint32 sound = monster::Containers::SelectRandomContainerElement(sounds);
 
                     if (p_ScriptHolder.action.randomSound.distance == 1)
                         target->PlayDistanceSound(sound, onlySelf ? target->ToPlayer() : nullptr);
@@ -3358,7 +3358,7 @@ void SmartScript::GetTargets(ObjectVector& targets, SmartScriptHolder const& e, 
             }
 
             if (e.target.unitRange.maxSize)
-                Trinity::Containers::RandomResize(targets, e.target.unitRange.maxSize);
+                monster::Containers::RandomResize(targets, e.target.unitRange.maxSize);
             break;
         }
 
@@ -3380,7 +3380,7 @@ void SmartScript::GetTargets(ObjectVector& targets, SmartScriptHolder const& e, 
             }
 
             if (e.target.unitDistance.maxSize)
-                Trinity::Containers::RandomResize(targets, e.target.unitDistance.maxSize);
+                monster::Containers::RandomResize(targets, e.target.unitDistance.maxSize);
 
             break;
         }
@@ -3403,7 +3403,7 @@ void SmartScript::GetTargets(ObjectVector& targets, SmartScriptHolder const& e, 
             }
 
             if (e.target.goDistance.maxSize)
-                Trinity::Containers::RandomResize(targets, e.target.goDistance.maxSize);
+                monster::Containers::RandomResize(targets, e.target.goDistance.maxSize);
             break;
         }
 
@@ -3425,7 +3425,7 @@ void SmartScript::GetTargets(ObjectVector& targets, SmartScriptHolder const& e, 
             }
 
             if (e.target.goRange.maxSize)
-                Trinity::Containers::RandomResize(targets, e.target.goRange.maxSize);
+                monster::Containers::RandomResize(targets, e.target.goRange.maxSize);
             break;
         }
 
@@ -3568,7 +3568,7 @@ void SmartScript::GetTargets(ObjectVector& targets, SmartScriptHolder const& e, 
                     std::list<Player*> players = me->GetPlayersInRange((float)e.target.playerDistance.dist, true);
                     if (!players.empty())
                     {
-                        players.sort(Trinity::ObjectDistanceOrderPred(me));
+                        players.sort(monster::ObjectDistanceOrderPred(me));
                         std::list<Player*>::reverse_iterator ritr = players.rbegin();
                         targets.push_back(*ritr);
                     }
@@ -3753,8 +3753,8 @@ void SmartScript::GetWorldObjectsInDist(ObjectVector& targets, float dist) const
     if (!obj)
         return;
 
-    Trinity::AllWorldObjectsInRange u_check(obj, dist);
-    Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(obj, targets, u_check);
+    monster::AllWorldObjectsInRange u_check(obj, dist);
+    monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(obj, targets, u_check);
     Cell::VisitAllObjects(obj, searcher, dist);
 }
 
@@ -3905,7 +3905,7 @@ void SmartScript::ProcessEvent(SmartScriptHolder& e, Unit* unit, uint32 var0, ui
                 RecalcTimer(e, 1000, 3000);
                 return;
             }
-            ProcessTimedAction(e, e.m_Event.friendlyCC.repeatMin, e.m_Event.friendlyCC.repeatMax, Trinity::Containers::SelectRandomContainerElement(creatures));
+            ProcessTimedAction(e, e.m_Event.friendlyCC.repeatMin, e.m_Event.friendlyCC.repeatMax, monster::Containers::SelectRandomContainerElement(creatures));
             break;
         }
         case SMART_EVENT_FRIENDLY_MISSING_BUFF:
@@ -3916,7 +3916,7 @@ void SmartScript::ProcessEvent(SmartScriptHolder& e, Unit* unit, uint32 var0, ui
             if (l_Creatures.empty())
                 return;
 
-            ProcessTimedAction(e, e.m_Event.missingBuff.repeatMin, e.m_Event.missingBuff.repeatMax, Trinity::Containers::SelectRandomContainerElement(l_Creatures));
+            ProcessTimedAction(e, e.m_Event.missingBuff.repeatMin, e.m_Event.missingBuff.repeatMax, monster::Containers::SelectRandomContainerElement(l_Creatures));
             break;
         }
         case SMART_EVENT_HAS_AURA:
@@ -4331,7 +4331,7 @@ void SmartScript::ProcessEvent(SmartScriptHolder& e, Unit* unit, uint32 var0, ui
             std::list<Player*> list = me->GetPlayersInRange((float)e.m_Event.playerDistance.range, true);
 
             if (e.m_Event.playerDistance.aura)
-                list.remove_if(Trinity::UnitAuraCheck(!e.m_Event.playerDistance.isPresent, e.m_Event.playerDistance.aura));
+                list.remove_if(monster::UnitAuraCheck(!e.m_Event.playerDistance.isPresent, e.m_Event.playerDistance.aura));
 
             if (!list.empty())
                 ProcessTimedAction(e, e.m_Event.playerDistance.repeat, e.m_Event.playerDistance.repeat, list.front());
@@ -4570,7 +4570,7 @@ void SmartScript::FillScript(SmartAIEventList p_EventList)
 
     for (SmartAIEventList::iterator i = p_EventList.begin(); i != p_EventList.end(); ++i)
     {
-        #ifndef TRINITY_DEBUG
+        #ifndef monster_DEBUG
             if ((*i).m_Event.event_flags & SMART_EVENT_FLAG_DEBUG_ONLY)
                 continue;
         #endif
@@ -4659,16 +4659,16 @@ Unit* SmartScript::DoSelectLowestHpFriendly(float range, uint32 MinHPDiff) const
     if (!me)
         return nullptr;
 
-    CellCoord p(Trinity::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
+    CellCoord p(monster::ComputeCellCoord(me->GetPositionX(), me->GetPositionY()));
     Cell cell(p);
     cell.SetNoCreate();
 
     Unit* unit = nullptr;
 
-    Trinity::MostHPMissingInRange u_check(me, range, MinHPDiff);
-    Trinity::UnitLastSearcher<Trinity::MostHPMissingInRange> searcher(me, unit, u_check);
+    monster::MostHPMissingInRange u_check(me, range, MinHPDiff);
+    monster::UnitLastSearcher<monster::MostHPMissingInRange> searcher(me, unit, u_check);
 
-    TypeContainerVisitor<Trinity::UnitLastSearcher<Trinity::MostHPMissingInRange>, GridTypeMapContainer >  grid_unit_searcher(searcher);
+    TypeContainerVisitor<monster::UnitLastSearcher<monster::MostHPMissingInRange>, GridTypeMapContainer >  grid_unit_searcher(searcher);
 
     cell.Visit(p, grid_unit_searcher, *me->GetMap(), *me, range);
     return unit;
@@ -4679,8 +4679,8 @@ void SmartScript::DoFindFriendlyCC(std::vector<Creature*>& creatures, float rang
     if (!me)
         return;
 
-    Trinity::FriendlyCCedInRange u_check(me, range);
-    Trinity::CreatureListSearcher<Trinity::FriendlyCCedInRange> searcher(me, creatures, u_check);
+    monster::FriendlyCCedInRange u_check(me, range);
+    monster::CreatureListSearcher<monster::FriendlyCCedInRange> searcher(me, creatures, u_check);
     Cell::VisitGridObjects(me, searcher, range);
 }
 
@@ -4689,8 +4689,8 @@ void SmartScript::DoFindFriendlyMissingBuff(std::vector<Creature*>& creatures, f
     if (!me)
         return;
 
-    Trinity::FriendlyMissingBuffInRange u_check(me, range, spellid);
-    Trinity::CreatureListSearcher<Trinity::FriendlyMissingBuffInRange> searcher(me, creatures, u_check);
+    monster::FriendlyMissingBuffInRange u_check(me, range, spellid);
+    monster::CreatureListSearcher<monster::FriendlyMissingBuffInRange> searcher(me, creatures, u_check);
     Cell::VisitGridObjects(me, searcher, range);
 }
 
@@ -4700,8 +4700,8 @@ Unit* SmartScript::DoFindClosestFriendlyInRange(float range, bool playerOnly) co
         return nullptr;
 
     Unit* unit = nullptr;
-    Trinity::AnyFriendlyUnitInObjectRangeCheck u_check(me, me, range);
-    Trinity::UnitLastSearcher<Trinity::AnyFriendlyUnitInObjectRangeCheck> searcher(me, unit, u_check);
+    monster::AnyFriendlyUnitInObjectRangeCheck u_check(me, me, range);
+    monster::UnitLastSearcher<monster::AnyFriendlyUnitInObjectRangeCheck> searcher(me, unit, u_check);
     Cell::VisitAllObjects(me, searcher, range);
     return unit;
 }

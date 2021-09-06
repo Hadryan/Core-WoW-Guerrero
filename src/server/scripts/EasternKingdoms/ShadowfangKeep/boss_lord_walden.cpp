@@ -129,8 +129,8 @@ class HordeOutroEventWalden : public BasicEvent
                     if (Creature* warlord = _owner->FindNearestCreature(NPC_HIGH_WARLORD_CROMUSH, 100.00f))
                     {
                         std::list<Creature*> trooperList;
-                        Trinity::AllCreaturesOfEntryInRange checker(warlord, NPC_VETERAN_FORSAKEN_TROOPER, 20.0f);
-                        Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(warlord, trooperList, checker);
+                        monster::AllCreaturesOfEntryInRange checker(warlord, NPC_VETERAN_FORSAKEN_TROOPER, 20.0f);
+                        monster::CreatureListSearcher<monster::AllCreaturesOfEntryInRange> searcher(warlord, trooperList, checker);
                         warlord->VisitNearbyObject(20.0f, searcher);
 
                         for (Creature* trooper : trooperList)
@@ -150,8 +150,8 @@ class HordeOutroEventWalden : public BasicEvent
                     if (Creature* warlord = _owner->FindNearestCreature(NPC_HIGH_WARLORD_CROMUSH, 100.00f))
                     {
                         std::list<Creature*> trooperList;
-                        Trinity::AllCreaturesOfEntryInRange checker(warlord, NPC_VETERAN_FORSAKEN_TROOPER, 20.0f);
-                        Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(warlord, trooperList, checker);
+                        monster::AllCreaturesOfEntryInRange checker(warlord, NPC_VETERAN_FORSAKEN_TROOPER, 20.0f);
+                        monster::CreatureListSearcher<monster::AllCreaturesOfEntryInRange> searcher(warlord, trooperList, checker);
                         warlord->VisitNearbyObject(20.0f, searcher);
 
                         for (Creature* trooper : trooperList)

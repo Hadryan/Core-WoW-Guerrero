@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2011-2012 Project SkyFire <http://www.projectskyfire.org/>
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2006-2012 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -342,8 +342,8 @@ public:
                     //Give Credit
                     std::list<Player*> players;
 
-                    Trinity::AnyPlayerInObjectRangeCheck checker(me, 35.0f);
-                    Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(me, players, checker);
+                    monster::AnyPlayerInObjectRangeCheck checker(me, 35.0f);
+                    monster::PlayerListSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(me, players, checker);
                     me->VisitNearbyWorldObject(35.0f, searcher);
 
                     for (Player* player : players)

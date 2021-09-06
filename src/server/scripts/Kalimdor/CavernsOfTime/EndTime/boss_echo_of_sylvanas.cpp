@@ -553,7 +553,7 @@ public:
         void FilterTargets(std::list<WorldObject*>& targets)
         {
             Unit* caster = GetCaster();
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_WRACKING_PAIN_PERIODIC_DUMMY));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_WRACKING_PAIN_PERIODIC_DUMMY));
             targets.remove_if([caster](WorldObject* target) {
                 return target->GetEntry() != NPC_RISEN_GHOUL;
             });

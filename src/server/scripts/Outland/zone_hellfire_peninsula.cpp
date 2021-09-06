@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -160,7 +160,7 @@ public:
             if (creature->GetOwner() && creature->GetOwner()->GetTypeId() == TYPEID_PLAYER)
                 Start(false, false, creature->GetOwner()->GetGUID());
             else
-                TC_LOG_ERROR("scripts", "TRINITY: npc_ancestral_wolf can not obtain owner or owner is not a player.");
+                TC_LOG_ERROR("scripts", "monster: npc_ancestral_wolf can not obtain owner or owner is not a player.");
 
             creature->SetSpeed(MOVE_WALK, 1.5f);
             Reset();

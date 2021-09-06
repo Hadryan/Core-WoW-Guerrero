@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -16,8 +16,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __TRINITY_LANGUAGE_H
-#define __TRINITY_LANGUAGE_H
+#ifndef __monster_LANGUAGE_H
+#define __monster_LANGUAGE_H
 
 enum BroadcastTextIds
 {
@@ -26,7 +26,7 @@ enum BroadcastTextIds
     BROADCAST_TEXT_FLEE_FOR_ASSIST      = 1150
 };
 
-enum TrinityStrings
+enum monsterStrings
 {
     // for chat commands
     LANG_SELECT_CHAR_OR_CREATURE        = 1,
@@ -1018,7 +1018,7 @@ enum TrinityStrings
     LANG_COMMAND_TICKETRESET            = 2028,
     LANG_COMMAND_TICKETLISTRESPONSE     = 2029,
 
-    // Trinity strings                    5000-9999
+    // monster strings                    5000-9999
     LANG_COMMAND_FREEZE                 = 5000,
     LANG_COMMAND_FREEZE_ERROR           = 5001,
     LANG_COMMAND_FREEZE_WRONG           = 5002,
@@ -1056,7 +1056,7 @@ enum TrinityStrings
     LANG_COMMAND_NO_ACHIEVEMENT_CRITERIA_FOUND = 5033,
     LANG_COMMAND_NO_OUTDOOR_PVP_FORUND  = 5034,
     LANG_CALL_FOR_HELP                  = 5035, // unused
-    // Room for more Trinity strings      5036-9999
+    // Room for more monster strings      5036-9999
 
     // Level requirement notifications
     LANG_SAY_REQ                        = 6604,

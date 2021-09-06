@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -16,8 +16,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRINITY_GRIDSTATES_H
-#define TRINITY_GRIDSTATES_H
+#ifndef monster_GRIDSTATES_H
+#define monster_GRIDSTATES_H
 
 #include "Map.h"
 #include "Object.h"
@@ -25,7 +25,7 @@
 class GridState
 {
     public:
-#ifdef TRINITY_DEBUG
+#ifdef monster_DEBUG
 #define MAGIC_TESTVAL 0xFBE823BA
         GridState() { i_Magic = MAGIC_TESTVAL; }
         bool checkMagic()

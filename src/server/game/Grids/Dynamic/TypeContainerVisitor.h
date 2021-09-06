@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2018 TrinityCore <https://www.trinitycore.org/>
+ * Copyright (C) 2008-2018 monsterCore <https://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -16,8 +16,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRINITY_TYPECONTAINERVISITOR_H
-#define TRINITY_TYPECONTAINERVISITOR_H
+#ifndef monster_TYPECONTAINERVISITOR_H
+#define monster_TYPECONTAINERVISITOR_H
 
 /*
  * @class TypeContainerVisitor is implemented as a visitor pattern.  It is

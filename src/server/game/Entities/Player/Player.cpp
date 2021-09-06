@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -386,7 +386,7 @@ inline void KillRewarder::_InitGroupData()
                         _maxLevel = lvl;
                     // 2.4. _maxNotGrayMember - maximum level of alive group member within reward distance,
                     //      for whom victim is not gray;
-                    uint32 grayLevel = Trinity::XP::GetGrayLevel(lvl);
+                    uint32 grayLevel = monster::XP::GetGrayLevel(lvl);
                     if (_victim->getLevel() > grayLevel && (!_maxNotGrayMember || _maxNotGrayMember->getLevel() < lvl))
                         _maxNotGrayMember = member;
                 }
@@ -406,7 +406,7 @@ inline void KillRewarder::_InitXP(Player* player)
     // * otherwise, not in PvP;
     // * not if killer is on vehicle.
     if (_isBattleGround || (!_isPvP && !_killer->GetVehicle()))
-        _xp = Trinity::XP::Gain(player, _victim);
+        _xp = monster::XP::Gain(player, _victim);
 }
 
 inline void KillRewarder::_RewardHonor(Player* player)
@@ -567,7 +567,7 @@ void KillRewarder::_RewardGroup()
             {
                 // 3.1.2. Alter group rate if group is in raid (not for battlegrounds).
                 const bool isRaid = !_isPvP && sMapStore.LookupEntry(_killer->GetMapId())->IsRaid() && _group->isRaidGroup();
-                _groupRate = Trinity::XP::xp_in_group_rate(_count, isRaid);
+                _groupRate = monster::XP::xp_in_group_rate(_count, isRaid);
             }
 
             // 3.1.3. Reward each group member (even dead or corpse) within reward distance.
@@ -2840,7 +2840,7 @@ void Player::Regenerate(Powers power)
         {
             float ManaIncreaseRate = sWorld->getRate(RATE_POWER_MANA);
 
-            if (isInCombat()) // Trinity Updates Mana in intervals of 2s, which is correct
+            if (isInCombat()) // monster Updates Mana in intervals of 2s, which is correct
                 addvalue += GetFloatValue(UNIT_FIELD_POWER_REGEN_INTERRUPTED_FLAT_MODIFIER) *  ManaIncreaseRate * ((0.001f * m_regenTimer) + CalculatePct(0.001f, spellHaste));
             else
                 addvalue += GetFloatValue(UNIT_FIELD_POWER_REGEN_FLAT_MODIFIER) *  ManaIncreaseRate * ((0.001f * m_regenTimer) + CalculatePct(0.001f, spellHaste));
@@ -6247,7 +6247,7 @@ void Player::UpdateLocalChannels(uint32 newZone)
                     char const* currentNameExt;
 
                     if (channel->flags & CHANNEL_DBC_FLAG_CITY_ONLY)
-                        currentNameExt = sObjectMgr->GetTrinityStringForDBCLocale(LANG_CHANNEL_CITY);
+                        currentNameExt = sObjectMgr->GetmonsterStringForDBCLocale(LANG_CHANNEL_CITY);
                     else
                         currentNameExt = current_zone_name.c_str();
 
@@ -6816,13 +6816,13 @@ void Player::GiveXpForGather(uint32 const& skillId, uint32 const& reqSkillValue)
 
     uint8 level;
     if(levelDiff >= 10 && levelDiff < 20)
-        level = Trinity::XP::GetGrayLevel(getLevel()) + 1;
+        level = monster::XP::GetGrayLevel(getLevel()) + 1;
     else if(levelDiff >= 20)
-        level = Trinity::XP::GetGrayLevel(getLevel());
+        level = monster::XP::GetGrayLevel(getLevel());
     else
         level = getLevel() + 3;
 
-    uint32 xp = Trinity::XP::BaseGain(level, areaEntry->area_level, GetContentLevelsForMapAndZone(GetMapId(), GetZoneId())) * 2;
+    uint32 xp = monster::XP::BaseGain(level, areaEntry->area_level, GetContentLevelsForMapAndZone(GetMapId(), GetZoneId())) * 2;
 
     if(!xp || levelDiff >= 20)
         return;
@@ -7474,7 +7474,7 @@ void Player::SendMessageToSetInRange(WorldPacket* data, float dist, bool self)
     if (self)
         GetSession()->SendPacket(data);
 
-    Trinity::MessageDistDeliverer notifier(this, data, dist);
+    monster::MessageDistDeliverer notifier(this, data, dist);
     VisitNearbyWorldObject(dist, notifier);
 }
 
@@ -7483,7 +7483,7 @@ void Player::SendMessageToSetInRange(WorldPacket* data, float dist, bool self, b
     if (self)
         GetSession()->SendPacket(data);
 
-    Trinity::MessageDistDeliverer notifier(this, data, dist, own_team_only);
+    monster::MessageDistDeliverer notifier(this, data, dist, own_team_only);
     VisitNearbyWorldObject(dist, notifier);
 }
 
@@ -7494,7 +7494,7 @@ void Player::SendMessageToSet(WorldPacket* data, Player const* skipped_rcvr)
 
     // we use World::GetMaxVisibleDistance() because i cannot see why not use a distance
     // update: replaced by GetMap()->GetVisibilityDistance()
-    Trinity::MessageDistDeliverer notifier(this, data, GetVisibilityRange(), false, skipped_rcvr);
+    monster::MessageDistDeliverer notifier(this, data, GetVisibilityRange(), false, skipped_rcvr);
     VisitNearbyWorldObject(GetVisibilityRange(), notifier);
 }
 
@@ -7672,7 +7672,7 @@ int32 Player::CalculateReputationGain(ReputationSource source, uint32 creatureOr
             break;
     }
 
-    if (rate != 1.0f && creatureOrQuestLevel <= Trinity::XP::GetGrayLevel(getLevel()))
+    if (rate != 1.0f && creatureOrQuestLevel <= monster::XP::GetGrayLevel(getLevel()))
         percent *= rate;
 
     if (percent <= 0.0f)
@@ -7901,7 +7901,7 @@ bool Player::RewardHonor(Unit* victim, uint32 groupsize, int32 honor, bool pvpto
                 return false;
 
             uint8 k_level = getLevel();
-            uint8 k_grey = Trinity::XP::GetGrayLevel(k_level);
+            uint8 k_grey = monster::XP::GetGrayLevel(k_level);
             uint8 v_level = victim->getLevel();
 
             if (v_level <= k_grey)
@@ -7928,7 +7928,7 @@ bool Player::RewardHonor(Unit* victim, uint32 groupsize, int32 honor, bool pvpto
             else
                 victim_guid = 0;                        // Don't show HK: <rank> message, only log.
 
-            honor_f = ceil(Trinity::Honor::hk_honor_at_level_f(k_level) * (v_level - k_grey) / (k_level - k_grey));
+            honor_f = ceil(monster::Honor::hk_honor_at_level_f(k_level) * (v_level - k_grey) / (k_level - k_grey));
 
             // count the number of playerkills in one day
             ApplyModUInt32Value(PLAYER_FIELD_KILLS, 1, true);
@@ -8475,16 +8475,16 @@ void Player::UpdateConquestCurrencyCap(uint32 currency)
         {
             case CURRENCY_TYPE_CONQUEST_POINTS:
             {
-                uint32 arenaCap = Trinity::Currency::ConquestRatingCalculator(GetMaxPersonalArenaRatingRequirement(0)) * CURRENCY_PRECISION;
-                uint32 rbgCap = Trinity::Currency::BgConquestRatingCalculator(GetRbgOrSoloQueueRatingForCapCalculation()) * CURRENCY_PRECISION;
+                uint32 arenaCap = monster::Currency::ConquestRatingCalculator(GetMaxPersonalArenaRatingRequirement(0)) * CURRENCY_PRECISION;
+                uint32 rbgCap = monster::Currency::BgConquestRatingCalculator(GetRbgOrSoloQueueRatingForCapCalculation()) * CURRENCY_PRECISION;
                 cap = std::max(arenaCap, rbgCap);
                 break;
             }
             case CURRENCY_TYPE_CONQUEST_META_ARENA:
-                cap = Trinity::Currency::ConquestRatingCalculator(GetMaxPersonalArenaRatingRequirement(0)) * CURRENCY_PRECISION;
+                cap = monster::Currency::ConquestRatingCalculator(GetMaxPersonalArenaRatingRequirement(0)) * CURRENCY_PRECISION;
                 break;
             case CURRENCY_TYPE_CONQUEST_META_RBG:
-                cap = Trinity::Currency::BgConquestRatingCalculator(GetRbgOrSoloQueueRatingForCapCalculation()) * CURRENCY_PRECISION;
+                cap = monster::Currency::BgConquestRatingCalculator(GetRbgOrSoloQueueRatingForCapCalculation()) * CURRENCY_PRECISION;
                 break;
         }
 
@@ -17329,7 +17329,7 @@ void Player::RemoveRewardedSpecializationQuest(uint32 spellId)
     CharacterDatabase.CommitTransaction(trans);
 }
 
-// not used in Trinity, but used in scripting code
+// not used in monster, but used in scripting code
 uint16 Player::GetReqKillOrCastCurrentCount(uint32 quest_id, int32 entry)
 {
     Quest const* qInfo = sObjectMgr->GetQuestTemplate(quest_id);
@@ -17408,7 +17408,7 @@ void Player::AreaExploredOrEventHappens(uint32 questId)
     }
 }
 
-//not used in Trinityd, function for external script library
+//not used in monsterd, function for external script library
 void Player::GroupEventHappens(uint32 questId, WorldObject const* pEventObject)
 {
     if (Group* group = GetGroup())
@@ -18812,7 +18812,7 @@ bool Player::LoadFromDB(uint32 guid, SQLQueryHolder *holder)
         m_movementInfo.t_guid = MAKE_NEW_GUID(transGUID, 0, HIGHGUID_MO_TRANSPORT);
         m_movementInfo.t_pos.Relocate(fields[27].GetFloat(), fields[28].GetFloat(), fields[29].GetFloat(), fields[30].GetFloat());
 
-        if (!Trinity::IsValidMapCoord(
+        if (!monster::IsValidMapCoord(
             GetPositionX()+m_movementInfo.t_pos.m_positionX, GetPositionY()+m_movementInfo.t_pos.m_positionY,
             GetPositionZ()+m_movementInfo.t_pos.m_positionZ, GetOrientation()+m_movementInfo.t_pos.GetOrientation()) ||
             // transport size limited
@@ -19626,7 +19626,7 @@ void Player::_LoadInventory(PreparedQueryResult result, uint32 timeDiff)
         // Send problematic items by mail
         while (!problematicItems.empty())
         {
-            std::string subject = GetSession()->GetTrinityString(LANG_NOT_EQUIPPED_ITEM);
+            std::string subject = GetSession()->GetmonsterString(LANG_NOT_EQUIPPED_ITEM);
 
             MailDraft draft(subject, "There were problems with equipping item(s).");
             for (uint8 i = 0; !problematicItems.empty() && i < MAX_MAIL_ITEMS; ++i)
@@ -20626,7 +20626,7 @@ bool Player::Satisfy(AccessRequirement const* ar, uint32 target_map, bool report
 
         if (DisableMgr::IsDisabledFor(DISABLE_TYPE_MAP, target_map, this))
         {
-            GetSession()->SendAreaTriggerMessage("%s", GetSession()->GetTrinityString(LANG_INSTANCE_CLOSED));
+            GetSession()->SendAreaTriggerMessage("%s", GetSession()->GetmonsterString(LANG_INSTANCE_CLOSED));
             return false;
         }
 
@@ -20657,9 +20657,9 @@ bool Player::Satisfy(AccessRequirement const* ar, uint32 target_map, bool report
                 else if (mapDiff->hasErrorMessage) // if (missingAchievement) covered by this case
                     SendTransferAborted(target_map, TRANSFER_ABORT_DIFFICULTY, target_difficulty);
                 else if (missingItem)
-                    GetSession()->SendAreaTriggerMessage(GetSession()->GetTrinityString(LANG_LEVEL_MINREQUIRED_AND_ITEM), LevelMin, sObjectMgr->GetItemTemplate(missingItem)->Name1.c_str());
+                    GetSession()->SendAreaTriggerMessage(GetSession()->GetmonsterString(LANG_LEVEL_MINREQUIRED_AND_ITEM), LevelMin, sObjectMgr->GetItemTemplate(missingItem)->Name1.c_str());
                 else if (LevelMin)
-                    GetSession()->SendAreaTriggerMessage(GetSession()->GetTrinityString(LANG_LEVEL_MINREQUIRED), LevelMin);
+                    GetSession()->SendAreaTriggerMessage(GetSession()->GetmonsterString(LANG_LEVEL_MINREQUIRED), LevelMin);
             }
             return false;
         }
@@ -24371,7 +24371,7 @@ inline void UpdateVisibilityOf_helper(std::set<uint64>& s64, Creature* target, s
 
 inline void UpdateVisibilityOf_helper(std::set<uint64>& s64, GameObject* target, std::set<Unit*>& /*v*/)
 {
-	// From old trinity revision
+	// From old monster revision
 	//if (!target->IsTransport() && !(target->GetGOInfo()->type == GAMEOBJECT_TYPE_DESTRUCTIBLE_BUILDING))
 	// s64.insert(target->GetGUID());
 
@@ -24411,7 +24411,7 @@ void Player::UpdateVisibilityOf(WorldObject* target)
             target->DestroyForPlayer(this);
             m_clientGUIDs.erase(target->GetGUID());
 
-            #ifdef TRINITY_DEBUG
+            #ifdef monster_DEBUG
                 TC_LOG_DEBUG("maps", "Object %u (Type: %u) out of range for player %u. Distance = %f", target->GetGUIDLow(), target->GetTypeId(), GetGUIDLow(), GetDistance(target));
             #endif
         }
@@ -24426,7 +24426,7 @@ void Player::UpdateVisibilityOf(WorldObject* target)
             target->SendUpdateToPlayer(this);
             m_clientGUIDs.insert(target->GetGUID());
 
-            #ifdef TRINITY_DEBUG
+            #ifdef monster_DEBUG
                 TC_LOG_DEBUG("maps", "Object %u (Type: %u) is visible now for player %u. Distance = %f", target->GetGUIDLow(), target->GetTypeId(), GetGUIDLow(), GetDistance(target));
             #endif
 
@@ -24486,7 +24486,7 @@ void Player::UpdateVisibilityOf(T* target, UpdateData& data, std::set<Unit*>& vi
             target->BuildOutOfRangeUpdateBlock(&data);
             m_clientGUIDs.erase(target->GetGUID());
 
-            #ifdef TRINITY_DEBUG
+            #ifdef monster_DEBUG
                 TC_LOG_DEBUG("maps", "Object %u (Type: %u, Entry: %u) is out of range for player %u. Distance = %f", target->GetGUIDLow(), target->GetTypeId(), target->GetEntry(), GetGUIDLow(), GetDistance(target));
             #endif
         }
@@ -24501,7 +24501,7 @@ void Player::UpdateVisibilityOf(T* target, UpdateData& data, std::set<Unit*>& vi
             target->BuildCreateUpdateBlockForPlayer(&data, this);
             UpdateVisibilityOf_helper(m_clientGUIDs, target, visibleNow);
 
-            #ifdef TRINITY_DEBUG
+            #ifdef monster_DEBUG
                 TC_LOG_DEBUG("maps", "Object %u (Type: %u, Entry: %u) is visible now for player %u. Distance = %f", target->GetGUIDLow(), target->GetTypeId(), target->GetEntry(), GetGUIDLow(), GetDistance(target));
             #endif
         }
@@ -24529,7 +24529,7 @@ void Player::UpdateObjectVisibility(bool forced)
 void Player::UpdateVisibilityForPlayer()
 {
     // updates visibility of all objects around point of view for current player
-    Trinity::VisibleNotifier notifier(*this);
+    monster::VisibleNotifier notifier(*this);
     m_seer->VisitNearbyObject(GetSightRange(), notifier);
     notifier.SendToSelf();   // send gathered data
 }
@@ -25534,7 +25534,7 @@ void Player::AutoUnequipOffhandIfNeed(bool force /*= false*/)
         offItem->DeleteFromInventoryDB(trans);                   // deletes item from character's inventory
         offItem->SaveToDB(trans);                                // recursive and not have transaction guard into self, item not in inventory and can be save standalone
 
-        std::string subject = GetSession()->GetTrinityString(LANG_NOT_EQUIPPED_ITEM);
+        std::string subject = GetSession()->GetmonsterString(LANG_NOT_EQUIPPED_ITEM);
         MailDraft(subject, "There were problems with equipping one or several items").AddItem(offItem).SendMailTo(trans, this, MailSender(this, MAIL_STATIONERY_GM), MAIL_CHECK_MASK_COPIED);
 
         CharacterDatabase.CommitTransaction(trans);
@@ -25702,7 +25702,7 @@ uint32 Player::GetResurrectionSpellId()
 bool Player::isHonorOrXPTarget(Unit const* victim)
 {
     uint8 v_level = victim->getLevel();
-    uint8 k_grey  = Trinity::XP::GetGrayLevel(getLevel());
+    uint8 k_grey  = monster::XP::GetGrayLevel(getLevel());
 
     // Victim level less gray level
     if (v_level <= k_grey)

@@ -544,10 +544,10 @@ class npc_razorclaw_the_butcher : public CreatureScript
                         case EVENT_SPECTRAL_RUSH:
                         {
                             std::list<Player*> players;
-                            Trinity::AnyPlayerInObjectRangeCheck checker(me, 45.00f);
-                            Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(me, players, checker);
+                            monster::AnyPlayerInObjectRangeCheck checker(me, 45.00f);
+                            monster::PlayerListSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(me, players, checker);
                             me->VisitNearbyWorldObject(45.00f, searcher);
-                            players.sort(Trinity::ObjectDistanceOrderPred(me, false));
+                            players.sort(monster::ObjectDistanceOrderPred(me, false));
 
                             if (!players.empty())
                                 DoCast(players.front(), SPELL_SPECTRAL_RUSH, true);

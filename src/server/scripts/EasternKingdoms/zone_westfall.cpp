@@ -1,6 +1,6 @@
 /*
-* Copyright (C) 2011-2013 Project Trinity <http://www.projectTrinity.org/>
-* Copyright (C) 2008-2013 Trinity <http://www.trinitycore.org/>
+* Copyright (C) 2011-2013 Project monster <http://www.projectmonster.org/>
+* Copyright (C) 2008-2013 monster <http://www.monstercore.org/>
 * Copyright (C) 2005-2013 MaNGOS <http://www.getmangos.com/>
 *
 * This program is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 */
 
 /* ScriptData
-TrinityScript_Name: Westfall
+monsterScript_Name: Westfall
 %Complete: 90
 Comment: Alot of this needs moved to db... it doesnt belong in core script.
 Category: Westfall
@@ -758,8 +758,8 @@ public:
 
                                     std::list<Player*> players;
 
-                                    Trinity::AnyPlayerInObjectRangeCheck checker(me, 25.0f);
-                                    Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(me, players, checker);
+                                    monster::AnyPlayerInObjectRangeCheck checker(me, 25.0f);
+                                    monster::PlayerListSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(me, players, checker);
                                     me->VisitNearbyWorldObject(20.0f, searcher);
 
                                     for (std::list<Player*>::const_iterator itr = players.begin(); itr != players.end(); ++itr)

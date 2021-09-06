@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -162,7 +162,7 @@ public:
                 GetCreatureListWithEntryInGrid(stalkers, me, NPC_BEETLE_STALKER, 100.0f);
                 std::list<Creature*> beetlers = stalkers;
 
-                Trinity::Containers::RandomResizeList(beetlers, 9); // Holds the summoners of Jeweled Scarab
+                monster::Containers::RandomResizeList(beetlers, 9); // Holds the summoners of Jeweled Scarab
 
                 for (std::list<Creature*>::iterator itr = beetlers.begin(); itr != beetlers.end(); ++itr)
                 {
@@ -172,7 +172,7 @@ public:
                     (*itr)->m_Events.AddEvent(new SummonScarab((*itr), instance), (*itr)->m_Events.CalculateTime(5000));
                 }
 
-                Trinity::Containers::RandomResizeList(stalkers, 2); // Holds the summoners of Dustbone Horror
+                monster::Containers::RandomResizeList(stalkers, 2); // Holds the summoners of Dustbone Horror
 
                 for (std::list<Creature*>::iterator itr = stalkers.begin(); itr != stalkers.end(); ++itr)
                     (*itr)->CastSpell((*itr), SPELL_SUMMON_DUSTBONE_HORROR);

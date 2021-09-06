@@ -645,7 +645,7 @@ public:
         if (vTargets.empty())
             return NULL;
 
-        return Trinity::Containers::SelectRandomContainerElement(vTargets);
+        return monster::Containers::SelectRandomContainerElement(vTargets);
     }
 
     // Function to get a square as close as possible to the enemy
@@ -701,8 +701,8 @@ public:
             return NULL;
 
         // Sort the enemies by distance and the squares compared to the distance to the closest enemy
-        lEnemies.sort(Trinity::ObjectDistanceOrderPred(me));
-        lSquaresList.sort(Trinity::ObjectDistanceOrderPred(lEnemies.front()));
+        lEnemies.sort(monster::ObjectDistanceOrderPred(me));
+        lSquaresList.sort(monster::ObjectDistanceOrderPred(lEnemies.front()));
 
         return lSquaresList.front();
     }
@@ -2654,7 +2654,7 @@ public:
                                   return true;
                               });
             if (targets.size() > 3)
-                Trinity::Containers::RandomResizeList(targets, 3);
+                monster::Containers::RandomResizeList(targets, 3);
         }
 
         void HandleScript(SpellEffIndex effIndex)
@@ -2773,7 +2773,7 @@ public:
                                   return true;
                               });
             if (targets.size() > 3)
-                Trinity::Containers::RandomResizeList(targets, 3);
+                monster::Containers::RandomResizeList(targets, 3);
         }
 
         void Register()

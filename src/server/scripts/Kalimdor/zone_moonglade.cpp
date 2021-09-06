@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -321,8 +321,8 @@ public:
         void IsSummonedBy(Unit* /*summoner*/)
         {
             std::list<Player*> playerOnQuestList;
-            Trinity::AnyPlayerInObjectRangeCheck checker(me, 5.0f);
-            Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(me, playerOnQuestList, checker);
+            monster::AnyPlayerInObjectRangeCheck checker(me, 5.0f);
+            monster::PlayerListSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(me, playerOnQuestList, checker);
             me->VisitNearbyWorldObject(5.0f, searcher);
             for (std::list<Player*>::const_iterator itr = playerOnQuestList.begin(); itr != playerOnQuestList.end(); ++itr)
             {

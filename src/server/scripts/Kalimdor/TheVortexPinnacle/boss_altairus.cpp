@@ -212,7 +212,7 @@ class boss_altairus : public CreatureScript
                     twisterList.remove_if([=](WorldObject* target) { return target && target->ToCreature() && target->ToCreature()->HasAura(SPELL_TWISTER_AURA); });
 
                     if (twisterList.size() > count)
-                        Trinity::Containers::RandomResizeList(twisterList, count);
+                        monster::Containers::RandomResizeList(twisterList, count);
 
                     for (auto&& itr : twisterList)
                         itr->AI()->DoAction(ACTION_INIT_TWIST);

@@ -133,7 +133,7 @@ public:
         void ActivateNextCorruption(std::list<Creature*> spawnerList, bool first)
         {
             uint8 count = first ? 4 : 2;
-            spawnerList.sort(Trinity::ObjectDistanceOrderPred(me));
+            spawnerList.sort(monster::ObjectDistanceOrderPred(me));
             spawnerList.remove_if([](Creature* crea)
             {
                 return crea->AI()->GetGUID();
@@ -327,7 +327,7 @@ public:
 
                         if (!spawnerList.empty())
                         {
-                            Unit* target = Trinity::Containers::SelectRandomContainerElement(spawnerList);
+                            Unit* target = monster::Containers::SelectRandomContainerElement(spawnerList);
                             if (target)
                                 target->CastSpell(target, SPELL_SUMMON_SLIME, true);
                         }
@@ -430,7 +430,7 @@ public:
                     return !crea->AI()->GetGUID() || crea == spawner;
                 });
                 if (!creatureList.empty())
-                    corruption = Trinity::Containers::SelectRandomContainerElement(creatureList);
+                    corruption = monster::Containers::SelectRandomContainerElement(creatureList);
                 if (corruption) // actually now its the spawner
                 {
                     corruption->RemoveAllAuras();
@@ -892,9 +892,9 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Trinity::UnitAuraCheck(true, sSpellMgr->GetSpellIdForDifficulty(SPELL_SEARING_PLASMA_TR, GetCaster())));
+            targets.remove_if(monster::UnitAuraCheck(true, sSpellMgr->GetSpellIdForDifficulty(SPELL_SEARING_PLASMA_TR, GetCaster())));
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void HandleScriptEffect(SpellEffIndex /*effIndex*/)
@@ -971,7 +971,7 @@ public:
                 });
             }
 
-            targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+            targets.sort(monster::ObjectDistanceOrderPred(GetCaster()));
             if (targets.size() > 1)
                 targets.resize(1);
         }
@@ -1267,10 +1267,10 @@ public:
         void FilterTargets(std::list<WorldObject*>& targetlist)
         {
             uint8 count = GetCaster()->ToCreature() ? (GetCaster()->GetMap()->Is25ManRaid() ? 3 : 1) : 1;
-            targetlist.remove_if(Trinity::UnitAuraCheck(true, GetSpellInfo()->Id == SPELL_BLOOD_CORRUPTION_DEATH ? SPELL_BLOOD_CORRUPTION_EARTH : SPELL_BLOOD_CORRUPTION_DEATH));
+            targetlist.remove_if(monster::UnitAuraCheck(true, GetSpellInfo()->Id == SPELL_BLOOD_CORRUPTION_DEATH ? SPELL_BLOOD_CORRUPTION_EARTH : SPELL_BLOOD_CORRUPTION_DEATH));
             targetlist.remove(GetCaster());
             if (!targetlist.empty())
-                Trinity::Containers::RandomResizeList(targetlist, count);
+                monster::Containers::RandomResizeList(targetlist, count);
         }
 
         void Register() override

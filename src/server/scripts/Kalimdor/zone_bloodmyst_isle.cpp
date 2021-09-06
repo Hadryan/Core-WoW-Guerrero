@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -864,8 +864,8 @@ public:
 
                 //Find Sironas and make it respawn if needed
                 Creature* sironas = NULL;
-                Trinity::AllCreaturesOfEntryInRange check(me, NPC_SIRONAS, SIZE_OF_GRIDS);
-                Trinity::CreatureSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(me, sironas, check);
+                monster::AllCreaturesOfEntryInRange check(me, NPC_SIRONAS, SIZE_OF_GRIDS);
+                monster::CreatureSearcher<monster::AllCreaturesOfEntryInRange> searcher(me, sironas, check);
                 me->VisitNearbyObject(SIZE_OF_GRIDS, searcher);
 
                 if (sironas)

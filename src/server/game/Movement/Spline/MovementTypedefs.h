@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef TRINITYSERVER_TYPEDEFS_H
-#define TRINITYSERVER_TYPEDEFS_H
+#ifndef monsterSERVER_TYPEDEFS_H
+#define monsterSERVER_TYPEDEFS_H
 
 #include "Common.h"
 
@@ -73,4 +73,4 @@ namespace Movement
     extern UInt32Counter splineIdGen;
 }
 
-#endif // TRINITYSERVER_TYPEDEFS_H
+#endif // monsterSERVER_TYPEDEFS_H

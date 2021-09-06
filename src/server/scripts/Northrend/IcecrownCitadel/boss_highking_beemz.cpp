@@ -202,7 +202,7 @@ public:
             entries.push_back(ADD_GAS);
             entries.push_back(ADD_PLAGUE);
 
-            Trinity::Containers::RandomResizeList(entries, uint32(IsHeroic() ? 4 : 3));
+            monster::Containers::RandomResizeList(entries, uint32(IsHeroic() ? 4 : 3));
             uint8 i = 0;
             for (std::list<uint32>::const_iterator itr = entries.begin(); itr != entries.end(); ++itr, ++i)
                 me->SummonCreature(*itr, AddSpawn[i]);
@@ -222,7 +222,7 @@ public:
             entries.push_back(ADD_GAS);
             entries.push_back(ADD_PLAGUE);
 
-            Trinity::Containers::RandomResizeList(entries, 10);
+            monster::Containers::RandomResizeList(entries, 10);
             uint8 i = 0;
             for (std::list<uint32>::const_iterator itr = entries.begin(); itr != entries.end(); ++itr, ++i)
                 me->SummonCreature(*itr, AddEnrageSpawn[i]);
@@ -348,7 +348,7 @@ public:
                     {
                         std::list<Player*> targets;
                         SelectRandomTarget(&targets);
-                        Trinity::Containers::RandomResizeList<Player*>(targets, uint32(Is25ManRaid() ? 4 : 2));
+                        monster::Containers::RandomResizeList<Player*>(targets, uint32(Is25ManRaid() ? 4 : 2));
                         for (std::list<Player*>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
                             DoCast(*itr, SPELL_SWARMING_SHADOWS);
                         events.ScheduleEvent(EVENT_SWARMING_SHADOWS , 35000, 0, PHASE_NORMAL);
@@ -365,7 +365,7 @@ public:
                             ++targetCount;
                         if (Is25ManRaid())
                             ++targetCount;
-                        Trinity::Containers::RandomResizeList<Player*>(targets, targetCount);
+                        monster::Containers::RandomResizeList<Player*>(targets, targetCount);
                         if (targets.size() > 1)
                             for (std::list<Player*>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
                                 DoCast(*itr, SPELL_FATAL_ATRACTION);
@@ -381,7 +381,7 @@ public:
                             ++targetCount;
                         if (Is25ManRaid())
                             ++targetCount;
-                        Trinity::Containers::RandomResizeList<Player*>(targets, targetCount);
+                        monster::Containers::RandomResizeList<Player*>(targets, targetCount);
                         if (targets.size() > 1)
                             for (std::list<Player*>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
                                 DoCast(*itr, SPELL_PACKT_OF_THE_DARKFALLEN);
@@ -424,7 +424,7 @@ public:
                             else ++targetCount;
                         if (Is25ManRaid())
                             targetCount += 2;
-                        Trinity::Containers::RandomResizeList<Player*>(targets, uint32(Is25ManRaid() ? 6 : 2));
+                        monster::Containers::RandomResizeList<Player*>(targets, uint32(Is25ManRaid() ? 6 : 2));
                         for (std::list<Player*>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
                             DoCast(*itr, SPELL_LEGION_FLAME);
                         events.RescheduleEvent(EVENT_FIRE, 21000, 0,PHASE_SPECIAL);
@@ -502,7 +502,7 @@ public:
                 return NULL;
             }
 
-            return Trinity::Containers::SelectRandomContainerElement(tempTargets);
+            return monster::Containers::SelectRandomContainerElement(tempTargets);
         }
     };
 

@@ -191,8 +191,8 @@ class boss_majordomo_staghelm : public CreatureScript
             // Despawn leaping flames ground effect after boss reset
             uint32 spellId = sSpellMgr->GetSpellIdForDifficulty(SPELL_LEAPING_FLAMES_GROUND, me);
             std::list<WorldObject*> targetList;
-            Trinity::AllWorldObjectsInRange objects(me, 250.0f);
-            Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, targetList, objects, GRID_MAP_TYPE_MASK_DYNAMICOBJECT);
+            monster::AllWorldObjectsInRange objects(me, 250.0f);
+            monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, targetList, objects, GRID_MAP_TYPE_MASK_DYNAMICOBJECT);
             me->VisitNearbyObject(250.0f, searcher);
             for (auto objects : targetList)
             {

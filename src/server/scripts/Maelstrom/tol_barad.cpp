@@ -67,7 +67,7 @@ public:
             {
                 if (gy[i]->GetControlTeamId() == player->GetTeamId())
                 {
-                   player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, sObjectMgr->GetTrinityStringForDBCLocale(((BfGraveYardTB*)gy[i])->GetTextId()), GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+i);
+                   player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, sObjectMgr->GetmonsterStringForDBCLocale(((BfGraveYardTB*)gy[i])->GetTextId()), GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+i);
                 }
             }
         }
@@ -112,7 +112,7 @@ class npc_tol_barad_battlemage : public CreatureScript
         {
             if (BfTB->IsWarTime())
             {
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, sObjectMgr->GetTrinityStringForDBCLocale(TB_NPCQUEUE_TEXTOPTION_JOIN), GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, sObjectMgr->GetmonsterStringForDBCLocale(TB_NPCQUEUE_TEXTOPTION_JOIN), GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
                 player->SEND_GOSSIP_MENU(BfTB->GetDefenderTeam() ? TB_NPCQUEUE_TEXT_H_WAR : TB_NPCQUEUE_TEXT_A_WAR, creature->GetGUID());
             }
             else
@@ -121,7 +121,7 @@ class npc_tol_barad_battlemage : public CreatureScript
                 player->SendUpdateWorldState(5332, time(NULL)+uiTime);
                 if (uiTime < 15 * MINUTE)
                 {
-                    player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, sObjectMgr->GetTrinityStringForDBCLocale(TB_NPCQUEUE_TEXTOPTION_JOIN), GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
+                    player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, sObjectMgr->GetmonsterStringForDBCLocale(TB_NPCQUEUE_TEXTOPTION_JOIN), GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
                     player->SEND_GOSSIP_MENU(BfTB->GetDefenderTeam() ? TB_NPCQUEUE_TEXT_H_QUEUE : TB_NPCQUEUE_TEXT_A_QUEUE, creature->GetGUID());
                 }
                 else
@@ -241,8 +241,8 @@ public:
                     case EVENT_CHECK_NEAR_TOWER:
                     {
                         std::list<WorldObject*> targetList;
-                        Trinity::AllWorldObjectsInRange objects(me, 100.00f);
-                        Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, targetList, objects, GRID_MAP_TYPE_MASK_GAMEOBJECT);
+                        monster::AllWorldObjectsInRange objects(me, 100.00f);
+                        monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, targetList, objects, GRID_MAP_TYPE_MASK_GAMEOBJECT);
                         me->VisitNearbyObject(100.00f, searcher);
                         targetList.remove_if([](WorldObject* target){
                             return target->GetEntry() != GO_TOWER_WEST && target->GetEntry() != GO_TOWER_EAST && target->GetEntry() != GO_TOWER_SOUTH;

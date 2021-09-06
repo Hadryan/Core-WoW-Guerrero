@@ -699,7 +699,7 @@ public:
             uint8 count = 0;
             targets.remove_if([](WorldObject* target){ return target->GetTypeId() != TYPEID_PLAYER; });
             if (!targets.empty())
-                targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+                targets.sort(monster::ObjectDistanceOrderPred(GetCaster()));
             for (std::list<WorldObject*>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
                 if (++count > targetCount)
                     unauraTargets.push_back((*itr));

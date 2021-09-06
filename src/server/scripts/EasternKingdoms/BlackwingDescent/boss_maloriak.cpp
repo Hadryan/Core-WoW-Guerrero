@@ -1096,11 +1096,11 @@ public:
         {
             if (!unitList.empty())
             {
-                WorldObject *target = Trinity::Containers::SelectRandomContainerElement(unitList);
+                WorldObject *target = monster::Containers::SelectRandomContainerElement(unitList);
                 if (Unit *caster = GetCaster())
                     unitList.remove_if(FlashFreezeTargetSelector(caster));
                 if (!unitList.empty())
-                    Trinity::Containers::RandomResizeList(unitList, 1);
+                    monster::Containers::RandomResizeList(unitList, 1);
                 else if (target)
                     unitList.push_back(target);
             }
@@ -1176,7 +1176,7 @@ public:
             });
 
             if (targets.size() > 3)
-                Trinity::Containers::RandomResizeList(targets, 3);
+                monster::Containers::RandomResizeList(targets, 3);
         }
 
         void HandleDummyLaunch(SpellEffIndex effIndex)
@@ -1217,7 +1217,7 @@ public:
             if (targets.empty())
                 return;
 
-            targets.remove_if(Trinity::UnitAuraCheck(false, SPELL_DROWNED_STATE));
+            targets.remove_if(monster::UnitAuraCheck(false, SPELL_DROWNED_STATE));
         }
 
         void Register()

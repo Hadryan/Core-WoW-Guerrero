@@ -353,7 +353,7 @@ class spell_ground_siege_selector : public SpellScript
         if (targets.size() >= 1)
         {
             if (targets.size() > 1)
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
 
             return;
         }
@@ -366,7 +366,7 @@ class spell_ground_siege_selector : public SpellScript
                 targets.push_back(itr);
 
             if (targets.size() > 1)
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
     }
 

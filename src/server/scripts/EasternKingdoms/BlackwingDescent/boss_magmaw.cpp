@@ -1020,8 +1020,8 @@ public:
                 }
                 x = startX + (me->GetObjectSize() + radius + temprad) * std::cos(ori);
                 y = startY + (me->GetObjectSize() + radius + temprad) * std::sin(ori);
-                Trinity::NormalizeMapCoord(x);
-                Trinity::NormalizeMapCoord(y);
+                monster::NormalizeMapCoord(x);
+                monster::NormalizeMapCoord(y);
                 ori += M_PI / 9;
                 me->CastSpell(x, y, me->GetPositionZ(), SPELL_IGNITION_MISSILE, true);
             }
@@ -1063,8 +1063,8 @@ public:
                 }
                 x = startX + (me->GetObjectSize() + radius + temprad) * std::cos(ori + M_PI);
                 y = startY + (me->GetObjectSize() + radius + temprad) * std::sin(ori + M_PI);
-                Trinity::NormalizeMapCoord(x);
-                Trinity::NormalizeMapCoord(y);
+                monster::NormalizeMapCoord(x);
+                monster::NormalizeMapCoord(y);
                 ori += M_PI / 9;
                 me->CastSpell(x, y, me->GetPositionZ(), SPELL_IGNITION_MISSILE, true);
             }
@@ -1157,7 +1157,7 @@ public :
             if (!GetCaster())
                 return;
 
-            WorldObject* target = Trinity::Containers::SelectRandomContainerElement(unitList);
+            WorldObject* target = monster::Containers::SelectRandomContainerElement(unitList);
 
             for (std::list<WorldObject*>::iterator itr = unitList.begin(); itr != unitList.end(); )
             {

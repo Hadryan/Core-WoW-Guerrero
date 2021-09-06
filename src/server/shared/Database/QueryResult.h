@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -57,7 +57,7 @@ class ResultSet
         MYSQL_FIELD* _fields;
 };
 
-typedef Trinity::AutoPtr<ResultSet, ACE_Thread_Mutex> QueryResult;
+typedef monster::AutoPtr<ResultSet, ACE_Thread_Mutex> QueryResult;
 
 class PreparedResultSet
 {
@@ -102,7 +102,7 @@ class PreparedResultSet
 
 };
 
-typedef Trinity::AutoPtr<PreparedResultSet, ACE_Thread_Mutex> PreparedQueryResult;
+typedef monster::AutoPtr<PreparedResultSet, ACE_Thread_Mutex> PreparedQueryResult;
 
 #endif
 

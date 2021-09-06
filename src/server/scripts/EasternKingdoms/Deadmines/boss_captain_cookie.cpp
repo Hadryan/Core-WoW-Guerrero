@@ -206,8 +206,8 @@ class boss_captain_cookie : public CreatureScript
                     case EVENT_CHECK_WIPE:
                     {
                         Player* player = 0;
-                        Trinity::AnyPlayerInObjectRangeCheck u_check(me, 50.0f, true);
-                        Trinity::PlayerSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(me, player, u_check);
+                        monster::AnyPlayerInObjectRangeCheck u_check(me, 50.0f, true);
+                        monster::PlayerSearcher<monster::AnyPlayerInObjectRangeCheck> searcher(me, player, u_check);
                         me->VisitNearbyObject(50.0f, searcher);
                         if (!player)
                         {

@@ -238,10 +238,10 @@ class boss_bethtilac : public CreatureScript
                     return;
 
                 if (action == ACTION_SUMMON_SPIDERLING)
-                    Trinity::Containers::RandomResizeList(targetList, Is25ManRaid() ? 3 : 1);
+                    monster::Containers::RandomResizeList(targetList, Is25ManRaid() ? 3 : 1);
 
                 if (action == ACTION_SUMMON_SPINNERS)
-                    Trinity::Containers::RandomResizeList(targetList, RAID_MODE(2, 4, 2, 5));
+                    monster::Containers::RandomResizeList(targetList, RAID_MODE(2, 4, 2, 5));
 
                 for (std::list<Creature*>::const_iterator itr = targetList.begin(); itr != targetList.end(); ++itr)
                     (*itr)->AI()->DoAction(action);
@@ -561,7 +561,7 @@ class boss_bethtilac : public CreatureScript
 
                                 //Players part
                                 std::list<Player*> TargetList = me->GetPlayersInRange(500.00f, true);
-                                TargetList.remove_if(Trinity::UnitAuraCheck(false, SPELL_WEB_SILK, me->GetGUID()));
+                                TargetList.remove_if(monster::UnitAuraCheck(false, SPELL_WEB_SILK, me->GetGUID()));
 
                                 if (TargetList.empty())
                                 {
@@ -580,7 +580,7 @@ class boss_bethtilac : public CreatureScript
                                             me->getThreatManager().addThreat(target, -90000000);
                                             if (!TargetList.empty())
                                             {
-                                                if (Player* player = Trinity::Containers::SelectRandomContainerElement(TargetList))
+                                                if (Player* player = monster::Containers::SelectRandomContainerElement(TargetList))
                                                 {
                                                     me->Attack(player, true);
                                                     me->GetMotionMaster()->MoveChase(player);
@@ -922,7 +922,7 @@ public:
                             if (!drones.empty())
                             {
                                 if (drones.size() > 1)
-                                    drones.sort(Trinity::ObjectDistanceOrderPred(me));
+                                    drones.sort(monster::ObjectDistanceOrderPred(me));
                                 me->GetMotionMaster()->MoveChase(*drones.begin());
                                 me->getThreatManager().addThreat(*drones.begin(), 1000000);
                             }

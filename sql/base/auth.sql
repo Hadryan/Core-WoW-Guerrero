@@ -431,13 +431,13 @@ CREATE TABLE `uptime` (
   `starttime` int(10) unsigned NOT NULL DEFAULT '0',
   `uptime` int(10) unsigned NOT NULL DEFAULT '0',
   `maxplayers` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `revision` varchar(255) NOT NULL DEFAULT 'Trinitycore',
+  `revision` varchar(255) NOT NULL DEFAULT 'monstercore',
   PRIMARY KEY (`realmid`,`starttime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Uptime system';
 
 /*Data for the table `uptime` */
 
-insert  into `uptime`(`realmid`,`starttime`,`uptime`,`maxplayers`,`revision`) values (1,1617399729,1201,1,'Trinity rev. 23bf871b7274+ 2021-04-01 21:33:20 +0200 (master branch) (Win64, Release)'),(1,1630852559,0,0,'Trinity rev. 31-08-2021 (Emucore-DL) (Win64, Release)'),(1,1630853047,600,1,'Trinity rev. 31-08-2021 (Emucore-DL) (Win64, Release)'),(1,1630938840,1347,1,'Trinity rev. 0000-00-00 00:00:00 +0000 (Archived) (Win64, Release)'),(1,1630940754,0,0,'Trinity rev. 0000-00-00 00:00:00 +0000 (Archived) (Win64, Release)'),(1,1630940924,0,0,'Trinity rev. 0000-00-00 00:00:00 +0000 (Archived) (Win64, Release)'),(1,1630941401,0,0,'Trinity rev. 0000-00-00 00:00:00 +0000 (Archived) (Win64, Release)');
+insert  into `uptime`(`realmid`,`starttime`,`uptime`,`maxplayers`,`revision`) values (1,1617399729,1201,1,'monster rev. 23bf871b7274+ 2021-04-01 21:33:20 +0200 (master branch) (Win64, Release)'),(1,1630852559,0,0,'monster rev. 31-08-2021 (Emucore-DL) (Win64, Release)'),(1,1630853047,600,1,'monster rev. 31-08-2021 (Emucore-DL) (Win64, Release)'),(1,1630938840,1347,1,'monster rev. 0000-00-00 00:00:00 +0000 (Archived) (Win64, Release)'),(1,1630940754,0,0,'monster rev. 0000-00-00 00:00:00 +0000 (Archived) (Win64, Release)'),(1,1630940924,0,0,'monster rev. 0000-00-00 00:00:00 +0000 (Archived) (Win64, Release)'),(1,1630941401,0,0,'monster rev. 0000-00-00 00:00:00 +0000 (Archived) (Win64, Release)');
 
 /*Table structure for table `vip_accounts` */
 

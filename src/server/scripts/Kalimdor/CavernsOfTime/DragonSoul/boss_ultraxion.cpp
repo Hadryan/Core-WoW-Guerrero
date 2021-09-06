@@ -426,8 +426,8 @@ public:
             instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_FADING_LIGHT_RAID, me->GetGUID(), AURA_REMOVE_BY_CANCEL);
 
             std::list<WorldObject*> targetList;
-            Trinity::AllWorldObjectsInRange objects(me, 100.0f);
-            Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, targetList, objects);
+            monster::AllWorldObjectsInRange objects(me, 100.0f);
+            monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, targetList, objects);
             me->VisitNearbyObject(100.0f, searcher);
             for (std::list<WorldObject*>::const_iterator i = targetList.begin(); i != targetList.end(); ++i)
                 if (GameObject* go = (*i)->ToGameObject())
@@ -1641,7 +1641,7 @@ public:
         void FilterTargets(std::list<WorldObject*>& targets)
         {
             uint32 spellId = GetSpellInfo()->Id;
-            targets.remove_if(Trinity::UnitAuraCheck(false, SPELL_TWILIGHT_VISUAL));
+            targets.remove_if(monster::UnitAuraCheck(false, SPELL_TWILIGHT_VISUAL));
             targets.remove_if([spellId](WorldObject* target)
             {
                 if (target->GetTypeId() != TYPEID_UNIT
@@ -1653,7 +1653,7 @@ public:
             });
 
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void HandleScriptEffect(SpellEffIndex /*effIndex*/)
@@ -1760,10 +1760,10 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Trinity::UnitAuraCheck(false, SPELL_TWILIGHT_SHIFT_PHASING));
+            targets.remove_if(monster::UnitAuraCheck(false, SPELL_TWILIGHT_SHIFT_PHASING));
 
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void HandleDummy(SpellEffIndex effIndex)
@@ -1796,10 +1796,10 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Trinity::UnitAuraCheck(false, SPELL_TWILIGHT_SHIFT_PHASING));
+            targets.remove_if(monster::UnitAuraCheck(false, SPELL_TWILIGHT_SHIFT_PHASING));
 
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void HandleScriptEffect(SpellEffIndex effIndex)
@@ -1850,7 +1850,7 @@ public:
             else if (difficulty == RAID_DIFFICULTY_25MAN_HEROIC)
                 maxTargets = 5;
 
-            targets.remove_if(Trinity::UnitAuraCheck(false, SPELL_TWILIGHT_SHIFT_PHASING));
+            targets.remove_if(monster::UnitAuraCheck(false, SPELL_TWILIGHT_SHIFT_PHASING));
 
             if (GetCaster()->getVictim())
                 targets.remove(GetCaster()->getVictim());
@@ -1874,7 +1874,7 @@ public:
             }
 
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, maxTargets);
+                monster::Containers::RandomResizeList(targets, maxTargets);
         }
 
         void Register()
@@ -1989,7 +1989,7 @@ public:
             else if (difficulty == RAID_DIFFICULTY_25MAN_HEROIC)
                 minTargets = 5;
 
-            targets.remove_if(Trinity::UnitAuraCheck(false, SPELL_TWILIGHT_SHIFT_PHASING));
+            targets.remove_if(monster::UnitAuraCheck(false, SPELL_TWILIGHT_SHIFT_PHASING));
 
             if (targets.size() < minTargets)
             {
@@ -2123,7 +2123,7 @@ public:
             });
 
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void Register()

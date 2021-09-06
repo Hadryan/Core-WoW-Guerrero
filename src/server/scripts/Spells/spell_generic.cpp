@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013-2014 OMFG.GG Network <http://www.omfg.gg/>
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -292,8 +292,8 @@ class spell_gen_cannibalize : public SpellScriptLoader
                 float max_range = GetSpellInfo()->GetMaxRange(false);
                 WorldObject* result = NULL;
                 // search for nearby enemy corpse in range
-                Trinity::AnyDeadUnitSpellTargetInRangeCheck check(caster, max_range, GetSpellInfo(), TARGET_CHECK_ENEMY);
-                Trinity::WorldObjectSearcher<Trinity::AnyDeadUnitSpellTargetInRangeCheck> searcher(caster, result, check);
+                monster::AnyDeadUnitSpellTargetInRangeCheck check(caster, max_range, GetSpellInfo(), TARGET_CHECK_ENEMY);
+                monster::WorldObjectSearcher<monster::AnyDeadUnitSpellTargetInRangeCheck> searcher(caster, result, check);
                 caster->GetMap()->VisitFirstFound(caster->m_positionX, caster->m_positionY, max_range, searcher);
                 if (!result)
                     return SPELL_FAILED_NO_EDIBLE_CORPSES;
@@ -3520,10 +3520,10 @@ public:
 
                 return false;
             });
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_DEBUFF_SATED));
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_DEBUFF_EXHAUSTION));
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_DEBUFF_TEMPORAL_DISPLACEMENT));
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_DEBUFF_INSANITY));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_DEBUFF_SATED));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_DEBUFF_EXHAUSTION));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_DEBUFF_TEMPORAL_DISPLACEMENT));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_DEBUFF_INSANITY));
         }
 
         void ApplyDebuff()
@@ -3679,7 +3679,7 @@ public:
             if (targets.empty())
                 return;
 
-            WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+            WorldObject* target = monster::Containers::SelectRandomContainerElement(targets);
             targets.clear();
             if (Player* player = target->ToPlayer())
                 if (player->isAlive())
@@ -5208,7 +5208,7 @@ public:
         {
             targets.remove_if(TypeCheck(GetCaster()));
 
-            Trinity::Containers::RandomResizeList(targets, 1);
+            monster::Containers::RandomResizeList(targets, 1);
         }
 
         void Register()

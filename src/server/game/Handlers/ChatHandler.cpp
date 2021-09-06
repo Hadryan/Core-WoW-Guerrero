@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -257,14 +257,14 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
     if (type != CHAT_MSG_AFK && type != CHAT_MSG_DND && !sender->CanSpeak())
     {
         std::string timeStr = secsToTimeString(m_muteTime - time(NULL));
-        SendNotification(GetTrinityString(LANG_WAIT_BEFORE_SPEAKING), timeStr.c_str());
+        SendNotification(GetmonsterString(LANG_WAIT_BEFORE_SPEAKING), timeStr.c_str());
         recvData.rfinish(); // Prevent warnings
         return;
     }
 
     if (sender->HasAura(1852) && type != CHAT_MSG_WHISPER)
     {
-        SendNotification(GetTrinityString(LANG_GM_SILENCE), sender->GetName().c_str());
+        SendNotification(GetmonsterString(LANG_GM_SILENCE), sender->GetName().c_str());
         recvData.rfinish();
         return;
     }
@@ -342,7 +342,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
         {
             if (sender->getLevel() < sWorld->getIntConfig(CONFIG_CHAT_SAY_LEVEL_REQ))
             {
-                SendNotification(GetTrinityString(LANG_SAY_REQ), sWorld->getIntConfig(CONFIG_CHAT_SAY_LEVEL_REQ));
+                SendNotification(GetmonsterString(LANG_SAY_REQ), sWorld->getIntConfig(CONFIG_CHAT_SAY_LEVEL_REQ));
                 return;
             }
 
@@ -361,7 +361,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
         {
             if (sender->getLevel() < sWorld->getIntConfig(CONFIG_CHAT_WHISPER_LEVEL_REQ))
             {
-                SendNotification(GetTrinityString(LANG_WHISPER_REQ), sWorld->getIntConfig(CONFIG_CHAT_WHISPER_LEVEL_REQ));
+                SendNotification(GetmonsterString(LANG_WHISPER_REQ), sWorld->getIntConfig(CONFIG_CHAT_WHISPER_LEVEL_REQ));
                 return;
             }
 
@@ -389,7 +389,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
 
             if (GetPlayer()->HasAura(1852) && !receiver->isGameMaster())
             {
-                SendNotification(GetTrinityString(LANG_GM_SILENCE), GetPlayer()->GetName().c_str());
+                SendNotification(GetmonsterString(LANG_GM_SILENCE), GetPlayer()->GetName().c_str());
                 return;
             }
 
@@ -510,7 +510,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
             {
                 if (_player->getLevel() < sWorld->getIntConfig(CONFIG_CHAT_CHANNEL_LEVEL_REQ))
                 {
-                    SendNotification(GetTrinityString(LANG_CHANNEL_REQ), sWorld->getIntConfig(CONFIG_CHAT_CHANNEL_LEVEL_REQ));
+                    SendNotification(GetmonsterString(LANG_CHANNEL_REQ), sWorld->getIntConfig(CONFIG_CHAT_CHANNEL_LEVEL_REQ));
                     return;
                 }
             }
@@ -537,7 +537,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
                 }
                 else                                        // New AFK mode
                 {
-                    _player->autoReplyMsg = msg.empty() ? GetTrinityString(LANG_PLAYER_AFK_DEFAULT) : msg;
+                    _player->autoReplyMsg = msg.empty() ? GetmonsterString(LANG_PLAYER_AFK_DEFAULT) : msg;
 
                     if (_player->isDND())
                         _player->ToggleDND();
@@ -560,7 +560,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
             }
             else                                            // New DND mode
             {
-                _player->autoReplyMsg = msg.empty() ? GetTrinityString(LANG_PLAYER_DND_DEFAULT) : msg;
+                _player->autoReplyMsg = msg.empty() ? GetmonsterString(LANG_PLAYER_DND_DEFAULT) : msg;
 
                 if (_player->isAFK())
                     _player->ToggleAFK();
@@ -730,7 +730,7 @@ void WorldSession::HandleEmoteOpcode(WorldPacket& recvData)
     if (!GetPlayer()->CanSpeak())
     {
         std::string timeStr = secsToTimeString(m_muteTime - time(NULL));
-        SendNotification(GetTrinityString(LANG_WAIT_BEFORE_SPEAKING), timeStr.c_str());
+        SendNotification(GetmonsterString(LANG_WAIT_BEFORE_SPEAKING), timeStr.c_str());
         return;
     }
 
@@ -743,7 +743,7 @@ void WorldSession::HandleEmoteOpcode(WorldPacket& recvData)
         _player->SetUInt32Value(UNIT_NPC_EMOTESTATE, 0);
 }
 
-namespace Trinity
+namespace monster
 {
     class EmoteChatBuilder
     {
@@ -773,7 +773,7 @@ namespace Trinity
             uint32        i_emote_num;
             Unit const*   i_target;
     };
-}                                                           // namespace Trinity
+}                                                           // namespace monster
 
 void WorldSession::HandleTextEmoteOpcode(WorldPacket& recvData)
 {
@@ -783,7 +783,7 @@ void WorldSession::HandleTextEmoteOpcode(WorldPacket& recvData)
     if (!GetPlayer()->CanSpeak())
     {
         std::string timeStr = secsToTimeString(m_muteTime - time(NULL));
-        SendNotification(GetTrinityString(LANG_WAIT_BEFORE_SPEAKING), timeStr.c_str());
+        SendNotification(GetmonsterString(LANG_WAIT_BEFORE_SPEAKING), timeStr.c_str());
         return;
     }
 
@@ -819,15 +819,15 @@ void WorldSession::HandleTextEmoteOpcode(WorldPacket& recvData)
 
     Unit* unit = ObjectAccessor::GetUnit(*_player, guid);
 
-    CellCoord p = Trinity::ComputeCellCoord(GetPlayer()->GetPositionX(), GetPlayer()->GetPositionY());
+    CellCoord p = monster::ComputeCellCoord(GetPlayer()->GetPositionX(), GetPlayer()->GetPositionY());
 
     Cell cell(p);
     cell.SetNoCreate();
 
-    Trinity::EmoteChatBuilder emote_builder(*GetPlayer(), text_emote, emoteNum, unit);
-    Trinity::LocalizedPacketDo<Trinity::EmoteChatBuilder > emote_do(emote_builder);
-    Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::EmoteChatBuilder > > emote_worker(GetPlayer(), sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_TEXTEMOTE), emote_do);
-    TypeContainerVisitor<Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::EmoteChatBuilder> >, WorldTypeMapContainer> message(emote_worker);
+    monster::EmoteChatBuilder emote_builder(*GetPlayer(), text_emote, emoteNum, unit);
+    monster::LocalizedPacketDo<monster::EmoteChatBuilder > emote_do(emote_builder);
+    monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::EmoteChatBuilder > > emote_worker(GetPlayer(), sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_TEXTEMOTE), emote_do);
+    TypeContainerVisitor<monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::EmoteChatBuilder> >, WorldTypeMapContainer> message(emote_worker);
     cell.Visit(p, message, *GetPlayer()->GetMap(), *GetPlayer(), sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_TEXTEMOTE));
 
     GetPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_DO_EMOTE, text_emote, 0, 0, unit);

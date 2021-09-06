@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -358,7 +358,7 @@ bool WorldSession::HandleMovementInfo(MovementInfo &movementInfo, const uint16 o
         }
         if (!stopTransportSeq)
         {
-            if (!Trinity::IsValidMapCoord(
+            if (!monster::IsValidMapCoord(
                                           movementInfo.pos.GetPositionX() + movementInfo.t_pos.GetPositionX(),
                                           movementInfo.pos.GetPositionY() + movementInfo.t_pos.GetPositionY(),
                                           movementInfo.pos.GetPositionZ() + movementInfo.t_pos.GetPositionZ(),

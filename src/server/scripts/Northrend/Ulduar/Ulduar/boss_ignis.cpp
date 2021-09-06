@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -348,7 +348,7 @@ class boss_ignis : public CreatureScript
 
                             if (!summons.empty())
                             {
-                                uint64 selectedConstruct = Trinity::Containers::SelectRandomContainerElement(summons);
+                                uint64 selectedConstruct = monster::Containers::SelectRandomContainerElement(summons);
                                 if (Creature* construct = ObjectAccessor::GetCreature(*me, selectedConstruct))
                                 {
                                     construct->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);

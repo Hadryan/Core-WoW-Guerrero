@@ -167,7 +167,7 @@ class boss_karsh_steelbender : public CreatureScript
                     float m_ori = 0.0f;
                     float x, y;
                     std::list<uint32> boundFlamePos = { 1, 3, 5, 7, 9, 11, 13 };
-                    Trinity::Containers::RandomResizeList(boundFlamePos, 3);
+                    monster::Containers::RandomResizeList(boundFlamePos, 3);
 
                     for (uint8 i = 0; i < 15; i++)
                     {
@@ -306,7 +306,7 @@ class spell_karsh_burning_heat : public SpellScript
         targets.remove_if([=](WorldObject* target) { return target->GetEntry() != NPC_QUICKSILVER; });
 
         if (targets.size() > 5)
-            Trinity::Containers::RandomResizeList(targets, 5);
+            monster::Containers::RandomResizeList(targets, 5);
     }
 
     void Register() override

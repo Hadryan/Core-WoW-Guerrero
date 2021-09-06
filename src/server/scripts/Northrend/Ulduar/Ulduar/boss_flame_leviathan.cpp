@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2012 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -2728,13 +2728,13 @@ class spell_pursued : public SpellScriptLoader
 
                 if (!tempList.empty())
                 {
-                    _target = Trinity::Containers::SelectRandomContainerElement(tempList)->ToUnit();
+                    _target = monster::Containers::SelectRandomContainerElement(tempList)->ToUnit();
                     SetSelectedTarget(tempList);
                 }
                 else
                 {
                     // No vehicles found, select a random target
-                    _target = Trinity::Containers::SelectRandomContainerElement(targets)->ToUnit();
+                    _target = monster::Containers::SelectRandomContainerElement(targets)->ToUnit();
                     SetSelectedTarget(targets);
                 }
             }

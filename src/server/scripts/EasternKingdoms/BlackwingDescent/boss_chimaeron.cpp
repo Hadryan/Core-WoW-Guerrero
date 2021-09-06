@@ -661,7 +661,7 @@ public:
             if (targets.empty())
                 return;
 
-            Trinity::Containers::RandomResizeList(targets, GetCaster()->GetMap()->Is25ManRaid() ? 4 : 1);
+            monster::Containers::RandomResizeList(targets, GetCaster()->GetMap()->Is25ManRaid() ? 4 : 1);
         }
 
         void Register()

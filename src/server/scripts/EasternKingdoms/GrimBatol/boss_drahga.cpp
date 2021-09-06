@@ -565,7 +565,7 @@ class spell_drahga_burning_shadowbolt : public SpellScript
     void SelectTargets(std::list<WorldObject*>&targets)
     {
         if (targets.size() > 1)
-            Trinity::Containers::RandomResizeList(targets, 1);
+            monster::Containers::RandomResizeList(targets, 1);
     }
 
     void Register() override

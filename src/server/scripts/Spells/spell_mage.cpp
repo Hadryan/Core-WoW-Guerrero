@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -1300,7 +1300,7 @@ class spell_mage_piercing_chill : public SpellScriptLoader
                 if (AuraEffect* aurEff = GetCaster()->GetAuraEffect(SPELL_AURA_DUMMY, SPELLFAMILY_MAGE, 4625, EFFECT_0))
                 {
                     targets.remove(GetExplTargetUnit());
-                    Trinity::Containers::RandomResizeList(targets, aurEff->GetAmount());
+                    monster::Containers::RandomResizeList(targets, aurEff->GetAmount());
                     targets.push_back(GetExplTargetUnit());
                     _targets = targets;
                 }

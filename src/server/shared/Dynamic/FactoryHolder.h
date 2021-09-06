@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2018 TrinityCore <https://www.trinitycore.org/>
+ * Copyright (C) 2008-2018 monsterCore <https://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -16,8 +16,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRINITY_FACTORY_HOLDER
-#define TRINITY_FACTORY_HOLDER
+#ifndef monster_FACTORY_HOLDER
+#define monster_FACTORY_HOLDER
 
 #include "Define.h"
 #include "Dynamic/TypeList.h"

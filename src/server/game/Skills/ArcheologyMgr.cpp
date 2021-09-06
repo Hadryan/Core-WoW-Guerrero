@@ -405,7 +405,7 @@ uint32 ArcheologyMgr::GetNewRandomSite(const uint32 &map)
         if (isValid)
             tempSitesList.push_back(*itr);
     }
-    return (Trinity::Containers::SelectRandomContainerElement(tempSitesList));
+    return (monster::Containers::SelectRandomContainerElement(tempSitesList));
 }
 
 void ArcheologyMgr::SetDigSiteInSlot(const uint32 &slot, const uint32 &site1, const uint32 &site2)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -301,7 +301,7 @@ public:
         stmt->setUInt16(0, uint16(atLogin));
         CharacterDatabase.Execute(stmt);
 
-        TRINITY_READ_GUARD(HashMapHolder<Player>::LockType, *HashMapHolder<Player>::GetLock());
+        monster_READ_GUARD(HashMapHolder<Player>::LockType, *HashMapHolder<Player>::GetLock());
         HashMapHolder<Player>::MapType const& plist = sObjectAccessor->GetPlayers();
         for (HashMapHolder<Player>::MapType::const_iterator itr = plist.begin(); itr != plist.end(); ++itr)
             itr->second->SetAtLoginFlag(atLogin);

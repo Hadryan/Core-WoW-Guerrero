@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -2512,8 +2512,8 @@ void UnitAura::FillTargetMap(std::map<Unit*, uint8> & targets, Unit* caster)
                     targetList.push_back(GetUnitOwner());
                     if (!isolated)
                     {
-                        Trinity::AnyGroupedUnitInObjectRangeCheck u_check(GetUnitOwner(), GetUnitOwner(), radius, GetSpellInfo()->Effects[effIndex].Effect == SPELL_EFFECT_APPLY_AREA_AURA_RAID);
-                        Trinity::UnitListSearcher<Trinity::AnyGroupedUnitInObjectRangeCheck> searcher(GetUnitOwner(), targetList, u_check);
+                        monster::AnyGroupedUnitInObjectRangeCheck u_check(GetUnitOwner(), GetUnitOwner(), radius, GetSpellInfo()->Effects[effIndex].Effect == SPELL_EFFECT_APPLY_AREA_AURA_RAID);
+                        monster::UnitListSearcher<monster::AnyGroupedUnitInObjectRangeCheck> searcher(GetUnitOwner(), targetList, u_check);
                         GetUnitOwner()->VisitNearbyObject(radius, searcher);
                     }
                     break;
@@ -2523,16 +2523,16 @@ void UnitAura::FillTargetMap(std::map<Unit*, uint8> & targets, Unit* caster)
                     targetList.push_back(GetUnitOwner());
                     if (!isolated)
                     {
-                        Trinity::AnyFriendlyUnitInObjectRangeCheck u_check(GetUnitOwner(), GetUnitOwner(), radius);
-                        Trinity::UnitListSearcher<Trinity::AnyFriendlyUnitInObjectRangeCheck> searcher(GetUnitOwner(), targetList, u_check);
+                        monster::AnyFriendlyUnitInObjectRangeCheck u_check(GetUnitOwner(), GetUnitOwner(), radius);
+                        monster::UnitListSearcher<monster::AnyFriendlyUnitInObjectRangeCheck> searcher(GetUnitOwner(), targetList, u_check);
                         GetUnitOwner()->VisitNearbyObject(radius, searcher);
                     }
                     break;
                 }
                 case SPELL_EFFECT_APPLY_AREA_AURA_ENEMY:
                 {
-                    Trinity::AnyAoETargetUnitInObjectRangeCheck u_check(GetUnitOwner(), GetUnitOwner(), radius); // No GetCharmer in searcher
-                    Trinity::UnitListSearcher<Trinity::AnyAoETargetUnitInObjectRangeCheck> searcher(GetUnitOwner(), targetList, u_check);
+                    monster::AnyAoETargetUnitInObjectRangeCheck u_check(GetUnitOwner(), GetUnitOwner(), radius); // No GetCharmer in searcher
+                    monster::UnitListSearcher<monster::AnyAoETargetUnitInObjectRangeCheck> searcher(GetUnitOwner(), targetList, u_check);
                     GetUnitOwner()->VisitNearbyObject(radius, searcher);
                     break;
                 }
@@ -2594,14 +2594,14 @@ void DynObjAura::FillTargetMap(std::map<Unit*, uint8> & targets, Unit* /*caster*
         if (GetSpellInfo()->Effects[effIndex].TargetB.GetTarget() == TARGET_DEST_DYNOBJ_ALLY
             || GetSpellInfo()->Effects[effIndex].TargetB.GetTarget() == TARGET_UNIT_DEST_AREA_ALLY)
         {
-            Trinity::AnyFriendlyUnitInObjectRangeCheck u_check(GetDynobjOwner(), dynObjOwnerCaster, radius,  GetSpellInfo()->Effects[effIndex].ImplicitTargetConditions);
-            Trinity::UnitListSearcher<Trinity::AnyFriendlyUnitInObjectRangeCheck> searcher(GetDynobjOwner(), targetList, u_check);
+            monster::AnyFriendlyUnitInObjectRangeCheck u_check(GetDynobjOwner(), dynObjOwnerCaster, radius,  GetSpellInfo()->Effects[effIndex].ImplicitTargetConditions);
+            monster::UnitListSearcher<monster::AnyFriendlyUnitInObjectRangeCheck> searcher(GetDynobjOwner(), targetList, u_check);
             GetDynobjOwner()->VisitNearbyObject(radius, searcher);
         }
         else
         {
-            Trinity::AnyAoETargetUnitInObjectRangeCheck u_check(GetDynobjOwner(), dynObjOwnerCaster, radius, GetSpellInfo()->Effects[effIndex].ImplicitTargetConditions);
-            Trinity::UnitListSearcher<Trinity::AnyAoETargetUnitInObjectRangeCheck> searcher(GetDynobjOwner(), targetList, u_check);
+            monster::AnyAoETargetUnitInObjectRangeCheck u_check(GetDynobjOwner(), dynObjOwnerCaster, radius, GetSpellInfo()->Effects[effIndex].ImplicitTargetConditions);
+            monster::UnitListSearcher<monster::AnyAoETargetUnitInObjectRangeCheck> searcher(GetDynobjOwner(), targetList, u_check);
             GetDynobjOwner()->VisitNearbyObject(radius, searcher);
         }
 

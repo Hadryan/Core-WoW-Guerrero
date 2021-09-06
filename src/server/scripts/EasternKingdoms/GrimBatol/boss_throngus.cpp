@@ -279,7 +279,7 @@ class boss_forgemaster_throngus : public CreatureScript
                     GetCreatureListWithEntryInGrid(archersList, me, NPC_TWILIGHT_ARCHER, 200.0f);
 
                     if (action == ACTION_INIT_ARCHERS && archersList.size() > 5)
-                        Trinity::Containers::RandomResizeList(archersList, 5);
+                        monster::Containers::RandomResizeList(archersList, 5);
 
                     for (auto&& itr : archersList)
                         itr->AI()->DoAction(action);
@@ -394,7 +394,7 @@ class spell_throngus_pick_weapon : public SpellScript
                 weaponComboSpellStorage.erase(std::find(weaponComboSpellStorage.begin(), weaponComboSpellStorage.end(), caster->AI()->GetData(TYPE_WEAPON_DATA)));
 
             // Select new spell from updated container
-            caster->AI()->DoAction(invPickWeaponsType.find(Trinity::Containers::SelectRandomContainerElement(weaponComboSpellStorage))->second);
+            caster->AI()->DoAction(invPickWeaponsType.find(monster::Containers::SelectRandomContainerElement(weaponComboSpellStorage))->second);
         }
     }
 
@@ -423,7 +423,7 @@ class spell_throngus_mightly_stomp : public SpellScript
         if (targets.size() >= 1)
         {
             if (targets.size() > 1)
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
 
             return;
         }
@@ -436,7 +436,7 @@ class spell_throngus_mightly_stomp : public SpellScript
                 targets.push_back(itr);
 
             if (targets.size() > 1)
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
     }
 
@@ -499,7 +499,7 @@ class spell_throngus_flaming_arrow : public SpellScript
         uint8 targetsCount = GetCaster()->GetMap()->IsHeroic() ? 2 : 1;
 
         if (targets.size() > targetsCount)
-            Trinity::Containers::RandomResizeList(targets, targetsCount);
+            monster::Containers::RandomResizeList(targets, targetsCount);
     }
 
     void Register() override

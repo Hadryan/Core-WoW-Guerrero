@@ -305,7 +305,7 @@ public:
                         me->GetCreatureListWithEntryInGrid(trig, NPC_FROZEN_SERVITOR_SPAWN_POINT, 1000.0f);
                         if (!trig.empty())
                         {
-                            Creature* spawnPoint = Trinity::Containers::SelectRandomContainerElement(trig);
+                            Creature* spawnPoint = monster::Containers::SelectRandomContainerElement(trig);
                             me->SummonCreature(NPC_INFIGHT_FROZEN_SERVITOR, *spawnPoint);
                         }
                         events.ScheduleEvent(EVENT_SUMMON_FROZEN_SERVITOR, 4000);

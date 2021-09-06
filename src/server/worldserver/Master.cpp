@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -17,7 +17,7 @@
  */
 
 /** \file
-    \ingroup Trinityd
+    \ingroup monsterd
 */
 
 #include <ace/Sig_Handler.h>
@@ -51,7 +51,7 @@ extern int m_ServiceStatus;
 #endif
 
 /// Handle worldservers's termination signals
-class WorldServerSignalHandler : public Trinity::SignalHandler
+class WorldServerSignalHandler : public monster::SignalHandler
 {
     public:
         virtual void HandleSignal(int SigNum)

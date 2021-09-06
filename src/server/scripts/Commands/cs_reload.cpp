@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -151,7 +151,7 @@ public:
             { "spell_threats",                SEC_ADMINISTRATOR, true,  &HandleReloadSpellThreatsCommand,               "" },
             { "spell_group_stack_rules",      SEC_ADMINISTRATOR, true,  &HandleReloadSpellGroupStackRulesCommand,       "" },
             { "instance_teleporter_dest",     SEC_ADMINISTRATOR, true,  &HandleReloadInstanceTeleporterDestCommand,     "" },
-            { "trinity_string",               SEC_ADMINISTRATOR, true,  &HandleReloadTrinityStringCommand,              "" },
+            { "monster_string",               SEC_ADMINISTRATOR, true,  &HandleReloadmonsterStringCommand,              "" },
             { "warden_action",                SEC_ADMINISTRATOR, true,  &HandleReloadWardenactionCommand,               "" },
             { "waypoint_scripts",             SEC_ADMINISTRATOR, true,  &HandleReloadWpScriptsCommand,                  "" },
             { "waypoint_data",                SEC_ADMINISTRATOR, true,  &HandleReloadWpCommand,                         "" },
@@ -193,7 +193,7 @@ public:
         HandleReloadMailLevelRewardCommand(handler, "");
         HandleReloadCommandCommand(handler, "");
         HandleReloadReservedNameCommand(handler, "");
-        HandleReloadTrinityStringCommand(handler, "");
+        HandleReloadmonsterStringCommand(handler, "");
         HandleReloadGameTeleCommand(handler, "");
 
         HandleReloadCreatureSummonGroupsCommand(handler, "");
@@ -746,11 +746,11 @@ public:
         return true;
     }
 
-    static bool HandleReloadTrinityStringCommand(ChatHandler* handler, const char* /*args*/)
+    static bool HandleReloadmonsterStringCommand(ChatHandler* handler, const char* /*args*/)
     {
-        TC_LOG_INFO("misc", "Re-Loading trinity_string Table!");
-        sObjectMgr->LoadTrinityStrings();
-        handler->SendGlobalGMSysMessage("DB table `trinity_string` reloaded.");
+        TC_LOG_INFO("misc", "Re-Loading monster_string Table!");
+        sObjectMgr->LoadmonsterStrings();
+        handler->SendGlobalGMSysMessage("DB table `monster_string` reloaded.");
         return true;
     }
 

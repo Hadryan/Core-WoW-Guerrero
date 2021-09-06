@@ -1,4 +1,4 @@
-# Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+# Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
@@ -150,7 +150,7 @@ add_executable(worldserver
 
 if( NOT WIN32 )
   set_target_properties(worldserver PROPERTIES
-    COMPILE_DEFINITIONS _TRINITY_CORE_CONFIG="${CONF_DIR}/worldserver.conf"
+    COMPILE_DEFINITIONS _monster_CORE_CONFIG="${CONF_DIR}/worldserver.conf"
   )
 endif()
 

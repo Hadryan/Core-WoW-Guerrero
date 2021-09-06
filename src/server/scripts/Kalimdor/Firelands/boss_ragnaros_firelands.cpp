@@ -1044,7 +1044,7 @@ public:
                                             sonSpawnPos.push_back(SonsOfFlameHeroicPos[i]);
                                     }
 
-                                    Trinity::Containers::RandomResizeList(sonSpawnPos, 8);
+                                    monster::Containers::RandomResizeList(sonSpawnPos, 8);
                                 }
 
                                 for (Position const& pos : sonSpawnPos)
@@ -2885,7 +2885,7 @@ public:
                 });
 
                 if (!targets.empty())
-                    Trinity::Containers::RandomResizeList(targets, summonCount);
+                    monster::Containers::RandomResizeList(targets, summonCount);
             }
         }
 
@@ -2986,7 +2986,7 @@ public:
             });
 
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void HandleScriptEffect(SpellEffIndex effIndex)
@@ -3024,7 +3024,7 @@ public:
             });
 
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, 1);
+                monster::Containers::RandomResizeList(targets, 1);
         }
 
         void HandleDummy(SpellEffIndex effIndex)
@@ -3097,8 +3097,8 @@ public:
         void FilterTargets(std::list<WorldObject*>& targets)
         {
             uint32 deluge = sSpellMgr->GetSpellIdForDifficulty(SPELL_CLOUDBURST_DELUGE, GetCaster());
-            targets.remove_if(Trinity::UnitAuraCheck(true, deluge));
-            targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_BREADTH_OF_FROST_PROTECTION));
+            targets.remove_if(monster::UnitAuraCheck(true, deluge));
+            targets.remove_if(monster::UnitAuraCheck(true, SPELL_BREADTH_OF_FROST_PROTECTION));
             sharedTargets = targets;
         }
 
@@ -3133,9 +3133,9 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Trinity::UnitAuraCheck(true, GetSpellInfo()->Id));
+            targets.remove_if(monster::UnitAuraCheck(true, GetSpellInfo()->Id));
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, GetCaster()->GetMap()->Is25ManRaid() ? 8 : 3);
+                monster::Containers::RandomResizeList(targets, GetCaster()->GetMap()->Is25ManRaid() ? 8 : 3);
 
             sharedTargets = targets;
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -413,7 +413,7 @@ void CreatureTextMgr::SendBroadcastGroup(Creature* source, uint32 id, uint64 whi
     
     if (!group.empty())
     {
-        uint32 textid = Trinity::Containers::SelectRandomContainerElement(group);
+        uint32 textid = monster::Containers::SelectRandomContainerElement(group);
         SendBroadcast(source, textid, whisperguid, msgType, range, team);
     }
 }

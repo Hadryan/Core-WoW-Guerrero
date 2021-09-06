@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -16,7 +16,7 @@
  */
 
 /** \file
-    \ingroup Trinityd
+    \ingroup monsterd
  */
 
 #include "Common.h"
@@ -67,11 +67,11 @@ void RARunnable::run()
 
     if (acceptor.open(listen_addr, m_Reactor) == -1)
     {
-        TC_LOG_ERROR("server.worldserver", "Trinity RA can not bind to port %d on %s", raport, stringip.c_str());
+        TC_LOG_ERROR("server.worldserver", "monster RA can not bind to port %d on %s", raport, stringip.c_str());
         return;
     }
 
-    TC_LOG_INFO("server.worldserver", "Starting Trinity RA on port %d on %s", raport, stringip.c_str());
+    TC_LOG_INFO("server.worldserver", "Starting monster RA on port %d on %s", raport, stringip.c_str());
 
     while (!World::IsStopped())
     {
@@ -82,5 +82,5 @@ void RARunnable::run()
             break;
     }
 
-    TC_LOG_DEBUG("server.worldserver", "Trinity RA thread exiting");
+    TC_LOG_DEBUG("server.worldserver", "monster RA thread exiting");
 }

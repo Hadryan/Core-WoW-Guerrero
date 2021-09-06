@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+* Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
 *
 * This program is free software; you can redistribute it and/or modify it
 * under the terms of the GNU General Public License as published by the
@@ -1063,7 +1063,7 @@ public:
                     temp.push_back(unit);
 
             targets.clear();
-            temp.sort(Trinity::HealthPctOrderPred());
+            temp.sort(monster::HealthPctOrderPred());
             if (temp.size() > targetCount)
                 temp.resize(targetCount);
             for (std::list<Unit*>::iterator itr = temp.begin(); itr != temp.end(); itr++)
@@ -1383,8 +1383,8 @@ public:
             if (caster->HasAura(SPELL_PALADIN_SEALS_OF_COMMAND))
             {
                 std::list<Unit*> targets;
-                Trinity::AnyUnfriendlyUnitInObjectRangeCheck u_check(caster, caster, 5);
-                Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(caster, targets, u_check);
+                monster::AnyUnfriendlyUnitInObjectRangeCheck u_check(caster, caster, 5);
+                monster::UnitListSearcher<monster::AnyUnfriendlyUnitInObjectRangeCheck> searcher(caster, targets, u_check);
                 caster->VisitNearbyObject(5, searcher);
                 if (!targets.empty())
                     if (eventInfo.GetDamageInfo() && eventInfo.GetDamageInfo()->GetSpellInfo() && eventInfo.GetDamageInfo()->GetSpellInfo()->Id == SPELL_PALADIN_DIVINE_STORM)

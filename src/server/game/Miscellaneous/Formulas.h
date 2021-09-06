@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -16,15 +16,15 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRINITY_FORMULAS_H
-#define TRINITY_FORMULAS_H
+#ifndef monster_FORMULAS_H
+#define monster_FORMULAS_H
 
 #include "World.h"
 #include "SharedDefines.h"
 #include "ScriptMgr.h"
 #include "Player.h"
 
-namespace Trinity
+namespace monster
 {
     namespace Honor
     {
@@ -39,7 +39,7 @@ namespace Trinity
         {
             return uint32(ceil(hk_honor_at_level_f(level, multiplier)));
         }
-    } // namespace Trinity::Honor
+    } // namespace monster::Honor
 
     namespace XP
     {
@@ -227,7 +227,7 @@ namespace Trinity
             sScriptMgr->OnGroupRateCalculation(rate, count, isRaid);
             return rate;
         }
-    } // namespace Trinity::XP
+    } // namespace monster::XP
 
     namespace Currency
     {
@@ -248,7 +248,7 @@ namespace Trinity
             // WowWiki: Battleground ratings receive a bonus of 22.2% to the cap they generate
             return uint32((ConquestRatingCalculator(rate) * 1.222f) + 0.5f);
         }
-    } // namespace Trinity::Currency
-} // namespace Trinity
+    } // namespace monster::Currency
+} // namespace monster
 
 #endif

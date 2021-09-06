@@ -1,6 +1,6 @@
 /*
 * Copyright (C) 2013-2014 OMFG.GG Network <http://www.omfg.gg/>
-* Copyright (C) 2008-2014 TrinityCore <http://www.trinitycore.org/>
+* Copyright (C) 2008-2014 monsterCore <http://www.monstercore.org/>
 *
 * This program is free software; you can redistribute it and/or modify it
 * under the terms of the GNU General Public License as published by the
@@ -460,7 +460,7 @@ public:
                 return;
             }
 
-            Trinity::Containers::RandomResizeList(targets, 2);
+            monster::Containers::RandomResizeList(targets, 2);
 
             std::list<WorldObject*>::const_iterator itr = targets.begin();
             target1 = (*itr)->ToUnit();
@@ -529,7 +529,7 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.remove_if(Trinity::UnitAuraCheck(false, SPELL_COUNTDOWN_PERIODIC));
+            targets.remove_if(monster::UnitAuraCheck(false, SPELL_COUNTDOWN_PERIODIC));
             targets.remove(GetCaster());
         }
 
@@ -627,7 +627,7 @@ public:
             if (targets.size() <= targetCount)
                 return;
 
-            targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+            targets.sort(monster::ObjectDistanceOrderPred(GetCaster()));
             std::list<WorldObject*> ranged, melee;
             std::list<WorldObject*>::iterator itr = targets.begin();
             while (itr != targets.end() && (*itr)->GetExactDist2d(GetCaster()) < 18.6f)
@@ -648,7 +648,7 @@ public:
 
             if (!melee.empty())
             {
-                WorldObject* target = Trinity::Containers::SelectRandomContainerElement(melee);
+                WorldObject* target = monster::Containers::SelectRandomContainerElement(melee);
                 melee.remove(target);
                 targets.push_back(target);
                 --targetCount;
@@ -656,7 +656,7 @@ public:
 
             while (!ranged.empty() && targetCount)
             {
-                WorldObject* target = Trinity::Containers::SelectRandomContainerElement(ranged);
+                WorldObject* target = monster::Containers::SelectRandomContainerElement(ranged);
                 ranged.remove(target);
                 targets.push_back(target);
                 --targetCount;
@@ -693,7 +693,7 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+            targets.sort(monster::ObjectDistanceOrderPred(GetCaster()));
             if (Unit* caster = GetCaster())
                 targets.remove_if([caster](WorldObject* target) { return target->GetDistance2d(caster) > 15.0f; });
             if (!targets.empty())

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -43,7 +43,7 @@
 #include "World.h"
 #include "WorldPacket.h"
 
-namespace Trinity
+namespace monster
 {
     class AchievementChatBuilder
     {
@@ -72,7 +72,7 @@ namespace Trinity
             int32 _textId;
             uint32 _achievementId;
     };
-}                                                           // namespace Trinity
+}                                                           // namespace monster
 
 bool AchievementCriteriaData::IsValid(AchievementCriteriaEntry const* criteria)
 {
@@ -919,8 +919,8 @@ void AchievementMgr<T>::SendAchievementEarned(AchievementEntry const* achievemen
 
     if (Guild* guild = sGuildMgr->GetGuildById(GetOwner()->GetGuildId()))
     {
-        Trinity::AchievementChatBuilder _builder(GetOwner(), CHAT_MSG_GUILD_ACHIEVEMENT, BROADCAST_TEXT_ACHIEVEMENT_EARNED, achievement->ID);
-        Trinity::LocalizedPacketDo<Trinity::AchievementChatBuilder> _localizer(_builder);
+        monster::AchievementChatBuilder _builder(GetOwner(), CHAT_MSG_GUILD_ACHIEVEMENT, BROADCAST_TEXT_ACHIEVEMENT_EARNED, achievement->ID);
+        monster::LocalizedPacketDo<monster::AchievementChatBuilder> _localizer(_builder);
         guild->BroadcastWorker(_localizer, GetOwner());
     }
 
@@ -937,9 +937,9 @@ void AchievementMgr<T>::SendAchievementEarned(AchievementEntry const* achievemen
     // if player is in world he can tell his friends about new achievement
     else if (GetOwner()->IsInWorld())
     {
-        Trinity::AchievementChatBuilder _builder(GetOwner(), CHAT_MSG_ACHIEVEMENT, BROADCAST_TEXT_ACHIEVEMENT_EARNED, achievement->ID);
-        Trinity::LocalizedPacketDo<Trinity::AchievementChatBuilder> _localizer(_builder);
-        Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::AchievementChatBuilder> > _worker(GetOwner(), sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY), _localizer);
+        monster::AchievementChatBuilder _builder(GetOwner(), CHAT_MSG_ACHIEVEMENT, BROADCAST_TEXT_ACHIEVEMENT_EARNED, achievement->ID);
+        monster::LocalizedPacketDo<monster::AchievementChatBuilder> _localizer(_builder);
+        monster::PlayerDistWorker<monster::LocalizedPacketDo<monster::AchievementChatBuilder> > _worker(GetOwner(), sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY), _localizer);
         GetOwner()->VisitNearbyWorldObject(sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY), _worker);
     }
 

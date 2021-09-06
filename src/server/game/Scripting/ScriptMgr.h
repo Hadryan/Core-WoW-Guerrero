@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -876,7 +876,7 @@ class ScriptMgr
         void LoadDatabase();
         void FillSpellSummary();
 
-        const char* ScriptsVersion() const { return "Integrated Trinity Scripts"; }
+        const char* ScriptsVersion() const { return "Integrated monster Scripts"; }
 
         void IncrementScriptCount() { ++_scriptCount; }
         uint32 GetScriptCount() const { return _scriptCount; }

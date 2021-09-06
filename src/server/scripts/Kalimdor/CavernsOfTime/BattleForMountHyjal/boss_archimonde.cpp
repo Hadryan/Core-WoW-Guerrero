@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -375,7 +375,7 @@ public:
             if (targets.empty())
                 return false;
 
-            targets.sort(Trinity::ObjectDistanceOrderPred(me));
+            targets.sort(monster::ObjectDistanceOrderPred(me));
             Unit* target = targets.front();
             if (target)
             {

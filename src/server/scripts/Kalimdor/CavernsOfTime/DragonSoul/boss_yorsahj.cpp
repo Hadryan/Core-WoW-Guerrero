@@ -887,7 +887,7 @@ public:
             {
                 return target->GetDistance2d(caster) > 60.0f;
             });
-            targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster(), false));
+            targets.sort(monster::ObjectDistanceOrderPred(GetCaster(), false));
             uint8 targetcnt = GetCaster()->GetMap()->Is25ManRaid() ? 8 : 3;
             if (targets.size() > targetcnt)
                 targets.resize(targetcnt);
@@ -996,7 +996,7 @@ public:
         void FilterTargets(std::list<WorldObject*>& targets)
         {
             if (!targets.empty())
-                Trinity::Containers::RandomResizeList(targets, GetCaster()->GetMap()->Is25ManRaid() ? 15 : 5);
+                monster::Containers::RandomResizeList(targets, GetCaster()->GetMap()->Is25ManRaid() ? 15 : 5);
         }
 
         void HandleDummy(SpellEffIndex effIndex)

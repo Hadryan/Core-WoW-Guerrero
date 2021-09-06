@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -273,7 +273,7 @@ void WorldSession::HandleWhoOpcode(WorldPacket& recvData)
     wstrToLower(wplayer_name);
     wstrToLower(wguild_name);
 
-    // client send in case not set max level value 100 but Trinity supports 255 max level,
+    // client send in case not set max level value 100 but monster supports 255 max level,
     // update it to show GMs with characters after 100 level
     if (level_max >= MAX_LEVEL)
         level_max = STRONG_MAX_LEVEL;
@@ -288,7 +288,7 @@ void WorldSession::HandleWhoOpcode(WorldPacket& recvData)
     data << uint32(matchcount);                           // placeholder, count of players matching criteria
     data << uint32(displaycount);                         // placeholder, count of players displayed
 
-    TRINITY_READ_GUARD(HashMapHolder<Player>::LockType, *HashMapHolder<Player>::GetLock());
+    monster_READ_GUARD(HashMapHolder<Player>::LockType, *HashMapHolder<Player>::GetLock());
     HashMapHolder<Player>::MapType const& m = sObjectAccessor->GetPlayers();
     for (HashMapHolder<Player>::MapType::const_iterator itr = m.begin(); itr != m.end(); ++itr)
     {
@@ -568,7 +568,7 @@ void WorldSession::HandleAddFriendOpcode(WorldPacket& recvData)
 {
     TC_LOG_DEBUG("network.opcode", "WORLD: Received CMSG_ADD_FRIEND");
 
-    std::string friendName = GetTrinityString(LANG_FRIEND_IGNORE_UNKNOWN);
+    std::string friendName = GetmonsterString(LANG_FRIEND_IGNORE_UNKNOWN);
     std::string friendNote;
 
     recvData >> friendName;
@@ -664,7 +664,7 @@ void WorldSession::HandleAddIgnoreOpcode(WorldPacket& recvData)
 {
     TC_LOG_DEBUG("network.opcode", "WORLD: Received CMSG_ADD_IGNORE");
 
-    std::string ignoreName = GetTrinityString(LANG_FRIEND_IGNORE_UNKNOWN);
+    std::string ignoreName = GetmonsterString(LANG_FRIEND_IGNORE_UNKNOWN);
 
     recvData >> ignoreName;
 
@@ -1170,7 +1170,7 @@ void WorldSession::HandleMoveTimeSkippedOpcode(WorldPacket& recvData)
         TC_LOG_DEBUG(LOG_FILTER_PACKETIO, "WORLD: CMSG_MOVE_TIME_SKIPPED");
 
         /// TODO
-        must be need use in Trinity
+        must be need use in monster
         We substract server Lags to move time (AntiLags)
         for exmaple
         GetPlayer()->ModifyLastMoveTime(-int32(time_skipped));

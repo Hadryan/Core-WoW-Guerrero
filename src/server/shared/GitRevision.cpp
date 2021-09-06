@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2008-2018 TrinityCore <http://www.trinitycore.org/>
+* Copyright (C) 2008-2018 monsterCore <http://www.monstercore.org/>
 *
 * This program is free software; you can redistribute it and/or modify it
 * under the terms of the GNU General Public License as published by the
@@ -30,7 +30,7 @@ char const* GitRevision::GetDate()
 }
 
 
-#define _PACKAGENAME "Trinity"
+#define _PACKAGENAME "monster"
 
 char const* GitRevision::GetFullVersion()
 {

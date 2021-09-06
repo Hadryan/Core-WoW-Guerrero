@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -41,7 +41,7 @@
 #include "Transport.h"
 #include "Chat.h"
 
-namespace Trinity
+namespace monster
 {
     class BattlegroundChatBuilder
     {
@@ -51,7 +51,7 @@ namespace Trinity
 
             void operator()(WorldPacket& data, LocaleConstant loc_idx)
             {
-                char const* text = sObjectMgr->GetTrinityString(_textId, loc_idx);
+                char const* text = sObjectMgr->GetmonsterString(_textId, loc_idx);
                 if (_args)
                 {
                     // we need copy va_list before use or original va_list will corrupted
@@ -97,9 +97,9 @@ namespace Trinity
 
             void operator()(WorldPacket& data, LocaleConstant loc_idx)
             {
-                char const* text = sObjectMgr->GetTrinityString(_textId, loc_idx);
-                char const* arg1str = _arg1 ? sObjectMgr->GetTrinityString(_arg1, loc_idx) : "";
-                char const* arg2str = _arg2 ? sObjectMgr->GetTrinityString(_arg2, loc_idx) : "";
+                char const* text = sObjectMgr->GetmonsterString(_textId, loc_idx);
+                char const* arg1str = _arg1 ? sObjectMgr->GetmonsterString(_arg1, loc_idx) : "";
+                char const* arg2str = _arg2 ? sObjectMgr->GetmonsterString(_arg2, loc_idx) : "";
 
                 char str[2048];
                 snprintf(str, 2048, text, arg1str, arg2str);
@@ -123,7 +123,7 @@ namespace Trinity
             int32 _arg1;
             int32 _arg2;
     };
-}                                                           // namespace Trinity
+}                                                           // namespace monster
 
 template<class Do>
 void Battleground::BroadcastWorker(Do& _do)
@@ -1492,7 +1492,7 @@ uint32 Battleground::GetBonusHonorFromKill(uint32 kills) const
 {
     //variable kills means how many honorable kills you scored (so we need kills * honor_for_one_kill)
     uint32 maxLevel = std::min<uint32>(GetMaxLevel(), 85U);
-    return Trinity::Honor::hk_honor_at_level(maxLevel, float(kills));
+    return monster::Honor::hk_honor_at_level(maxLevel, float(kills));
 }
 
 void Battleground::BlockMovement(Player* player)
@@ -2372,8 +2372,8 @@ void Battleground::SendMessageToAll(int32 entry, ChatMsg type, Player const* sou
     if (!entry)
         return;
 
-    Trinity::BattlegroundChatBuilder bg_builder(type, entry, source);
-    Trinity::LocalizedPacketDo<Trinity::BattlegroundChatBuilder> bg_do(bg_builder);
+    monster::BattlegroundChatBuilder bg_builder(type, entry, source);
+    monster::LocalizedPacketDo<monster::BattlegroundChatBuilder> bg_do(bg_builder);
     BroadcastWorker(bg_do);
 }
 
@@ -2385,8 +2385,8 @@ void Battleground::PSendMessageToAll(int32 entry, ChatMsg type, Player const* so
     va_list ap;
     va_start(ap, source);
 
-    Trinity::BattlegroundChatBuilder bg_builder(type, entry, source, &ap);
-    Trinity::LocalizedPacketDo<Trinity::BattlegroundChatBuilder> bg_do(bg_builder);
+    monster::BattlegroundChatBuilder bg_builder(type, entry, source, &ap);
+    monster::LocalizedPacketDo<monster::BattlegroundChatBuilder> bg_do(bg_builder);
     BroadcastWorker(bg_do);
 
     va_end(ap);
@@ -2397,7 +2397,7 @@ void Battleground::SendWarningToAll(int32 entry, ...)
     if (!entry)
         return;
 
-    char const* format = sObjectMgr->GetTrinityStringForDBCLocale(entry);
+    char const* format = sObjectMgr->GetmonsterStringForDBCLocale(entry);
 
     char str[1024];
     va_list ap;
@@ -2428,8 +2428,8 @@ void Battleground::SendWarningToAll(int32 entry, ...)
 
 void Battleground::SendMessage2ToAll(int32 entry, ChatMsg type, Player const* source, int32 arg1, int32 arg2)
 {
-    Trinity::Battleground2ChatBuilder bg_builder(type, entry, source, arg1, arg2);
-    Trinity::LocalizedPacketDo<Trinity::Battleground2ChatBuilder> bg_do(bg_builder);
+    monster::Battleground2ChatBuilder bg_builder(type, entry, source, arg1, arg2);
+    monster::LocalizedPacketDo<monster::Battleground2ChatBuilder> bg_do(bg_builder);
     BroadcastWorker(bg_do);
 }
 
@@ -2441,10 +2441,10 @@ void Battleground::EndNow()
 }
 
 // To be removed
-char const* Battleground::GetTrinityString(int32 entry)
+char const* Battleground::GetmonsterString(int32 entry)
 {
     // FIXME: now we have different DBC locales and need localized message for each target client
-    return sObjectMgr->GetTrinityStringForDBCLocale(entry);
+    return sObjectMgr->GetmonsterStringForDBCLocale(entry);
 }
 
 // IMPORTANT NOTICE:
