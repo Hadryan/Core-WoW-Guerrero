@@ -6,3 +6,9 @@
 + Visual Basic 2015
 + Openssl 1.0.1
 + Boost 1.60.0
+
+## Copyright
+
+License: GPL 2.0
+
+Read file [COPYING](COPYING).
