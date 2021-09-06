@@ -34,17 +34,12 @@ class HmacHash
         HmacHash(uint32 len, uint8 *seed);
         ~HmacHash();
         void UpdateData(const std::string &str);
-        void UpdateData(const uint8* data, size_t len);
         void Finalize();
         uint8 *ComputeHash(BigNumber* bn);
         uint8 *GetDigest() { return (uint8*)m_digest; }
         int GetLength() const { return SHA_DIGEST_LENGTH; }
     private:
-#if defined(OPENSSL_VERSION_NUMBER) && OPENSSL_VERSION_NUMBER >= 0x10100000L
-        HMAC_CTX* m_ctx;
-#else
         HMAC_CTX m_ctx;
-#endif
         uint8 m_digest[SHA_DIGEST_LENGTH];
 };
 #endif
