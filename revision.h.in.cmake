@@ -2,7 +2,7 @@
 #define __REVISION_H__
  #define _HASH                      "@rev_info@"
  #define _DATE                      "@rev_date@"
- #define VER_COMPANYNAME_STR        "OMFG.GG Developers"
+ #define VER_COMPANYNAME_STR        "MonsterCore"
  #define VER_LEGALCOPYRIGHT_STR     "(c)2008-2014 OMFG.GG"
  #define VER_FILEVERSION            0,0,0
  #define VER_FILEVERSION_STR        "@rev_date@ (@rev_info@)"
