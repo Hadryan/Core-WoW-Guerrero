@@ -59,10 +59,10 @@ bool CustomWaypointMovementGenerator<Creature>::StartMove(Creature* creature)
     if (!creature->isAlive())
         return false;
 
-	;// constexpr bool shouldUseInterpolation = true;
+    constexpr bool shouldUseInterpolation = true;
     doneMovement = false;
 
-    //if (shouldUseInterpolation)
+    if (shouldUseInterpolation)
     {
         if (m_isArrivalDone && doneMovement)
         {

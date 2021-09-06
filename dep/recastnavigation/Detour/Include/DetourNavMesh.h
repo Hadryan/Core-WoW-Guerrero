@@ -25,8 +25,7 @@
 
 // Edited by TC
 #if defined(WIN32) && !defined(__MINGW32__)
-/// Do not rename back to uint64. Otherwise mac complains about typedef redefinition
-typedef unsigned __int64    uint64_d;
+typedef unsigned __int64    uint64;
 #else
 #include <stdint.h>
 #ifndef uint64_t
@@ -34,8 +33,7 @@ typedef unsigned __int64    uint64_d;
 #include <linux/types.h>
 #endif
 #endif
-/// Do not rename back to uint64. Otherwise mac complains about typedef redefinition
-typedef uint64_t            uint64_d;
+typedef uint64_t            uint64;
 #endif 
 
 // Note: If you want to use 64-bit refs, change the types of both dtPolyRef & dtTileRef.
@@ -44,13 +42,17 @@ typedef uint64_t            uint64_d;
 // Edited by TC
 // We cannot have over 31 bits for either tile nor poly
 // without changing polyCount to use 64bits too.
+static const int STATIC_SALT_BITS = 12;
+static const int STATIC_TILE_BITS = 21;
+static const int STATIC_POLY_BITS = 31; 
+
 /// A handle to a polygon within a navigation mesh tile.
 /// @ingroup detour
-typedef uint64_d dtPolyRef; // Edited by TC
+typedef uint64 dtPolyRef; // Edited by TC
 
 /// A handle to a tile within a navigation mesh.
 /// @ingroup detour
-typedef uint64_d dtTileRef; // Edited by TC
+typedef uint64 dtTileRef; // Edited by TC
 
 /// The maximum number of vertices per navigation polygon.
 /// @ingroup detour
@@ -90,12 +92,6 @@ static const unsigned int DT_OFFMESH_CON_BIDIR = 1;
 /// @ingroup detour
 static const int DT_MAX_AREAS = 64;
 
-static const int STATIC_SALT_BITS = 12;
-static const int STATIC_TILE_BITS = 21;
-static const int STATIC_POLY_BITS = 31;
-// we cannot have over 31 bits for either tile nor poly
-// without changing polyCount to use 64bits too.
-
 /// Tile flags used for various functions and fields.
 /// For an example, see dtNavMesh::addTile().
 enum dtTileFlags
@@ -118,25 +114,6 @@ enum dtStraightPathOptions
 	DT_STRAIGHTPATH_AREA_CROSSINGS = 0x01,	///< Add a vertex at every polygon edge crossing where area changes.
 	DT_STRAIGHTPATH_ALL_CROSSINGS = 0x02,	///< Add a vertex at every polygon edge crossing.
 };
-
-
-/// Options for dtNavMeshQuery::findPath
-enum dtFindPathOptions
-{
-	DT_FINDPATH_LOW_QUALITY_FAR = 0x01,		///< [provisional] trade quality for performance far from the origin. The idea is that by then a new query will be issued
-	DT_FINDPATH_ANY_ANGLE	= 0x02,			///< use raycasts during pathfind to "shortcut" (raycast still consider costs)
-};
-
-/// Options for dtNavMeshQuery::raycast
-enum dtRaycastOptions
-{
-	DT_RAYCAST_USE_COSTS = 0x01,		///< Raycast should calculate movement cost along the ray and fill RaycastHit::cost
-};
-
-
-/// Limit raycasting during any angle pahfinding
-/// The limit is given as a multiple of the character radius
-static const float DT_RAY_CAST_LIMIT_PROPORTIONS = 50.0f;
 
 /// Flags representing the type of a navigation mesh polygon.
 enum dtPolyTypes
@@ -606,7 +583,8 @@ private:
 	dtPolyRef findNearestPolyInTile(const dtMeshTile* tile, const float* center,
 									const float* extents, float* nearestPt) const;
 	/// Returns closest point on polygon.
-	void closestPointOnPoly(dtPolyRef ref, const float* pos, float* closest, bool* posOverPoly) const;
+	void closestPointOnPolyInTile(const dtMeshTile* tile, unsigned int ip,
+								  const float* pos, float* closest) const;
 	
 	dtNavMeshParams m_params;			///< Current initialization params. TODO: do not store this info twice.
 	float m_orig[3];					///< Origin of the tile (0,0)

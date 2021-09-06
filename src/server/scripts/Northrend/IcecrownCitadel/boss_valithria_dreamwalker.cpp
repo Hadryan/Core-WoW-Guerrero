@@ -339,7 +339,7 @@ class boss_valithria_dreamwalker : public CreatureScript
                 me->LowerPlayerDamageReq(heal);
 
                 // encounter complete
-                if (me->GetMaxHealth() && !_done)
+                if (me->HealthAbovePctHealed(100, heal) && !_done)
                 {
                     _done = true;
                     Talk(SAY_VALITHRIA_SUCCESS);
@@ -351,18 +351,14 @@ class boss_valithria_dreamwalker : public CreatureScript
                     if (Creature* lichKing = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_VALITHRIA_LICH_KING)))
                         lichKing->AI()->EnterEvadeMode();
                 }
-                else if (!_over75PercentTalkDone && me->GetHealthPct() < 75)
+                else if (!_over75PercentTalkDone && me->HealthAbovePctHealed(75, heal))
                 {
                     _over75PercentTalkDone = true;
                     Talk(SAY_VALITHRIA_75_PERCENT);
                 }
                 else if (_instance->GetBossState(DATA_VALITHRIA_DREAMWALKER) == NOT_STARTED)
-                {
-                    if (Creature* archmage = me->FindNearestCreature(NPC_RISEN_ARCHMAGE, 30.0f))
-                        archmage->AI()->DoZoneInCombat();   // call EnterCombat on one of them, that will make it all start
-                    else if (Creature* trigger = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_VALITHRIA_TRIGGER)))
-                        trigger->AI()->DoAction(ACTION_DEATH);
-                }
+                if (Creature* archmage = me->FindNearestCreature(NPC_RISEN_ARCHMAGE, 30.0f))
+                    archmage->AI()->DoZoneInCombat();   // call EnterCombat on one of them, that will make it all start
             }
 
             void DamageTaken(Unit* /*attacker*/, uint32& damage)

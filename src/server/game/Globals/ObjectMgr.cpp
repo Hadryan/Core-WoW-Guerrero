@@ -139,15 +139,17 @@ bool normalizePlayerName(std::string& name)
     if (name.empty())
         return false;
 
-    std::wstring tmp;
-    if (!Utf8toWStr(name, tmp))
+    wchar_t wstr_buf[MAX_INTERNAL_PLAYER_NAME+1];
+    size_t wstr_len = MAX_INTERNAL_PLAYER_NAME;
+
+    if (!Utf8toWStr(name, &wstr_buf[0], wstr_len))
         return false;
 
-    wstrToLower(tmp);
-    if (!tmp.empty())
-        tmp[0] = wcharToUpper(tmp[0]);
+    wstr_buf[0] = wcharToUpper(wstr_buf[0]);
+    for (size_t i = 1; i < wstr_len; ++i)
+        wstr_buf[i] = wcharToLower(wstr_buf[i]);
 
-	if (!WStrToUtf8(tmp, name))
+    if (!WStrToUtf8(wstr_buf, wstr_len, name))
         return false;
 
     return true;

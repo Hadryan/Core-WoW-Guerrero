@@ -45,7 +45,7 @@ public:
         {
             { "addon",          SEC_MODERATOR,      false,   &HandleAccountAddonCommand,        "" },
             { "create",         SEC_CONSOLE,        true,    &HandleAccountCreateCommand,       "" },
-            //{ "delete",         SEC_CONSOLE,        true,    &HandleAccountDeleteCommand,       "" },
+            { "delete",         SEC_CONSOLE,        true,    &HandleAccountDeleteCommand,       "" },
             { "onlinelist",     SEC_CONSOLE,        true,    &HandleAccountOnlineListCommand,   "" },
             { "lock",           SEC_PLAYER,         false,   &HandleAccountLockCommand,         "" },
             { "set",            SEC_ADMINISTRATOR,  true,    NULL,                              "", accountSetCommandTable },

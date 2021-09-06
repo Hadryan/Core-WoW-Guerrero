@@ -323,7 +323,7 @@ void PoolGroup<T>::SpawnObject(ActivePoolData& spawns, uint32 limit, uint32 trig
                     return object.guid == triggerFrom || !spawns.IsActiveObject<T>(object.guid);
                 });
 
-            //Trinity::Containers::RandomResize(rolledObjects, count);
+            Trinity::Containers::RandomResize(rolledObjects, count);
         }
 
         // try to spawn rolled objects

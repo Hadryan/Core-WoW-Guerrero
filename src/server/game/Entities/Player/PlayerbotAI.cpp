@@ -172,25 +172,25 @@ void PlayerbotAI::HandleOnWhisperReact(uint64 receiver)
 		return;
 
 	if (chance > 50 && chance <= 60)
-		m_bot->Whisper("", LANG_UNIVERSAL, receiver);
+		m_bot->Whisper("Just doing my thing, and leveling.", LANG_UNIVERSAL, receiver);
 
 	if (chance > 60 && chance <= 70)
-		m_bot->Whisper("", LANG_UNIVERSAL, receiver);
+		m_bot->Whisper("Can't speak atm man, sorry.", LANG_UNIVERSAL, receiver);
 
 	if (chance > 70 && chance <= 80)
-		m_bot->Whisper("", LANG_UNIVERSAL, receiver);
+		m_bot->Whisper("Abit busy atm man.", LANG_UNIVERSAL, receiver);
 
 	if (chance > 80 && chance <= 85)
-		m_bot->Whisper("", LANG_UNIVERSAL, receiver);
+		m_bot->Whisper("Maybe later man", LANG_UNIVERSAL, receiver);
 
 	if (chance > 85 && chance <= 90)
-		m_bot->Whisper("", LANG_UNIVERSAL, receiver);
+		m_bot->Whisper("Just solo playing a bit atm", LANG_UNIVERSAL, receiver);
 
 	if (chance > 90 && chance <= 95)
-		m_bot->Whisper("", LANG_UNIVERSAL, receiver);
+		m_bot->Whisper("Maybe later", LANG_UNIVERSAL, receiver);
 
 	if (chance > 95 && chance <= 100)
-		m_bot->Whisper("", LANG_UNIVERSAL, receiver);
+		m_bot->Whisper("Yo, just a new player chilling around here.", LANG_UNIVERSAL, receiver);
 }
 
 void PlayerbotAI::HandleOnDuelReact()
@@ -199,7 +199,7 @@ void PlayerbotAI::HandleOnDuelReact()
 	chance;
 
 	if (chance <= 33)
-		m_bot->Say("", LANG_UNIVERSAL);
+		m_bot->Say("Yo, I'm a bit busy right now.", LANG_UNIVERSAL);
 
 	if (chance > 33 && chance <= 66)
 	{
@@ -236,13 +236,13 @@ void PlayerbotAI::HandleOnGroupReact()
 		return;
 
 	if (chance > 10 && chance <= 20)
-		m_bot->Say("", LANG_UNIVERSAL);
+		m_bot->Say("Not interested right now, sorry.", LANG_UNIVERSAL);
 
 	if (chance > 20 && chance <= 35)
-		m_bot->Say("", LANG_UNIVERSAL);
+		m_bot->Say("Just doing leveling, maybe later.", LANG_UNIVERSAL);
 
 	if (chance > 35 && chance <= 50)
-		m_bot->Say("", LANG_UNIVERSAL);
+		m_bot->Say("Heya, just solo playing atm.", LANG_UNIVERSAL);
 
 	if (chance > 50 && chance <= 100)
 	{
@@ -291,16 +291,16 @@ void PlayerbotAI::HandleOnGuildReact()
 		return;
 
 	if (chance > 40 && chance <= 50)
-		m_bot->Say("", LANG_UNIVERSAL);
+		m_bot->Say("No thanks", LANG_UNIVERSAL);
 
 	if (chance > 50 && chance <= 60)
-		m_bot->Say("", LANG_UNIVERSAL);
+		m_bot->Say("Hey, no thanks.", LANG_UNIVERSAL);
 
 	if (chance > 60 && chance <= 70)
-		m_bot->Say("", LANG_UNIVERSAL);
+		m_bot->Say("Nty.", LANG_UNIVERSAL);
 
 	if (chance > 70 && chance <= 80)
-		m_bot->Say("", LANG_UNIVERSAL);
+		m_bot->Say("Later sure.", LANG_UNIVERSAL);
 
 	if (chance > 80 && chance <= 100)
 	{
@@ -320,14 +320,14 @@ void PlayerbotAI::HandleOnTradeReact()
 
 	if (chance > 50 && chance <= 70)
 	{
-		m_bot->Say("", LANG_UNIVERSAL);
+		m_bot->Say("No thanks", LANG_UNIVERSAL);
 		if (m_bot)
 			m_bot->TradeCancel(true);
 	}
 
 	if (chance > 70 && chance <= 100)
 	{
-		m_bot->Say("", LANG_UNIVERSAL);
+		m_bot->Say("no bye", LANG_UNIVERSAL);
 		if (m_bot)
 			m_bot->TradeCancel(true);
 	}

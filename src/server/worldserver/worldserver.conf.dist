@@ -63,7 +63,7 @@ RealmID = 1
 #        Example:     "@prefix@/share/trinitycore"
 #        Default:     "."
 
-DataDir = "D:\REPACK COMPILADO"
+DataDir = "."
 
 #
 #    LogsDir
@@ -85,14 +85,14 @@ LogsDir = ""
 #                                                                 section my.ini)
 #                     ".;/path/to/unix_socket;username;password;database" - (use Unix sockets on
 #                                                                           Unix/Linux)
-#        Default:     "127.0.0.1;3306;root;ascent;emucoach_v14_vip_auth"  - (LoginDatabaseInfo)
-#                     "127.0.0.1;3306;root;ascent;emucoach_v14_vip_world" - (WorldDatabaseInfo)
-#                     "127.0.0.1;3306;root;ascent;emucoach_v14_vip_char"  - (CharacterDatabaseInfo)
+#        Default:     "127.0.0.1;3306;trinity;trinity;auth"       - (LoginDatabaseInfo)
+#                     "127.0.0.1;3306;trinity;trinity;world"      - (WorldDatabaseInfo)
+#                     "127.0.0.1;3306;trinity;trinity;characters" - (CharacterDatabaseInfo)
 
-LoginDatabaseInfo     = "127.0.0.1;3306;root;ascent;emucoach_v14_vip_auth" 
-WorldDatabaseInfo     = "127.0.0.1;3306;root;ascent;emucoach_v14_vip_world"
-CharacterDatabaseInfo = "127.0.0.1;3306;root;ascent;emucoach_v14_vip_char" 
-# Emucoach: Version 14 (VIP)
+LoginDatabaseInfo     = "127.0.0.1;3306;trinity;trinity;auth"
+WorldDatabaseInfo     = "127.0.0.1;3306;trinity;trinity;world"
+CharacterDatabaseInfo = "127.0.0.1;3306;trinity;trinity;characters"
+
 #
 #    LoginDatabase.WorkerThreads
 #    WorldDatabase.WorkerThreads
@@ -181,7 +181,7 @@ Compression = 1
 #                     1+  - (Enabled)
 #                     0   - (Disabled, No limit)
 
-PlayerLimit = 1500
+PlayerLimit = 100
 
 #
 #    SaveRespawnTimeImmediately
@@ -251,7 +251,7 @@ ChangeWeatherInterval = 600000
 #        Description: Time (in milliseconds) for player save interval.
 #        Default:     900000 - (15 min)
 
-PlayerSaveInterval = 90000
+PlayerSaveInterval = 900000
 
 #
 #    PlayerSave.Stats.MinLevel
@@ -275,7 +275,16 @@ PlayerSave.Stats.SaveOnlyOnLogout = 1
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-mmap.enablePathFinding = 1
+mmap.enablePathFinding = 0
+
+#    mmap.enableSplineLocking
+#        Description: Enable/Disable spline using mmaps - experimental
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
+
+mmap.enableSplineLocking = 1
+
+#
 
 #
 #    vmap.enableLOS
@@ -412,7 +421,7 @@ PacketLogFile = ""
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-ChatLogs.Channel = 1
+ChatLogs.Channel = 0
 
 #
 #    ChatLogs.Whisper
@@ -420,7 +429,7 @@ ChatLogs.Channel = 1
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-ChatLogs.Whisper = 1
+ChatLogs.Whisper = 0
 
 #
 #    ChatLogs.SysChan
@@ -437,7 +446,7 @@ ChatLogs.SysChan = 0
 #                     1 - (Enabled)
 
 
-ChatLogs.Party = 1
+ChatLogs.Party = 0
 
 #
 #    ChatLogs.Raid
@@ -454,7 +463,7 @@ ChatLogs.Raid = 0
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-ChatLogs.Guild = 1
+ChatLogs.Guild = 0
 
 #
 #    ChatLogs.Public
@@ -462,7 +471,7 @@ ChatLogs.Guild = 1
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-ChatLogs.Public = 1
+ChatLogs.Public = 0
 
 #
 #    ChatLogs.Addon
@@ -497,7 +506,7 @@ ChatLogs.BattleGround = 0
 #                     16 - (FFA_PVP, Free for all pvp mode like arena PvP in all zones except rest
 #                          activated places and sanctuaries)
 
-GameType = 1
+GameType = 0
 
 #
 #    RealmZone
@@ -639,7 +648,7 @@ MinPetName = 2
 #        Description: Set the max number of players returned in the /who list and interface.
 #        Default:     49 - (stable)
 
-MaxWhoListReturns = 1000
+MaxWhoListReturns = 49
 
 #
 #    CharacterCreating.Disabled
@@ -1053,7 +1062,7 @@ BeepAtStart = 1
 #        Example:     "Welcome to John\'s Server@This server runs on Trinity Core."
 #        Default:     "Welcome to a Trinity Core server."
 
-Motd = "Powered by Emucoach version 14.0 (VIP Blizzlike). Delivered by Emucoach.com. Playerbots included!"
+Motd = "Welcome to a Trinity Core server."
 
 #
 #    Server.LoginInfo
@@ -1111,7 +1120,7 @@ DBC.EnforceItemAttributes = 1
 #        Description: Controls the max amount of different instances player can enter within hour
 #        Default:     5
 
-AccountInstancesPerHour = 50
+AccountInstancesPerHour = 5
 
 #
 ###################################################################################################
@@ -1149,7 +1158,7 @@ Warden.NumOtherChecks = 7
 #        Default:     600 - (10 Minutes)
 #                     0 - (Disabled, client won't be kicked)
 
-Warden.ClientResponseDelay = 30
+Warden.ClientResponseDelay = 600
 
 #
 #    Warden.ClientCheckHoldOff
@@ -1207,7 +1216,7 @@ AllowTwoSide.Interaction.Calendar = 0
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-AllowTwoSide.Interaction.Chat = 1
+AllowTwoSide.Interaction.Chat = 0
 
 #
 #    AllowTwoSide.Interaction.Channel
@@ -1215,7 +1224,7 @@ AllowTwoSide.Interaction.Chat = 1
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-AllowTwoSide.Interaction.Channel = 1
+AllowTwoSide.Interaction.Channel = 0
 
 #
 #    AllowTwoSide.Interaction.Group
@@ -1223,7 +1232,7 @@ AllowTwoSide.Interaction.Channel = 1
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-AllowTwoSide.Interaction.Group = 1
+AllowTwoSide.Interaction.Group = 0
 
 #
 #    AllowTwoSide.Interaction.Lfg
@@ -1239,7 +1248,7 @@ AllowTwoSide.Interaction.Lfg = 0
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-AllowTwoSide.Interaction.Guild = 1
+AllowTwoSide.Interaction.Guild = 0
 
 #
 #    AllowTwoSide.Interaction.Auction
@@ -1263,7 +1272,7 @@ AllowTwoSide.Interaction.Mail = 0
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-AllowTwoSide.WhoList = 1
+AllowTwoSide.WhoList = 0
 
 #
 #    AllowTwoSide.AddFriend
@@ -1519,6 +1528,20 @@ ChatFlood.MessageDelay = 1
 
 ChatFlood.MuteTime = 10
 
+#    ChatFlood.PrivateMessageCount
+#        Description: Chat flood protection, number of private messages that player can send.
+#        Default:     10 - (Enabled)
+#                     0  - (Disabled)
+
+ChatFlood.PrivateMessageCount = 10
+
+#
+#    ChatFlood.PrivateMessageDelay
+#        Description: Time (in seconds) between messages to be counted into ChatFlood.PrivateMessageCount.
+#        Default:     1
+
+ChatFlood.PrivateMessageDelay = 1
+
 #
 #    Channel.RestrictedLfg
 #        Description: Restrict LookupForGroup channel to characters registered in the LFG tool.
@@ -1724,7 +1747,7 @@ Visibility.GroupMode = 1
 #                     533 - (Visibility.Distance.BGArenas)
 
 Visibility.Distance.Continents = 90
-Visibility.Distance.Instances = 533
+Visibility.Distance.Instances = 170
 Visibility.Distance.BGArenas = 533
 
 #
@@ -1835,6 +1858,37 @@ Rate.Drop.Item.ReferencedAmount = 1
 Rate.XP.Kill    = 1
 Rate.XP.Quest   = 1
 Rate.XP.Explore = 1
+
+#
+#	 Config.XP.PvPBonus.Enable
+#	 	Description: Enables/Disables bonus XP when the player has its pvp mode turned on.
+#		Default : 1 (Enabled)
+#				  0 (Disabled)
+
+Config.XP.PvPBonus.Enable = 1
+
+#
+#	 Rate.XP.PvPBonus.Percent
+#	 	Description: The amount of bonus XP in % that will be rewarded to the player for kills/quests/exploration if their pvp mode is turned on.
+#		Default : 10
+
+Rate.XP.PvPBonus.Percent = 10
+
+
+#
+#	 Config.XP.Dungeon.Enable
+#	 	Description: Enables/Disables bonus XP when the player is in a dungeon.
+#		Default : 1 (Enabled)
+#				  0 (Disabled)
+
+Config.XP.Dungeon.Enable = 1
+
+#
+#	 Rate.XP.Dungeon.Percent
+#	 	Description: The amount of bonus XP in % that will be rewarded to the player from quests/creature kills/etc while being in a dungeon.
+#		Default : 10
+
+Rate.XP.Dungeon.Percent = 10
 
 #
 #    Rate.RepairCost
@@ -2085,7 +2139,7 @@ Die.Command.Mode = 1
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-AutoBroadcast.On = 1
+AutoBroadcast.On = 0
 
 #
 #    AutoBroadcast.Center
@@ -2101,7 +2155,7 @@ AutoBroadcast.Center = 0
 #        Description: Timer (in milliseconds) for auto broadcasts.
 #        Default:     60000 - (60 seconds)
 
-AutoBroadcast.Timer = 400000
+AutoBroadcast.Timer = 60000
 
 #
 ###################################################################################################
@@ -2220,7 +2274,7 @@ Battleground.Random.DecayTime = 15
 #         Default:     0 - (Disabled)
 #                      1 - (Enabled, Experimental as of still being in development)
 
-Wintergrasp.Enable = 1
+Wintergrasp.Enable = 0
 
 #
 #     Wintergrasp.PlayerMax
@@ -2270,7 +2324,7 @@ Wintergrasp.CrashRestartTimer = 10
 #         Default:     0 - (Disabled)
 #                      1 - (Enabled, Experimental as of still being in development)
 
-TolBarad.Enable = 1
+TolBarad.Enable = 0
 
 #
 #     TolBarad.PlayerMax
@@ -2476,7 +2530,7 @@ Console.Enable = 1
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-Ra.Enable = 1
+Ra.Enable = 0
 
 #
 #    Ra.IP
@@ -2549,7 +2603,7 @@ CharDelete.MinLevel = 0
 #        Default:     30 - (Enabled)
 #                     0  - (Disabled, Don't delete any characters)
 
-CharDelete.KeepDays = 200
+CharDelete.KeepDays = 30
 
 #
 ###################################################################################################
@@ -2811,10 +2865,10 @@ UI.ShowQuestLevelsInDialogs = 0
 #                         Example:  536870912 (512 mb)
 #
 
-Appender.Console=1,3,14,1 1 3 10 14 14
+Appender.Console=1,3,0
 Appender.Server=2,2,0,Server.log,w
 Appender.GM=2,2,15,gm/gm_%s.log
-Appender.DBErrors=2,2,2,DBErrors.log
+Appender.DBErrors=2,2,0,DBErrors.log
 
 #  Logger config values: Given a logger "name"
 #    Logger.name
@@ -2869,7 +2923,7 @@ Logger.sql.sql=5,Console DBErrors
 #Logger.maps=3,Console Server
 #Logger.misc=3,Console Server
 #Logger.network=3,Console Server
-#Logger.network.opcode=2,Console Server
+#Logger.network.opcode=3,Console Server
 #Logger.network.soap=3,Console Server
 #Logger.outdoorpvp=3,Console Server
 #Logger.pool=3,Console Server
@@ -3138,14 +3192,11 @@ IPHistory.Enable = 0
 #
 ###################################################################################################
 
-
-
 #     Anticheat.Enable
 #        Description: Enables or disables the Anticheat System functionality
-#        Default:     0 - (Disabled)
-#                     0 - (Enabled)
-# 
-# Disabled as it has some false-positives. Not recommended for public usage.
+#        Default:     1 - (Enabled)
+#                     0 - (Disabled)
+
 Anticheat.Enable = 1
 
 #     Anticheat.ReportsForIngameWarnings
@@ -3229,147 +3280,7 @@ Anticheat.BanDuration = 86400
 Anticheat.SkipGMLevel = 1
 #
 
-
-###################################################################################################
-#
-#     Bot.AccGuid
-#        Description: AccGuid for the bot system
-#        Default:     1 - (Enabled)
-#                     0 - (Disabled)
-
-Bots.AccGuid = 0
-
-#     Bots.MaxCount
-#        Description: Max amount of bots.
-#        Default:     10
-
-Bots.MaxCount = 0
-
 ###############################################################################
-# DISCORD SERVER 
-#
-#    Discord.Enable
-#        Parse command logs into the Discord Channel
-#    Default 1 (On)
-#
-###############################################################################
-
-Discord.Enable = 0
-#
-
-# CROSSFACTION BG CONFIG
-#
-# CrossfactionBG.enable = 1 - Mixed battleground enabled.
-# CrossfactionBG.enable = 0 - Mixed battleground disabled.
-
-
-CrossfactionBG.enable = 0
-
-
-###################################################################################################
-# NPCBOT CONFIGURATION
-#
-#     Bot.EnableNpcBots
-#        Enable NpcBot system
-#        Default: 1 - enable
-#                       0 - disable
-
-Bot.EnableNpcBots = 1
-
-#    Bot.MaxNpcBots
-#        Maximum number of Npc Bots allowed per character (disabled for GM accounts)
-#        Default: 1
-#        Recomended: 4
-#        Max: 9
-#        Absolute Max: 39
-
-Bot.MaxNpcBots = 1
-
-#    Bot.MaxNpcBotsPerClass
-#        Maximum Npc Bots of each class allowed per character
-#        If set to 0, no restriction
-#        Default: 1
-
-Bot.MaxNpcBotsPerClass = 1
-
-#    Bot.BaseFollowDistance
-#        Default follow distance set at login
-#        Default: 30
-
-Bot.BaseFollowDistance = 30
-
-#    Bot.XpReductionPercent
-#        Since bot party can be pretty large, it can become an exploit to farm xp so you can reduce xp gain here
-#        PERCENT of  'XP.KILL'  reward reduction from each Npc Bots used (Starting with second)
-#        Example:
-#            You have 3 bots, xp reduction is 20 then reduction will be ((3-1)*20) = 40%; 60% exp gained only
-#        Note: Minimum xp rate will be 10%
-#        Min: 0
-#        Max: 90
-#        Default: 0
-
-Bot.XpReductionPercent = 0
-
-#    Bot.HealTargetIconsMask
-#        Icon number bitmask which bots are using to search for additional targets to heal (out of party)
-#        1 - Star
-#        2 - Circle
-#        4 - Diamond
-#        8 - Triangle
-#        16 - Moon
-#        32 - Square
-#        64 - Cross
-#        128 - Skull
-#        Example: to check Star, Triangle and Square we need 1832 = 41
-#        Note that many creatures cannot accept heal
-#        Min: 0 (Disable)
-#        Max: 255 (Any Icon)
-#        Default: 8 (Triangle)
-
-Bot.HealTargetIconsMask = 8
-
-#    Bot.DamageMult
-#        Myltiplier for bot's damage dealt. Allows to balance bots' compared to players' damage
-#        Any damage done by bots will be modified
-#        Range: 0.01 - 10.0
-#        Default: 1.0
-
-Bot.DamageMult.Melee = 1.0
-Bot.DamageMult.Spell = 1.0
-
-#    Bot.EnableIn... Arenas/BGs/Dungeons/Raids
-#        Allows to restrict bots usage in PvE and/or PvP
-#        Default: true for all
-
-Bot.EnableInArenas = 1
-Bot.EnableInBGs = 1
-Bot.EnableInDungeons = 1
-Bot.EnableInRaids = 1
-
-#    Bot.InstanceLimit... Dungeons/Raids
-#        If set to 1 will apply instance players limitation to bots
-#        Default: false for all
-
-Bot.InstanceLimit.Dungeons = 0
-Bot.InstanceLimit.Raids = 0
-
-#    Bot.Cost
-#        Bot recruitment cost (in copper)
-#        Note: this value is set for lvl 85 characters. Cost will be reduced for lower levels
-#        Default: 0
-
-Bot.Cost = 0
-
-#    Bot.PvP
-#        If set to 0 bots will not attack  players or other bots
-#        Default: 1
-
-Bot.PvP = 1
-
-#
-
-################################################## #################################################
-
 # AUCTION HOUSE BOT SETTINGS
 #
 #    AuctionHouseBot.DEBUG
@@ -3643,7 +3554,120 @@ AuctionHouseBot.DisableItemsBelowReqSkillRank = 0
 AuctionHouseBot.DisableItemsAboveReqSkillRank = 0
 AuctionHouseBot.DisableTGsBelowReqSkillRank = 0
 AuctionHouseBot.DisableTGsAboveReqSkillRank = 0
+
+###############################################################################
+# DISCORD SERVER 
 #
+#    Discord.Enable
+#        Parse command logs into the Discord Channel
+#    Default 1 (On)
+#
+###############################################################################
+
+Discord.Enable = 0
+
+###################################################################################################
+# NPCBOT CONFIGURATION
+#
+#     Bot.EnableNpcBots
+#        Enable NpcBot system
+#        Default: 1 - enable
+#                       0 - disable
+
+Bot.EnableNpcBots = 0
+
+#    Bot.MaxNpcBots
+#        Maximum number of Npc Bots allowed per character (disabled for GM accounts)
+#        Default: 1
+#        Recomended: 4
+#        Max: 9
+#        Absolute Max: 39
+
+Bot.MaxNpcBots = 1
+
+#    Bot.MaxNpcBotsPerClass
+#        Maximum Npc Bots of each class allowed per character
+#        If set to 0, no restriction
+#        Default: 1
+
+Bot.MaxNpcBotsPerClass = 1
+
+#    Bot.BaseFollowDistance
+#        Default follow distance set at login
+#        Default: 30
+
+Bot.BaseFollowDistance = 30
+
+#    Bot.XpReductionPercent
+#        Since bot party can be pretty large, it can become an exploit to farm xp so you can reduce xp gain here
+#        PERCENT of  'XP.KILL'  reward reduction from each Npc Bots used (Starting with second)
+#        Example:
+#            You have 3 bots, xp reduction is 20 then reduction will be ((3-1)*20) = 40%; 60% exp gained only
+#        Note: Minimum xp rate will be 10%
+#        Min: 0
+#        Max: 90
+#        Default: 0
+
+Bot.XpReductionPercent = 0
+
+#    Bot.HealTargetIconsMask
+#        Icon number bitmask which bots are using to search for additional targets to heal (out of party)
+#        1 - Star
+#        2 - Circle
+#        4 - Diamond
+#        8 - Triangle
+#        16 - Moon
+#        32 - Square
+#        64 - Cross
+#        128 - Skull
+#        Example: to check Star, Triangle and Square we need 1832 = 41
+#        Note that many creatures cannot accept heal
+#        Min: 0 (Disable)
+#        Max: 255 (Any Icon)
+#        Default: 8 (Triangle)
+
+Bot.HealTargetIconsMask = 8
+
+#    Bot.DamageMult
+#        Myltiplier for bot's damage dealt. Allows to balance bots' compared to players' damage
+#        Any damage done by bots will be modified
+#        Range: 0.01 - 10.0
+#        Default: 1.0
+
+Bot.DamageMult.Melee = 1.0
+Bot.DamageMult.Spell = 1.0
+
+#    Bot.EnableIn... Arenas/BGs/Dungeons/Raids
+#        Allows to restrict bots usage in PvE and/or PvP
+#        Default: true for all
+
+Bot.EnableInArenas = 1
+Bot.EnableInBGs = 1
+Bot.EnableInDungeons = 1
+Bot.EnableInRaids = 1
+
+#    Bot.InstanceLimit... Dungeons/Raids
+#        If set to 1 will apply instance players limitation to bots
+#        Default: false for all
+
+Bot.InstanceLimit.Dungeons = 0
+Bot.InstanceLimit.Raids = 0
+
+#    Bot.Cost
+#        Bot recruitment cost (in copper)
+#        Note: this value is set for lvl 85 characters. Cost will be reduced for lower levels
+#        Default: 0
+
+Bot.Cost = 0
+
+#    Bot.PvP
+#        If set to 0 bots will not attack  players or other bots
+#        Default: 1
+
+Bot.PvP = 1
+
+#
+###################################################################################################
 
 #
 #    Creature.MovingStopTimeForPlayer
@@ -3653,7 +3677,28 @@ AuctionHouseBot.DisableTGsAboveReqSkillRank = 0
  Creature.MovingStopTimeForPlayer = 30000
 #
 
+###############################################################################
+
 #
+#    BaseMapLoadAllGrids
+#        Description: Load all grids for base maps upon load. Requires GridUnload to be 0.
+#                     This will take around 5GB of ram upon server load, and will take some time
+#                     to initially load the server.
+#        Default:     0 - (Don't pre-load all base maps, dynamically load as used)
+#                     1 - (Preload all grids in all base maps upon load)
+
+BaseMapLoadAllGrids = 0
+
+#
+#    InstanceMapLoadAllGrids
+#        Description: Load all grids for instance maps upon load. Requires GridUnload to be 0.
+#                     Upon loading an instance map, all creatures/objects in the map will be pre-loaded
+#        Default:     0 - (Don't pre-load all base maps, dynamically load as used)
+#                     1 - (Preload all grids in the instance upon load)
+
+InstanceMapLoadAllGrids = 0
+#
+
 #	Config.No.Title.Requirements.Enable
 #	 	Description: Disables requirements upon adding Titles. 
 #  Note: If this is Disabled, the .title add WON'T work on players (only GMS)
@@ -3663,5 +3708,5 @@ AuctionHouseBot.DisableTGsAboveReqSkillRank = 0
 #		Default : 0 (Disabled)
 #		          1 (Enabled)
 
-Config.No.Title.Requirements = 1
+Config.No.Title.Requirements = 0
 #

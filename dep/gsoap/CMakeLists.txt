@@ -1,4 +1,4 @@
-# Copyright (C) 2016-2018 ForceCore Network <http://force.net.ve/>
+# Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without

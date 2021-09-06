@@ -1,5 +1,0 @@
-DELETE FROM `creature` WHERE id = 701450;
-DELETE FROM `creature` WHERE guid = 39404;
-INSERT INTO `creature` (`guid`, `id`, `map`, `zone`, `area`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`, `walkmode`, `saiscriptflag`) VALUES('39404','701450','0','1519','5704','1','1','0','0','-8699.7','838.564','99.2015','2.1293','90','0','0','1','0','0','0','0','0','0','0');
-DELETE FROM `creature` WHERE guid = 75257;
-INSERT INTO `creature` (`guid`, `id`, `map`, `zone`, `area`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`, `walkmode`, `saiscriptflag`) VALUES('75257','701450','1','1637','5167','1','1','0','0','1727.33','-4519.5','32.6442','1.29154','90','0','0','1','0','0','0','0','0','0','0');

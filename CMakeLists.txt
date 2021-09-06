@@ -9,7 +9,7 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 # Set projectname (must be done AFTER setting configurationtypes)
-project(EmuCore)
+project(TrinityCore)
 
 # CMake policies (can not be handled elsewhere)
 cmake_minimum_required(VERSION 2.8)
@@ -33,9 +33,10 @@ if( NOT CMAKE_BUILD_TYPE )
   set(CMAKE_BUILD_TYPE "Release")
 endif()
 
+include(AutoCollect)
 include(CheckCXXSourceRuns)
 include(CheckIncludeFiles)
-
+include(GroupSources)
 # set default buildoptions and print them
 include(cmake/options.cmake)
 
@@ -60,6 +61,10 @@ if( UNIX )
   find_package(ZLIB)
   find_package(BZip2)
   find_package(Threads REQUIRED)
+endif()
+
+if(NOT WITHOUT_GIT)
+  find_package(Git)
 endif()
 
 # Find revision ID and hash of the sourcetree

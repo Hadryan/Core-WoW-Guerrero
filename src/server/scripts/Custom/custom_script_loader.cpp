@@ -20,26 +20,20 @@
 // void Add${NameOfDirectory}Scripts()
 
 /* This is where custom scripts' loading functions should be declared. */
-void AddSC_Skirmish_npc();
-void AddSC_solo_queue();
+/*void AddSC_Skirmish_npc();
+void AddSC_solo_queue();*/
 void AddSC_SpellRegulator();
 void AddSC_StabilityTest();
 void AddSC_npc_level_booster();
 void AddSC_Transmogrifier_NPC();
-void AddSC_CdReset();
-void AddSC_System_Censure();
-void AddSC_MapSecureLvl();
 
 void AddCustomScripts()
 {
     /* This is where custom scripts should be added. */
-    AddSC_Skirmish_npc();
-    AddSC_solo_queue();
+    /*AddSC_Skirmish_npc();
+    AddSC_solo_queue();*/
     AddSC_SpellRegulator();
     AddSC_StabilityTest();
     AddSC_npc_level_booster();
 	AddSC_Transmogrifier_NPC();
-	AddSC_CdReset();
-	AddSC_System_Censure();
-    AddSC_MapSecureLvl();
 }

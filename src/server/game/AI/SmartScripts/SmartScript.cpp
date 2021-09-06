@@ -655,8 +655,8 @@ void SmartScript::ProcessAction(SmartScriptHolder& p_ScriptHolder, Unit* unit, u
             if (targets.empty())
                 break;
 
-			if (p_ScriptHolder.action.cast.targetsLimit > 0 && targets.size() > p_ScriptHolder.action.cast.targetsLimit)
-				;// Trinity::Containers::RandomResize(targets, p_ScriptHolder.action.cast.targetsLimit);
+            if (p_ScriptHolder.action.cast.targetsLimit > 0 && targets.size() > p_ScriptHolder.action.cast.targetsLimit)
+                Trinity::Containers::RandomResize(targets, p_ScriptHolder.action.cast.targetsLimit);
 
             for (WorldObject* target : targets)
             {
@@ -729,8 +729,8 @@ void SmartScript::ProcessAction(SmartScriptHolder& p_ScriptHolder, Unit* unit, u
             if (targets.empty())
                 break;
 
-			if (p_ScriptHolder.action.cast.targetsLimit)
-				;//Trinity::Containers::RandomResize(targets, p_ScriptHolder.action.cast.targetsLimit);
+            if (p_ScriptHolder.action.cast.targetsLimit)
+                Trinity::Containers::RandomResize(targets, p_ScriptHolder.action.cast.targetsLimit);
 
             for (WorldObject* target : targets)
             {
@@ -3357,8 +3357,8 @@ void SmartScript::GetTargets(ObjectVector& targets, SmartScriptHolder const& e, 
                     targets.push_back(unit);
             }
 
-			if (e.target.unitRange.maxSize)
-				;// Trinity::Containers::RandomResize(targets, e.target.unitRange.maxSize);
+            if (e.target.unitRange.maxSize)
+                Trinity::Containers::RandomResize(targets, e.target.unitRange.maxSize);
             break;
         }
 
@@ -3379,8 +3379,8 @@ void SmartScript::GetTargets(ObjectVector& targets, SmartScriptHolder const& e, 
                     targets.push_back(unit);
             }
 
-			if (e.target.unitDistance.maxSize)
-				;// Trinity::Containers::RandomResize(targets, e.target.unitDistance.maxSize);
+            if (e.target.unitDistance.maxSize)
+                Trinity::Containers::RandomResize(targets, e.target.unitDistance.maxSize);
 
             break;
         }
@@ -3402,8 +3402,8 @@ void SmartScript::GetTargets(ObjectVector& targets, SmartScriptHolder const& e, 
                     targets.push_back(unit);
             }
 
-			if (e.target.goDistance.maxSize)
-				;//Trinity::Containers::RandomResize(targets, e.target.goDistance.maxSize);
+            if (e.target.goDistance.maxSize)
+                Trinity::Containers::RandomResize(targets, e.target.goDistance.maxSize);
             break;
         }
 
@@ -3424,8 +3424,8 @@ void SmartScript::GetTargets(ObjectVector& targets, SmartScriptHolder const& e, 
                     targets.push_back(unit);
             }
 
-			if (e.target.goRange.maxSize)
-				;// Trinity::Containers::RandomResize(targets, e.target.goRange.maxSize);
+            if (e.target.goRange.maxSize)
+                Trinity::Containers::RandomResize(targets, e.target.goRange.maxSize);
             break;
         }
 

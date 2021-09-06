@@ -1502,7 +1502,7 @@ class instance_icecrown_citadel : public InstanceMapScript
                                         transData.BuildPacket(&packet);
                                         pPlayer->SendDirectMessage(&packet);
                                     }
-                            }						
+                            }
                         break;
                     }
                     case EVENT_QUAKE:
