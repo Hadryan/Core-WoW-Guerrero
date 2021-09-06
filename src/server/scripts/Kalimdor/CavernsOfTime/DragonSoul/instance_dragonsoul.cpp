@@ -155,9 +155,9 @@ class instance_dragonsoul : public InstanceMapScript
                     case NPC_TWILIGHT_SIEGE_CAPTAIN:
                     case NPC_TWILIGHT_PORTAL:
                     case NPC_EARTHEN_SOLDIER:
-                        npcGroups.emplace(DATA_MORCHOK, creature->GetGUID());
+                        /*npcGroups.emplace(DATA_MORCHOK, creature->GetGUID());
                         if (IsDone(DATA_MORCHOK) || LfrId == LFR_PART_TWO)
-                            creature->SetPhaseMask(0x2, true);
+                            creature->SetPhaseMask(0x2, true);*/
                         break;
                     case NPC_FLAIL_OF_GORATH_TRASH: // wing trash + bosses
                     case NPC_EYE_OF_GORATH_TRASH:
