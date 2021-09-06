@@ -15,7 +15,7 @@
 
 ## Links
 
-* [Website](wow-monster.com)
+* [Website](https://www.wow-monster.com)
 * [Discord](https://discord.gg/MWRbuf4KQt)
 
 ##
