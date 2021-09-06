@@ -1,4 +1,4 @@
-# ![logo](https://github.com/demixitho3/EmuCore4.3.4/blob/master/gitlab.png?raw=true) MonsterCore
+# ![logo](https://github.com/demixitho3/EmuCore4.3.4/blob/master/gitlab.png?raw=true) MonsterCore (master)
 ![Discord](https://img.shields.io/discord/802233220954587217?style=for-the-badge)
 
 ## Requirements
