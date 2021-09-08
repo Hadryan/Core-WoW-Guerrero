@@ -1812,6 +1812,9 @@ LfgLockMap const LFGMgr::GetLockedDungeons(uint64 guid)
             continue;
 
         LfgLockStatusType lockData = LFG_LOCKSTATUS_NONE;
+		
+        if ((dungeon->neededILevel) && dungeon->neededILevel > player->GetAverageItemLevel())
+            lockData = LFG_LOCKSTATUS_TOO_LOW_GEAR_SCORE;
         if (dungeon->expansion > expansion)
             lockData = LFG_LOCKSTATUS_INSUFFICIENT_EXPANSION;
         else if (DisableMgr::IsDisabledFor(DISABLE_TYPE_MAP, dungeon->map, player))
