@@ -9,6 +9,7 @@
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
 #include "dragonsoul.h"
+#include "Creature.h"
 
 enum Talks
 {
@@ -50,6 +51,7 @@ enum Spells
     SPELL_TANTRUM                       = 103953,
     SPELL_DARKNESS                      = 109413,
     SPELL_BERSERK                       = 64238,
+	SPELL_VOID_DIFFUSION_DMG            = 103527,
 
     // Void of the unmaking
     SPELL_VOID_OF_THE_UNMAKING_REMOVE   = 105336,
@@ -105,6 +107,7 @@ enum Events
     EVENT_LFR_CHANGE_DIRECTION          = 14,
     EVENT_LFR_MOVE_TO_ZONOZZ            = 15,
     EVENT_LFR_CHECK_ZONOZZ_DISTANCE     = 16,
+	EVENT_UPDATE_AURA                   = 17,
 
     // Eye of Go'rath
     EVENT_SHADOW_GAZE                   = 17,
@@ -114,7 +117,8 @@ enum Events
     EVENT_SLUDGE_SPEW                   = 19,
 
     // Dream Warden
-    EVENT_START_NEXT_WAYPOINT           = 20
+    EVENT_START_NEXT_WAYPOINT           = 20,
+	EVENT_CHECK_DISTANCE                = 21
 };
 
 enum Misc
@@ -126,7 +130,9 @@ enum Misc
     ACTION_SUMMON_NEW_VOID              = 5,
     POINT_PATH_ONE                      = 6,
     POINT_PATH_TWO                      = 7,
-    POINT_EJECT_PLAYER                  = 8
+    POINT_EJECT_PLAYER                  = 8,
+	DATA_ACHIEVE                        = 9,
+	DATA_VOID                           = 10
 };
 
 const Position EyeOfGorathPositions[] =
@@ -185,6 +191,7 @@ const Position HaloJumpYorsahj[4] =
     { -1764.342f, -3033.661f, -123.726f, 0.00f }
 };
 
+const Position centerPos = {-1769.329956f, -1916.869995f, -226.28f, 0.0f};
 class boss_ds_warlord_zonozz : public CreatureScript
 {
 public:
@@ -289,6 +296,7 @@ public:
             events.ScheduleEvent(EVENT_FOCUSED_ANGER, 10500, EVENT_GROUP_PHASE_NORMAL);
             events.ScheduleEvent(EVENT_PSYCHIC_DRAIN, 13000, EVENT_GROUP_PHASE_NORMAL);
             events.ScheduleEvent(EVENT_DISRUPTING_SHADOWS, 25000, EVENT_GROUP_PHASE_NORMAL);
+			events.ScheduleEvent(EVENT_CHECK_DISTANCE, 5000);
             events.ScheduleEvent(EVENT_BERSERK, 6 * IN_MILLISECONDS * MINUTE);
             instance->SendEncounterUnit(ENCOUNTER_FRAME_ENGAGE, me);
             _EnterCombat();
@@ -376,6 +384,15 @@ public:
             {
                 switch (eventid)
                 {
+                case EVENT_CHECK_DISTANCE:
+                    if (me->GetDistance(me->GetHomePosition()) > 150.0f)
+                    {
+                        events.Reset();
+                        EnterEvadeMode();
+                        return;
+                    }
+                    events.ScheduleEvent(EVENT_CHECK_DISTANCE, 5000);
+                    break;
                     case EVENT_VOID_OF_THE_UNMAKING_SUMMON:
                         Talk(TALK_VOID_OF_THE_UNMAKING);
                         Whisper(TALK_VOID_OF_THE_UNMAKING_WHISPER);
@@ -480,192 +497,191 @@ public:
 class npc_ds_void_of_the_unmaking : public CreatureScript
 {
 public:
-    npc_ds_void_of_the_unmaking() : CreatureScript("npc_ds_void_of_the_unmaking") {}
+    npc_ds_void_of_the_unmaking() : CreatureScript("npc_ds_void_of_the_unmaking") { }
 
-    struct npc_ds_void_of_the_unmakingAI : public ScriptedAI
+    struct npc_ds_void_of_the_unmakingAI : public Scripted_NoMovementAI
     {
-        npc_ds_void_of_the_unmakingAI(Creature* creature) : ScriptedAI(creature)
+        npc_ds_void_of_the_unmakingAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
         {
-            instance = me->GetInstanceScript();
-            me->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_ALL, false);
+			instance = me->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_STUN, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_FEAR, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_ROOT, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_FREEZE, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_POLYMORPH, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_HORROR, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_SAPPED, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_CHARM, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_DISORIENTED, true);
+            me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_CONFUSE, true);
+            me->SetReactState(REACT_PASSIVE);
+            bAura = false;
+            bExplode = false;
         }
 
-        void IsSummonedBy(Unit* summoner)
+        void IsSummonedBy(Unit* /*owner*/)
         {
-            me->SetControlled(true, UNIT_STATE_ROOT);
-            canExplode = true;
-            me->SetFacingToObject(summoner);
-
-            if (instance->GetData(DATA_RAID_MODE) != RAID_MODE_LFR)
-            {
-                events.ScheduleEvent(EVENT_CHECK_NEAR_TARGET, 5000);
-                events.ScheduleEvent(EVENT_START_MOVEMENT, 5000);
-                events.ScheduleEvent(EVENT_CHANGE_MODEL, 2500);
-            }
-            else
-            {
-                events.ScheduleEvent(EVENT_LFR_CHANGE_DIRECTION, 10000);
-                events.ScheduleEvent(EVENT_LFR_MOVE_TO_ZONOZZ, 55000);
-                events.ScheduleEvent(EVENT_START_MOVEMENT, 5000);
-            }
+            me->SetSpeed(MOVE_RUN, 0.6f, true);
+            me->SetSpeed(MOVE_WALK, 0.6f, true);
+            me->SetSpeed(MOVE_FLIGHT, 0.6f, true);
+            events.ScheduleEvent(EVENT_CHECK_DISTANCE, 5000);
+            events.ScheduleEvent(EVENT_LFR_CHECK_ZONOZZ_DISTANCE, 5000);
         }
 
-        void MovementInform(uint32 type, uint32 id)
+        void UpdateAI(uint32 const diff)
         {
-            if (type != POINT_MOTION_TYPE)
+            if (bExplode)
                 return;
 
-            if (id == POINT_WALL)
-            {
-                DoCast(me, SPELL_BLACK_BLOOD_ERUPTION, true);
-                if (Creature* zonozz = instance->GetCreature(DATA_WARLORD_ZONOZZ))
-                    zonozz->AI()->DoAction(ACTION_SUMMON_NEW_VOID);
-                me->DespawnOrUnsummon(3100);
-            }
-        }
+            if (!UpdateVictim())
+                return;
 
-        void UpdateAI(uint32 const diff) override
-        {
+            if (centerPos.GetExactDist2d(me->GetPositionX(), me->GetPositionY()) > 95.0f)
+            {
+                bExplode = true;
+                events.Reset();
+                me->StopMoving();
+                DoCastAOE(SPELL_BLACK_BLOOD_ERUPTION);
+                me->DespawnOrUnsummon(5000);
+                return;
+            }
+
             events.Update(diff);
 
-            while (uint32 eventid = events.ExecuteEvent())
+            if (uint32 eventId = events.ExecuteEvent())
             {
-                switch (eventid)
+                switch (eventId)
                 {
-                    case EVENT_CHECK_NEAR_TARGET:
+                case EVENT_LFR_CHECK_ZONOZZ_DISTANCE:
                     {
-                        std::list<WorldObject*> targetList;
-                        monster::AllWorldObjectsInRange objects(me, 0.5f);
-                        monster::WorldObjectListSearcher<monster::AllWorldObjectsInRange> searcher(me, targetList, objects);
-                        me->VisitNearbyObject(1.0f, searcher);
-                        targetList.remove(me);
-                        if (!targetList.empty())
-                        {
-                            targetList.sort(monster::ObjectDistanceOrderPred(me));
-                            if (Unit* target = targetList.front()->ToUnit())
-                            {
-                                if (me->HasAura(SPELL_VOID_OF_THE_UNMAKING_ACTIVE))
-                                {
-                                    if (target->ToPlayer() && target->isAlive())
-                                    {
-                                        me->RemoveAurasDueToSpell(SPELL_VOID_OF_THE_UNMAKING_ACTIVE);
-                                        DoCast(SPELL_VOID_DIFFUSION);
-                                        me->GetMotionMaster()->Clear();
-                                        //me->SetFacingToObject(target);
-                                        float orientation = me->GetOrientation();
-                                        me->SetFacingTo(frand(orientation - bounceDirection, orientation + bounceDirection));
-                                        events.ScheduleEvent(EVENT_CHANGE_DIRECTION, 1000);
-                                        events.ScheduleEvent(EVENT_ENABLE_EXPLOSON, 5000);
-                                    }
-                                    else if (target->GetEntry() == NPC_WARLORD_ZONOZZ)
-                                    {
-                                        me->RemoveAurasDueToSpell(SPELL_VOID_OF_THE_UNMAKING_ACTIVE);
-                                        me->GetMotionMaster()->Clear();
-                                        if (Creature* zonozz = instance->GetCreature(DATA_WARLORD_ZONOZZ))
-                                        {
-                                            if (Aura* aura = me->GetAura(SPELL_VOID_DIFFUSION_DMG_INCREASE))
-                                            {
-                                                uint32 stacks = aura->GetStackAmount();
-                                                me->CastCustomSpell(SPELL_VOID_DIFFUSION_ZONOZZ, SPELLVALUE_AURA_STACK, stacks, zonozz, true);
-                                            }
-                                            uint32 focusedAnger = sSpellMgr->GetSpellIdForDifficulty(SPELL_FOCUSED_ANGER, me);
-                                            zonozz->RemoveAurasDueToSpell(focusedAnger);
-                                            zonozz->AI()->DoAction(ACTION_START_BLOOD_PHASE);
-                                        }
-                                        me->DespawnOrUnsummon(1000);
-                                    }
-                                }
-                            }
-                        }
-                        events.ScheduleEvent(EVENT_CHECK_NEAR_TARGET, 300);
-                        break;
-                    }
-                    case EVENT_ENABLE_EXPLOSON:
                         DoCast(me, SPELL_VOID_OF_THE_UNMAKING_ACTIVE, true);
-                        break;
-                    case EVENT_CHANGE_MODEL:
-                        me->SetDisplayId(me->GetCreatureTemplate()->Modelid2);
-                        break;
-                    case EVENT_START_MOVEMENT:
-                    {
-                        me->SetControlled(false, UNIT_STATE_ROOT);
-                        DoCast(me, SPELL_VOID_OF_THE_UNMAKING_ACTIVE, true);
-                        Position pos(*me);
-                        float angle = Position::NormalizeOrientation(M_PI);
-                        me->MoveBlink(pos, 240.0f, angle);
-                        me->GetMotionMaster()->MovePoint(POINT_WALL, pos);
+                        bAura = true;
+                        _MovePosition(200.0f, me->GetOrientation());
+                        //me->GetMotionMaster()->MovePoint(POINT_VOID, pos);
                         break;
                     }
-                    case EVENT_CHANGE_DIRECTION:
+                case EVENT_CHECK_DISTANCE:
                     {
-                        me->GetMotionMaster()->Clear();
-                        Position pos(*me);
-                        float angle = Position::NormalizeOrientation(M_PI);
-                        me->MoveBlink(pos, 240.0f, angle);
-                        me->GetMotionMaster()->MovePoint(POINT_WALL, pos);
-                        break;
-                    }
-                    case EVENT_LFR_CHANGE_DIRECTION:
-                    {
-                        DoCast(SPELL_VOID_DIFFUSION);
-                        me->GetMotionMaster()->Clear();
-                        Position pos(*me);
-                        float angle = Position::NormalizeOrientation(M_PI);
-                        me->MoveBlink(pos, 240.0f, angle);
-                        me->GetMotionMaster()->MovePoint(0, pos);
-                        events.ScheduleEvent(EVENT_LFR_CHANGE_DIRECTION, 5000);
-                        break;
-                    }
-                    case EVENT_LFR_MOVE_TO_ZONOZZ:
-                        me->GetMotionMaster()->Clear();
-                        if (Creature* zonozz = instance->GetCreature(DATA_WARLORD_ZONOZZ))
-                            me->GetMotionMaster()->MoveChase(zonozz);
-                        events.CancelEvent(EVENT_LFR_CHANGE_DIRECTION);
-                        events.ScheduleEvent(EVENT_LFR_CHECK_ZONOZZ_DISTANCE, 500);
-                        break;
-                    case EVENT_LFR_CHECK_ZONOZZ_DISTANCE:
-                    {
-                        std::list<Creature*> creatures;
-                        GetCreatureListWithEntryInGrid(creatures, me, NPC_WARLORD_ZONOZZ, 1.00f);
-                        if (creatures.empty())
+                        if (!bAura)
                         {
-                            events.ScheduleEvent(EVENT_LFR_CHECK_ZONOZZ_DISTANCE, 500);
+                            events.ScheduleEvent(EVENT_CHECK_DISTANCE, 500);
                             break;
                         }
 
-                        if (Creature* zonozz = creatures.front())
+                        if (Player* pPlayer = me->FindNearestPlayer(5.0f))
                         {
-                            me->RemoveAurasDueToSpell(SPELL_VOID_OF_THE_UNMAKING_ACTIVE);
-                            me->GetMotionMaster()->Clear();
-                            if (Aura* aura = me->GetAura(SPELL_VOID_DIFFUSION_DMG_INCREASE))
+                            if (Aura const* aur = me->GetAura(SPELL_VOID_DIFFUSION_DMG_INCREASE))
                             {
-                                uint32 stacks = aura->GetStackAmount();
-                                me->CastCustomSpell(SPELL_VOID_DIFFUSION_ZONOZZ, SPELLVALUE_AURA_STACK, stacks, zonozz, true);
+                                if (aur->GetStackAmount() >= 9)
+                                    if (InstanceScript* pInstance = me->GetInstanceScript())
+                                        if (Creature* pZonozz = ObjectAccessor::GetCreature(*me, pInstance->GetData64(DATA_WARLORD_ZONOZZ)))
+                                            pZonozz->AI()->SetData(DATA_ACHIEVE, 1);
                             }
-                            uint32 focusedAnger = sSpellMgr->GetSpellIdForDifficulty(SPELL_FOCUSED_ANGER, me);
-                            zonozz->RemoveAurasDueToSpell(focusedAnger);
-                            zonozz->AI()->DoAction(ACTION_START_BLOOD_PHASE);
-                            me->DespawnOrUnsummon(1000);
-                        } 
-                        break;
-                    }
-                    default:
-                        break;
-                }
-            }
-        }
+
+                            me->RemoveAura(SPELL_VOID_OF_THE_UNMAKING_ACTIVE);
+                            bAura = false;
+                            DoCastAOE(SPELL_VOID_DIFFUSION_DMG);
+                            me->StopMoving();
+                            float ang = me->GetAngle(pPlayer->GetPositionX(), pPlayer->GetPositionY());
+
+                            if (me->NormalizeOrientation(me->GetOrientation() - ang) < (M_PI / 4.0f))
+                                ang = me->GetOrientation();
+
+                            _MovePosition(200.0f, ang + M_PI);
+
+                            //me->GetMotionMaster()->MovePoint(POINT_VOID, pos);
+                            events.ScheduleEvent(EVENT_UPDATE_AURA, 4000);
+                            events.ScheduleEvent(EVENT_CHECK_DISTANCE, 4000);
+                        }
+                        else if (Creature* pZonozz = me->FindNearestCreature(NPC_WARLORD_ZONOZZ, 3.0f))
+                        {
+                            uint8 stacks = 1;
+                            if (Aura const* aur = me->GetAura(SPELL_VOID_DIFFUSION_DMG_INCREASE))
+                                stacks = aur->GetStackAmount();
+
+								 me->RemoveAurasDueToSpell(SPELL_VOID_OF_THE_UNMAKING_ACTIVE);
+								 me->GetMotionMaster()->Clear();
+								 if (Creature* zonozz = instance->GetCreature(DATA_WARLORD_ZONOZZ))
+								 {
+								 	if (Aura* aura = me->GetAura(SPELL_VOID_DIFFUSION_DMG_INCREASE))
+								 	{
+								 		uint32 stacks = aura->GetStackAmount();
+								 		me->CastCustomSpell(SPELL_VOID_DIFFUSION_ZONOZZ, SPELLVALUE_AURA_STACK, stacks, zonozz, true);
+								 	}
+								 	uint32 focusedAnger = sSpellMgr->GetSpellIdForDifficulty(SPELL_FOCUSED_ANGER, me);
+								 	zonozz->RemoveAurasDueToSpell(focusedAnger);
+								 	zonozz->AI()->DoAction(ACTION_START_BLOOD_PHASE);
+								 }
+								pZonozz->AI()->SetData(DATA_VOID, stacks);
+								events.Reset();
+								me->StopMoving();
+								me->DespawnOrUnsummon(2000);
+								}
+								else
+									events.ScheduleEvent(EVENT_CHECK_DISTANCE, 200);
+								break;
+							}
+						case EVENT_UPDATE_AURA:
+							DoCast(me, SPELL_VOID_OF_THE_UNMAKING_ACTIVE, true);
+							bAura = true;
+							break;
+						default:
+							break;
+						}
+					}
+				}
+
     private:
         EventMap events;
-        InstanceScript* instance;
-        bool canExplode;
-        float bounceDirection = 5 * M_PI / 180;
-    };
+		InstanceScript* instance;
+        bool bAura;
+        bool bExplode;
 
-    CreatureAI* GetAI(Creature* creature) const
+        void _MovePosition(float dist, float angle)
+        {
+            angle = me->NormalizeOrientation(angle);
+
+            float cur_dist = 5.0f;
+            Movement::MoveSplineInit init(me);
+            bool bPassed = false;
+
+            while (!bPassed)
+            {
+                float x = me->GetPositionX() + (cur_dist * std::cos(angle));
+                float y = me->GetPositionY() + (cur_dist * std::sin(angle));
+                float z = me->GetPositionZ();
+                float center_dist = centerPos.GetExactDist2d(x, y);
+                if (center_dist > 100.0f || cur_dist > dist)
+                    bPassed = true;
+                else
+                {
+                    G3D::Vector3 point;
+                    point.x = x;
+                    point.y = y;
+                    if (center_dist > 40.0f)
+                        z = -225.0f + ((center_dist - 40.0f) * 0.1333f);
+                    else
+                        z = -225.0f;
+
+                    point.z =  z;
+                    init.Path().push_back(point);
+                    cur_dist += 5.0f;
+                }
+            }
+
+            if (!init.Path().empty())
+            {
+                init.SetWalk(false);
+                init.Launch();
+            }
+        }
+    };
+	
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new npc_ds_void_of_the_unmakingAI(creature);
+        return new npc_ds_void_of_the_unmakingAI (pCreature);
     }
 };
 
