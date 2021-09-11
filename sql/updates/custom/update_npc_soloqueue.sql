@@ -1,0 +1,1 @@
+UPDATE `creature_template` SET `ScriptName` ='npc_solo_queue' WHERE entry = 120030;
