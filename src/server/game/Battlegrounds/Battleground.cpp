@@ -1208,7 +1208,6 @@ void Battleground::EndBattleground(uint32 winner)
                 }
                 else if (player->IsRandomDailyBgRewarded())
                     player->ModifyCurrency(useArenaCap ? CURRENCY_TYPE_CONQUEST_META_ARENA : CURRENCY_TYPE_CONQUEST_META_RBG, BG_REWARD_WINNER_CONQUEST_LAST);
-
             }
             else if (isRatedBattleground())
                 player->ModifyCurrency(CURRENCY_TYPE_CONQUEST_META_RBG, BG_REWARD_WINNER_RBG_CONQUEST);
@@ -1229,15 +1228,11 @@ void Battleground::EndBattleground(uint32 winner)
                             guild->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_RATED_ARENA, std::max<uint32>(winnerArenaTeam->GetRating(), 1), 0, 0, NULL, player);
                     }
             }
-
-            UpdatePlayerScore(player, SCORE_BONUS_XP, 1);
         }
         else
         {
             if (IsRandom() && !isRatedBattleground() || BattlegroundMgr::IsBGWeekend(GetTypeID()) && !isRatedBattleground())
-				UpdatePlayerScore(player, SCORE_BONUS_HONOR, loser_honor);
-
-            UpdatePlayerScore(player, SCORE_BONUS_XP, 0);
+                UpdatePlayerScore(player, SCORE_BONUS_HONOR, loser_honor);
         }
 
         // Update Rated BG Stats at the end of the Game
@@ -1339,42 +1334,36 @@ void Battleground::EndSoloBattleground(uint32 winner)
     // arena rating calculation
     if (winner != WINNER_NONE && winner != WINNER_NOT_JOINED)
     {
-		for (auto& itr : PlayerScores)
-		{
-			if (Player* player = ObjectAccessor::FindPlayer(itr.first))
-			{
-				if (itr.second->BgTeam == winner)
-				{
-					if (ArenaTeam* team = sArenaTeamMgr->GetArenaTeamById(player->GetArenaTeamId(ArenaTeam::GetSlotByType(ARENA_TEAM_5v5))))
-						winnerTeamRating += ceil(team->GetRating() / 3);
-				}
-				else
-				{
-					if (ArenaTeam* team = sArenaTeamMgr->GetArenaTeamById(player->GetArenaTeamId(ArenaTeam::GetSlotByType(ARENA_TEAM_5v5))))
-						loserTeamRating += ceil(team->GetRating() / 3);
-				}
-			}
-		}
+        for (auto& itr : PlayerScores)
+        {
+            if (itr.second->BgTeam == winner)
+            {
+                if (ArenaTeam* team = sArenaTeamMgr->GetArenaTeamById(Player::GetArenaTeamIdFromDB(itr.first, ARENA_TEAM_5v5)))
+                    winnerTeamRating += ceil(team->GetRating() / 3);
+            }
+            else
+            {
+                if (ArenaTeam* team = sArenaTeamMgr->GetArenaTeamById(Player::GetArenaTeamIdFromDB(itr.first, ARENA_TEAM_5v5)))
+                    loserTeamRating += ceil(team->GetRating() / 3);
+            }
+        }
 
         loserMatchmakerRating = GetArenaMatchmakerRating(GetOtherTeam(winner));
         winnerMatchmakerRating = GetArenaMatchmakerRating(winner);
 
-		for (auto& itr : PlayerScores)
-		{
-			if (Player* player = ObjectAccessor::FindPlayer(itr.first))
-			{
-				if (itr.second->BgTeam == winner)
-				{
-					if (ArenaTeam* team = sArenaTeamMgr->GetArenaTeamById(player->GetArenaTeamId(ArenaTeam::GetSlotByType(ARENA_TEAM_5v5))))
-						winnerMatchmakerChange += team->WonAgainst(winnerMatchmakerRating, loserMatchmakerRating, winnerChange);
-				}
-				else
-				{
-					if (ArenaTeam* team = sArenaTeamMgr->GetArenaTeamById(player->GetArenaTeamId(ArenaTeam::GetSlotByType(ARENA_TEAM_5v5))))
-						loserMatchmakerChange += team->LostAgainst(loserMatchmakerRating, winnerMatchmakerRating, loserChange);
-				}
-			}
-		}
+        for (auto& itr : PlayerScores)
+        {
+            if (itr.second->BgTeam == winner)
+            {
+                if (ArenaTeam* team = sArenaTeamMgr->GetArenaTeamById(Player::GetArenaTeamIdFromDB(itr.first, ARENA_TEAM_5v5)))
+                    winnerMatchmakerChange += team->WonAgainst(winnerMatchmakerRating, loserMatchmakerRating, winnerChange);
+            }
+            else
+            {
+                if (ArenaTeam* team = sArenaTeamMgr->GetArenaTeamById(Player::GetArenaTeamIdFromDB(itr.first, ARENA_TEAM_5v5)))
+                    loserMatchmakerChange += team->LostAgainst(loserMatchmakerRating, winnerMatchmakerRating, loserChange);
+            }
+        }
 
         SetArenaMatchmakerRating(winner, winnerMatchmakerRating + winnerMatchmakerChange);
         SetArenaMatchmakerRating(GetOtherTeam(winner), loserMatchmakerRating + loserMatchmakerChange);
@@ -1985,113 +1974,6 @@ void Battleground::UpdatePlayerScore(Player* Source, uint32 type, uint32 value, 
                     itr->second->BonusHonor += value;
             }
             break;
-
-        case SCORE_BONUS_XP:
-            /// Don't add xp in arena
-            if (isBattleground())
-            {
-                uint32 l_MaxLevel = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
-
-                if (Source->getLevel() >= l_MaxLevel)
-                    return;
-
-                const static float l_FormulaForWin[15] = 
-                {
-                    0.75f, ///< 10-14
-                    0.70f, ///< 15-19
-                    0.65f, ///< 20-24
-                    0.60f, ///< 25-29
-                    0.55f, ///< 30-34
-                    0.50f, ///< 35-39
-                    0.48f, ///< 40-44
-                    0.46f, ///< 45-49
-                    0.44f, ///< 50-54
-                    0.42f, ///< 55-59
-                    0.40f, ///< 60-64
-                    0.36f, ///< 65-69
-                    0.30f, ///< 70-74
-                    0.25f, ///< 75-79
-                    0.20f, ///< 80-84
-                };
-
-                const static float l_FormulaForLoss[15] =
-                {
-                    0.38f, ///< 10-14
-                    0.35f, ///< 15-19
-                    0.33f, ///< 20-24
-                    0.30f, ///< 25-29
-                    0.28f, ///< 30-34
-                    0.25f, ///< 35-39
-                    0.20f, ///< 40-44
-                    0.18f, ///< 45-49
-                    0.16f, ///< 50-54
-                    0.14f, ///< 55-59
-                    0.12f, ///< 60-64
-                    0.11f, ///< 65-69
-                    0.10f, ///< 70-74
-                    0.9f,  ///< 75-79
-                    0.8f,  ///< 80-84
-                };
-
-                int l_Index = 0;
-                auto l_Level = Source->getLevel();
-
-                if (l_Level >= 10 && l_Level <= 14)
-                    l_Index = 0;
-
-                if (l_Level >= 15 && l_Level <= 19)
-                    l_Index = 1;
-
-                if (l_Level >= 20 && l_Level <= 24)
-                    l_Index = 2;
-
-                if (l_Level >= 25 && l_Level <= 29)
-                    l_Index = 3;
-
-                if (l_Level >= 30 && l_Level <= 34)
-                    l_Index = 4;
-
-                if (l_Level >= 35 && l_Level <= 39)
-                    l_Index = 5;
-
-                if (l_Level >= 40 && l_Level <= 44)
-                    l_Index = 6;
-
-                if (l_Level >= 45 && l_Level <= 49)
-                    l_Index = 7;
-
-                if (l_Level >= 50 && l_Level <= 54)
-                    l_Index = 8;
-
-                if (l_Level >= 55 && l_Level <= 59)
-                    l_Index = 9;
-
-                if (l_Level >= 60 && l_Level <= 64)
-                    l_Index = 10;
-
-                if (l_Level >= 65 && l_Level <= 69)
-                    l_Index = 11;
-
-                if (l_Level >= 70 && l_Level <= 74)
-                    l_Index = 12;
-
-                if (l_Level >= 75 && l_Level <= 79)
-                    l_Index = 13;
-
-                if (l_Level >= 80 && l_Level <= 84)
-                    l_Index = 14;
-
-                uint32 l_XPForLevel = sObjectMgr->GetXPForLevel(l_Level);
-
-                ///              win?            winPct                    else loss
-                l_XPForLevel *= value == 1 ? l_FormulaForWin[l_Index] : l_FormulaForLoss[l_Index];
-
-                /// We need to add checks here for increased XP in BG/decrease
-
-                Source->GiveXP(l_XPForLevel, nullptr);
-            }
-            break;
-
             // used only in EY, but in MSG_PVP_LOG_DATA opcode
         case SCORE_DAMAGE_DONE:                             // Damage Done
             itr->second->DamageDone += value;

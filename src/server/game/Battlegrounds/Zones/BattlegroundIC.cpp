@@ -195,7 +195,7 @@ void BattlegroundIC::PostUpdateImpl(uint32 diff)
                         if (siege->isAlive())
                         {
                             if (siege->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE|UNIT_FLAG_CANNOT_SWIM|UNIT_FLAG_IMMUNE_TO_PC))
-                                // following sniffs the vehicle always has UNIT_FLAG_CANNOT_SWIM
+                                // following sniffs the vehicle always has UNIT_FLAG_UNK_14
                                 siege->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE|UNIT_FLAG_IMMUNE_TO_PC);
                             else
                                 siege->SetHealth(siege->GetMaxHealth());
