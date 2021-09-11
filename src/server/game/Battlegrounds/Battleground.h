@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
+ * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -209,10 +209,7 @@ enum ScoreType
     SCORE_SECONDARY_OBJECTIVES  = 17,
     //SOTA
     SCORE_DESTROYED_DEMOLISHER  = 18,
-    SCORE_DESTROYED_WALL        = 19,
-    // XP
-	SCORE_BONUS_XP			    = 20
-
+    SCORE_DESTROYED_WALL        = 19
 };
 
 enum ArenaType
@@ -461,7 +458,6 @@ class Battleground
         void CastSpellOnTeam(uint32 SpellID, uint32 TeamID);
         void RemoveAuraOnTeam(uint32 SpellID, uint32 TeamID);
         void RewardHonorToTeam(uint32 Honor, uint32 TeamID);
-        void RewardXpToTeam(bool winners, uint32 TeamID);
         void RewardReputationToTeam(uint32 a_faction_id, uint32 h_faction_id, uint32 Reputation, uint32 teamId);
         void CompleteAchievementToTeam(uint32 AchievementEntry, uint32 TeamID);
         void UpdateWorldState(uint32 Field, uint32 Value);

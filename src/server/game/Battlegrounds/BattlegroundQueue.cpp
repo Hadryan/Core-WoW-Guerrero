@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
+ * Copyright (C) 2008-2013 TrinityCore <http://www.trinitycore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -459,7 +459,7 @@ void BattlegroundQueue::RemovePlayer(uint64 guid, bool decreaseInvitedCount)
     // remove player queue info
     m_QueuedPlayers.erase(itr);
 
-	uint32 teamId = group->isSoloQueueGroup ? Player::GetArenaTeamIdFromDB(guid, ArenaTeam::GetSlotByType(ARENA_TEAM_5v5)) : group->ArenaTeamIdOrRbgLeaderGuid;
+    uint32 teamId = group->isSoloQueueGroup ? Player::GetArenaTeamIdFromDB(guid, ARENA_TEAM_5v5) : group->ArenaTeamIdOrRbgLeaderGuid;
     // announce to world if arena team left queue for rated match, show only once
     if (group->ArenaType && group->IsRated && group->Players.empty() && sWorld->getBoolConfig(CONFIG_ARENA_QUEUE_ANNOUNCER_ENABLE))
         if (ArenaTeam* Team = sArenaTeamMgr->GetArenaTeamById(teamId))
