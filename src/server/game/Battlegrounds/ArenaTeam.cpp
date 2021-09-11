@@ -384,7 +384,7 @@ void ArenaTeam::Disband(WorldSession* session)
 
 void ArenaTeam::Roster(WorldSession* session)
 {
-    Player* player = NULL;
+    Player* player = nullptr;
 
     uint8 unk308 = 0;
 
@@ -458,7 +458,7 @@ void ArenaTeam::Query(WorldSession* session)
     WorldPacket data(SMSG_ARENA_TEAM_QUERY_RESPONSE, 4*7+GetName().size()+1);
     data << uint32(GetId());                                // team id
     data << GetName();                                      // team name
-    data << uint32(GetType());                              // arena team type (2=2x2, 3=3x3 or 5=5x5)
+    data << uint32(GetType() == 1 ? 5 : GetType());         // arena team type (2=2x2, 3=3x3 or 1=1x1(modify 1 to 5, so player can see arenateam in 5v5 slot))
     data << uint32(BackgroundColor);                        // background color
     data << uint32(EmblemStyle);                            // emblem style
     data << uint32(EmblemColor);                            // emblem color
@@ -714,12 +714,12 @@ int32 ArenaTeam::GetRatingMod(uint32 ownRating, uint32 opponentRating, bool won 
     if (won && ownRating < 1300)
     {
         if (ownRating < 1000)
-            mod = 96.0f * (won_mod - chance);
+            mod = 48.0f * (won_mod - chance);
         else
-            mod = (48.0f + (48.0f * (1300.0f - float(ownRating)) / 300.0f)) * (won_mod - chance);
+            mod = (24.0f + (24.0f * (1300.0f - float(ownRating)) / 300.0f)) * (won_mod - chance);
     }
     else
-        mod = 48.0f * (won_mod - chance);
+        mod = 24.0f * (won_mod - chance);
 
     return (int32)ceil(mod);
 }

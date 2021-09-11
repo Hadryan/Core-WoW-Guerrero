@@ -986,7 +986,7 @@ Battleground* BattlegroundMgr::CreateNewBattleground(BattlegroundTypeId original
         switch (arenaType)
         {
             case ARENA_TYPE_1v1_SOLO:
-                maxPlayersPerTeam = 1;
+                maxPlayersPerTeam = 5;
                 break;
             case ARENA_TYPE_2v2:
                 maxPlayersPerTeam = 2;
@@ -996,7 +996,7 @@ Battleground* BattlegroundMgr::CreateNewBattleground(BattlegroundTypeId original
                 maxPlayersPerTeam = 3;
                 break;
             case ARENA_TYPE_5v5:
-                maxPlayersPerTeam = 5;
+                maxPlayersPerTeam = 1;
                 break;
         }
 
@@ -1374,8 +1374,8 @@ BattlegroundQueueTypeId BattlegroundMgr::BGQueueTypeId(BattlegroundTypeId bgType
         case BATTLEGROUND_RV:
             switch (arenaType)
             {
-                case ARENA_TYPE_1v1_SOLO:
-                    return BATTLEGROUND_QUEUE_1v1_SOLO;
+               case ARENA_TYPE_1v1_SOLO:
+                   return BATTLEGROUND_QUEUE_1v1_SOLO;
                 case ARENA_TYPE_2v2:
                     return BATTLEGROUND_QUEUE_2v2;
                 case ARENA_TYPE_3v3:

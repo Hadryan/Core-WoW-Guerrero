@@ -209,16 +209,17 @@ enum ScoreType
     SCORE_SECONDARY_OBJECTIVES  = 17,
     //SOTA
     SCORE_DESTROYED_DEMOLISHER  = 18,
-    SCORE_DESTROYED_WALL        = 19
+    SCORE_DESTROYED_WALL        = 19,
+	SCORE_BONUS_XP              = 20
 };
 
 enum ArenaType
 {
-    ARENA_TYPE_1v1_SOLO     = 1,
+    ARENA_TYPE_1v1_SOLO     = 0,
     ARENA_TYPE_2v2          = 2,
     ARENA_TYPE_3v3          = 3,
     ARENA_TYPE_3v3_SOLO     = 4,
-    ARENA_TYPE_5v5          = 5
+    ARENA_TYPE_5v5          = 1
 };
 
 enum BattlegroundType
@@ -418,8 +419,8 @@ class Battleground
 
         void StartBattleground();
 
-        GameObject* GetBGObject(uint32 type);
-        Creature* GetBGCreature(uint32 type);
+        GameObject* GetBGObject(uint32 type, bool logError = true);
+        Creature* GetBGCreature(uint32 type, bool logError = true);
 
         // Location
         void SetMapId(uint32 MapID) { m_MapId = MapID; }
@@ -576,7 +577,7 @@ class Battleground
 
         virtual uint64 GetFlagPickerGUID(int32 /*team*/ = -1) const { return 0; }
         virtual void SetDroppedFlagGUID(uint64 /*guid*/, int32 /*team*/ = -1) {}
-        virtual void HandleQuestComplete(uint32 /*questid*/, Player* /*player*/) { }
+		virtual void HandleQuestComplete(uint32 /*questid*/, Player* /*player*/) { }
         uint32 GetTeamScore(uint32 TeamID) const;
 
         virtual uint32 GetPrematureWinner();
