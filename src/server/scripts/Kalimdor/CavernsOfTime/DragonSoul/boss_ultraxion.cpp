@@ -437,23 +437,11 @@ public:
 
         void IsSummonedBy(Unit* summoner)
         {
-            /*Talk(TALK_INTRO_1);
+            Talk(TALK_INTRO_1);
             me->SetHomePosition(ultraxionPositions[1]);
             me->GetMotionMaster()->MovePoint(POINT_WYRMREST_TEMPLE, ultraxionPositions[1]);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE | UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_IMMUNE_TO_PC | UNIT_FLAG_IMMUNE_TO_NPC);
-            me->SetUInt32Value(UNIT_FIELD_BYTES_0, 0x100);*/
-
-			// Fix pathing, Ultraxion didn't move to the platform:
-			Talk(TALK_INTRO_1);
-            DoZoneInCombat(me);
-            me->SetCanFly(true);
-            me->SetDisableGravity(true);	
-            me->SetByteFlag(UNIT_FIELD_ANIM_TIER, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
-            // Makes Ultraxion never being targetable again..
-//          me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_ATTACKABLE_1 | UNIT_FLAG_NOT_SELECTABLE);
-			me->GetMotionMaster()->MovePoint(0, ultraxionPositions[1]);
-            me->SetSpeed(MOVE_FLIGHT, 0.5f);
-			me->SetUInt32Value(UNIT_FIELD_BYTES_0, 0x100);
+            me->SetUInt32Value(UNIT_FIELD_BYTES_0, 0x100);
 
             for (uint8 i = 0; i < 37; i++)
                 me->SummonCreature(NPC_LIGHTNING_COSMETIC_TARGET, lightningTargetPositions[i], TEMPSUMMON_TIMED_DESPAWN, 30000);
