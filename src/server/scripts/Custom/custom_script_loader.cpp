@@ -26,6 +26,10 @@ void AddSC_SpellRegulator();
 void AddSC_StabilityTest();
 void AddSC_npc_level_booster();
 void AddSC_Transmogrifier_NPC();
+void AddSC_GMItems();
+void AddSC_bug_dual();
+void AddSC_System_Censure();
+void AddSC_CdReset();
 
 void AddCustomScripts()
 {
@@ -36,4 +40,8 @@ void AddCustomScripts()
     AddSC_StabilityTest();
     AddSC_npc_level_booster();
 	AddSC_Transmogrifier_NPC();
+	AddSC_GMItems();
+	AddSC_bug_dual();
+	AddSC_System_Censure();
+	AddSC_CdReset();
 }
