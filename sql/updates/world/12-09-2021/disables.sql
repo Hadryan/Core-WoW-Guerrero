@@ -1,0 +1,25 @@
+delete from `disables` where entry = 38776;
+delete from `disables` where entry = 79625;
+delete from `disables` where entry = 249;
+delete from `disables` where entry = 67830;
+delete from `disables` where entry = 81099;
+delete from `disables` where entry = 88697;
+delete from `disables` where entry = 85269;
+delete from `disables` where entry = 40817;
+delete from `disables` where entry = 88667;
+delete from `disables` where entry = 65635;
+delete from `disables` where entry = 60962;
+delete from `disables` where entry = 84601;
+
+insert into `disables` (`sourceType`, `entry`, `flags`, `params_0`, `params_1`, `comment`) values('0','38776','1','0','0','item de mision bug');
+insert into `disables` (`sourceType`, `entry`, `flags`, `params_0`, `params_1`, `comment`) values('0','79625','1','0','0','veneno mortisangre bug');
+insert into `disables` (`sourceType`, `entry`, `flags`, `params_0`, `params_1`, `comment`) values('2','249','3','0','0','Disabled entrance to Onixia');
+insert into `disables` (`sourceType`, `entry`, `flags`, `params_0`, `params_1`, `comment`) values('0','67830','1','0','0','te vuelve inmortal - subir caballo');
+insert into `disables` (`sourceType`, `entry`, `flags`, `params_0`, `params_1`, `comment`) values('0','81099','1','0','0','Spell: war Bug');
+insert into `disables` (`sourceType`, `entry`, `flags`, `params_0`, `params_1`, `comment`) values('0','88697','1','0','0','Rompe la barrera de tierras de fuego');
+insert into `disables` (`sourceType`, `entry`, `flags`, `params_0`, `params_1`, `comment`) values('0','85269','1','0','0','Spell: aura tumba server');
+insert into `disables` (`sourceType`, `entry`, `flags`, `params_0`, `params_1`, `comment`) values('0','40817','1','0','0','Creador de portales');
+insert into `disables` (`sourceType`, `entry`, `flags`, `params_0`, `params_1`, `comment`) values('0','88667','1','0','0','cae el server');
+insert into `disables` (`sourceType`, `entry`, `flags`, `params_0`, `params_1`, `comment`) values('0','65635','1','0','0','Spell: damage');
+insert into `disables` (`sourceType`, `entry`, `flags`, `params_0`, `params_1`, `comment`) values('0','60962','1','0','0','Spell: damage');
+insert into `disables` (`sourceType`, `entry`, `flags`, `params_0`, `params_1`, `comment`) values('0','84601','1','0','0','Spell: damage');
