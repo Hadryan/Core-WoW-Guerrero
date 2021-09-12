@@ -426,7 +426,21 @@ inline void Battleground::_ProcessRessurect(uint32 diff)
 			if (!player)
 				continue;
 			player->ResurrectPlayer(1.0f);
-			player->CastSpell(player, 6962, true);
+			//player->CastSpell(player, 6962, true);
+			switch (player->GetPrimaryTalentTree(player->GetActiveSpec()))
+			{
+			case TALENT_TREE_MAGE_FROST:
+			case TALENT_TREE_WARLOCK_AFFLICTION:
+			case TALENT_TREE_WARLOCK_DEMONOLOGY:
+			case TALENT_TREE_WARLOCK_DESTRUCTION:
+			case TALENT_TREE_HUNTER_BEAST_MASTERY:
+			case TALENT_TREE_HUNTER_MARKSMANSHIP:
+			case TALENT_TREE_HUNTER_SURVIVAL:
+			case TALENT_TREE_DEATH_KNIGHT_UNHOLY:
+				player->CastSpell(player, 6962, true);
+			default:
+				break;
+			}
 			player->CastSpell(player, SPELL_SPIRIT_HEAL_MANA, true);
 			sObjectAccessor->ConvertCorpseForPlayer(*itr);
 		}

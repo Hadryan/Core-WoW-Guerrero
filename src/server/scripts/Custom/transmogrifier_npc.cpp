@@ -7,8 +7,8 @@ uint32 TokenEntry = 0; // token item id
 uint32 TokenAmount = 0; // token amount
 bool AllowMixedArmorTypes = true; // plate to cloth etc..
 bool AllowMixedWeaponTypes = true; // sword to mace etc..
-bool AllowMixedInventoryTypes = false; // 2H to 1H etc..
-bool AllowAllClassTypes = false; // Warr -> Pala etc..
+bool AllowMixedInventoryTypes = true; // 2H to 1H etc..
+bool AllowAllClassTypes = true; // Warr -> Pala etc..
 bool playSound = true; // play sound on transmog
 uint32 soundId = 3337;
 
