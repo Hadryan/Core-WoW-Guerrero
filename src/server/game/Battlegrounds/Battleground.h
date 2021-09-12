@@ -210,16 +210,18 @@ enum ScoreType
     //SOTA
     SCORE_DESTROYED_DEMOLISHER  = 18,
     SCORE_DESTROYED_WALL        = 19,
-	SCORE_BONUS_XP              = 20
+    // XP
+	SCORE_BONUS_XP			    = 20
+
 };
 
 enum ArenaType
 {
-    ARENA_TYPE_1v1_SOLO     = 0,
+    ARENA_TYPE_1v1_SOLO     = 1,
     ARENA_TYPE_2v2          = 2,
     ARENA_TYPE_3v3          = 3,
     ARENA_TYPE_3v3_SOLO     = 4,
-    ARENA_TYPE_5v5          = 1
+    ARENA_TYPE_5v5          = 5
 };
 
 enum BattlegroundType
@@ -419,8 +421,8 @@ class Battleground
 
         void StartBattleground();
 
-        GameObject* GetBGObject(uint32 type, bool logError = true);
-        Creature* GetBGCreature(uint32 type, bool logError = true);
+        GameObject* GetBGObject(uint32 type);
+        Creature* GetBGCreature(uint32 type);
 
         // Location
         void SetMapId(uint32 MapID) { m_MapId = MapID; }
@@ -459,6 +461,7 @@ class Battleground
         void CastSpellOnTeam(uint32 SpellID, uint32 TeamID);
         void RemoveAuraOnTeam(uint32 SpellID, uint32 TeamID);
         void RewardHonorToTeam(uint32 Honor, uint32 TeamID);
+        void RewardXpToTeam(bool winners, uint32 TeamID);
         void RewardReputationToTeam(uint32 a_faction_id, uint32 h_faction_id, uint32 Reputation, uint32 teamId);
         void CompleteAchievementToTeam(uint32 AchievementEntry, uint32 TeamID);
         void UpdateWorldState(uint32 Field, uint32 Value);
@@ -577,7 +580,7 @@ class Battleground
 
         virtual uint64 GetFlagPickerGUID(int32 /*team*/ = -1) const { return 0; }
         virtual void SetDroppedFlagGUID(uint64 /*guid*/, int32 /*team*/ = -1) {}
-		virtual void HandleQuestComplete(uint32 /*questid*/, Player* /*player*/) { }
+        virtual void HandleQuestComplete(uint32 /*questid*/, Player* /*player*/) { }
         uint32 GetTeamScore(uint32 TeamID) const;
 
         virtual uint32 GetPrematureWinner();

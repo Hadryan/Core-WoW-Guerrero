@@ -77,8 +77,8 @@ enum ArenaTeamTypes
 {
     ARENA_TEAM_2v2      = 2,
     ARENA_TEAM_3v3      = 3,
-    ARENA_TEAM_5v5      = 1,
-    RBG_TEAM_10v10      = 10,
+    ARENA_TEAM_5v5      = 5,
+    RBG_TEAM_10v10      = 10
 };
 
 struct ArenaTeamMember
