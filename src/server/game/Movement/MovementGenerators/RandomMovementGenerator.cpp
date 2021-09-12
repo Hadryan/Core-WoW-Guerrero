@@ -38,7 +38,7 @@ void RandomMovementGenerator<Creature>::_setRandomLocation(Creature* creature)
     float respX, respY, respZ, respO, destX, destY, destZ, travelDistZ;
     creature->GetHomePosition(respX, respY, respZ, respO);
     Map const* map = creature->GetBaseSwapMap();
-    if (map == NULL)
+	if (map == nullptr)
         map = creature->GetBaseMap();
 
     // For 2D/3D system selection
@@ -58,7 +58,7 @@ void RandomMovementGenerator<Creature>::_setRandomLocation(Creature* creature)
     monster::NormalizeMapCoord(destX);
     monster::NormalizeMapCoord(destY);
 
-    travelDistZ = distanceX*distanceX + distanceY*distanceY;
+	travelDistZ = distanceX * distanceX + distanceY * distanceY;
 
     if (is_air_ok)                                          // 3D system above ground and above water (flying mode)
     {

@@ -1042,9 +1042,20 @@ bool Aura::CanBeSaved() const
         case 103004:
         case 102994:
         case 103020:
+		case 5301: // some vehicle spell
+		case 37800: // transparency 
+		case 55774: // phase
+		case 55773: // phase
+		case 60028: // phase
+		case 60027: // phase
+		case 62853: // lance
+		case 67830: // unnatackable
             return false;
             break;
     }
+
+	if (GetSpellInfo()->HasAura(SPELL_AURA_MOD_UNATTACKABLE))
+		return false;
 
     // When a druid logins, he doesnt have either eclipse power, nor the marker auras, nor the eclipse buffs. Dont save them.
     if (GetId() == 67483 || GetId() == 67484 || GetId() == 48517 || GetId() == 48518)
