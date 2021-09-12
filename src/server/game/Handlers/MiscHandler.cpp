@@ -399,6 +399,9 @@ void WorldSession::HandleWhoOpcode(WorldPacket& recvData)
         ++displaycount;
     }
 
+	if (matchcount > 50) // checked on retail this is blizzlike
+		matchcount = 50;
+
     data.put(0, displaycount);                            // insert right count, count displayed
     data.put(4, matchcount);                              // insert right count, count of matches
 
