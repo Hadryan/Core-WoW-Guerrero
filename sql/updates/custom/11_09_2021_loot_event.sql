@@ -21,6 +21,11 @@ UPDATE `creature_template` SET  `lootid`='43296' WHERE entry IN (43296);
 UPDATE `creature_template` SET  `lootid`='41378' WHERE entry IN (41378);
 UPDATE `creature_template` SET  `lootid`='41376' WHERE entry IN (41376);
 
+delete from `creature_loot_template` where item = 21100;
+delete from `creature_loot_template` where item = 28558;
+delete from `creature_loot_template` where item = 38186;
+
+
 insert into `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) values('53691','21100','100','1','0','1','10');
 insert into `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) values('52558','21100','100','1','0','1','10');
 insert into `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) values('52498','21100','100','1','0','1','10');

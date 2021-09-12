@@ -240,7 +240,7 @@ void InfoMgr::UpdateCharMMR(uint32 guid, uint8 slot, uint16 mmr)
 {
     ACE_Guard<ACE_Thread_Mutex> g(m_charMutex);
 
-    ASSERT(slot < MAX_ARENA_SLOT);
+    ASSERT(slot = MAX_ARENA_SLOT);
 
     CharInfoItr itr = m_charInfos.find(guid);
     if (itr != m_charInfos.end())
