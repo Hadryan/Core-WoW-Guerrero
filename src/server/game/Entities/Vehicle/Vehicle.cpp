@@ -403,29 +403,9 @@ void Vehicle::InstallAccessory(uint32 entry, int8 seatId, bool minion, uint8 typ
 {
     /// @Prevent adding accessories when vehicle is uninstalling. (Bad script in OnUninstall/OnRemovePassenger/PassengerBoarded hook.)
     if (_status == STATUS_UNINSTALLING)
-    {
-        TC_LOG_ERROR("entities.vehicle", "Vehicle (GuidLow: %u, DB GUID: %u, Entry: %u) attempts to install accessory (Entry: %u) on seat %d with STATUS_UNINSTALLING! "
-            "Check Uninstall/PassengerBoarded script hooks for errors.", _me->GetGUIDLow(),
-            (_me->GetTypeId() == TYPEID_UNIT ? _me->ToCreature()->GetDBTableGUIDLow() : _me->GetGUIDLow()), GetCreatureEntry(), entry, (int32)seatId);
+
         return;
-    }
-
-    TC_LOG_DEBUG("entities.vehicle", "Vehicle (GuidLow: %u, DB Guid: %u, Entry %u): installing accessory (Entry: %u) on seat: %d",
-        _me->GetGUIDLow(), (_me->GetTypeId() == TYPEID_UNIT ? _me->ToCreature()->GetDBTableGUIDLow() : _me->GetGUIDLow()), GetCreatureEntry(),
-        entry, (int32)seatId);
-
-    //if (Unit* passenger = GetPassenger(seatId))
-    //{
-    //    if (passenger->ToCreature())
-    //        if (!passenger->isAlive())
-    //            passenger->ToCreature()->Respawn();
-
-    //    ASSERT(passenger);
-
-    //    if (minion)
-    //        passenger->AddUnitTypeMask(UNIT_MASK_ACCESSORY);
-
-    //    (void)_me->HandleSpellClick(passenger, seatId);
+   
     //}
     TempSummon* accessory = _me->SummonCreature(entry, *_me, TempSummonType(type), summonTime);
     ASSERT(accessory);
@@ -437,6 +417,45 @@ void Vehicle::InstallAccessory(uint32 entry, int8 seatId, bool minion, uint8 typ
 
     /// If for some reason adding accessory to vehicle fails it will unsummon in
     /// @VehicleJoinEvent::Abort
+	if (Unit* passenger = GetPassenger(seatId))
+	{
+		// already installed
+		if (passenger->GetEntry() == entry)
+		{
+			ASSERT(passenger->GetTypeId() == TYPEID_UNIT);
+			if (_me->GetTypeId() == TYPEID_UNIT)
+			{
+				if (_me->ToCreature()->IsInEvadeMode() && passenger->ToCreature()->IsAIEnabled)
+					passenger->ToCreature()->AI()->EnterEvadeMode();
+				return;
+			}
+		}
+		else
+			passenger->ExitVehicle(); // this should not happen
+	}
+
+	if (TempSummon* accessory = _me->SummonCreature(entry, *_me, TempSummonType(type), summonTime))
+	{
+		if (minion)
+			accessory->AddUnitTypeMask(UNIT_MASK_ACCESSORY);
+
+		if (!_me->HandleSpellClick(accessory, seatId))
+		{
+			accessory->UnSummon();
+			return;
+		}
+
+		// this cannot be checked instantly like this
+		// spellsystem is delaying everything to next update tick
+		//if (!accessory->IsOnVehicle(me))
+		//{
+		//    accessory->UnSummon();
+		//    return;         // Something went wrong in the spellsystem
+		//}
+
+		if (GetBase()->GetTypeId() == TYPEID_UNIT)
+			sScriptMgr->OnInstallAccessory(this, accessory);
+	}
 }
 
 /**
@@ -457,15 +476,12 @@ bool Vehicle::AddPassenger(Unit* unit, int8 seatId)
 {
     /// @Prevent adding passengers when vehicle is uninstalling. (Bad script in OnUninstall/OnRemovePassenger/PassengerBoarded hook.)
     if (_status == STATUS_UNINSTALLING)
-    {
-        TC_LOG_ERROR("entities.vehicle", "Passenger GuidLow: %u, Entry: %u, attempting to board vehicle GuidLow: %u, Entry: %u during uninstall! SeatId: %d",
-            unit->GetGUIDLow(), unit->GetEntry(), _me->GetGUIDLow(), _me->GetEntry(), (int32)seatId);
         return false;
-    }
+	if (unit->GetVehicle() != this)
+		return false;
 
-    TC_LOG_DEBUG("entities.vehicle", "Unit %s scheduling enter vehicle (entry: %u, vehicleId: %u, guid: %u (dbguid: %u) on seat %d",
-                   unit->GetName().c_str(), _me->GetEntry(), _vehicleInfo->m_ID, _me->GetGUIDLow(),
-                   (_me->GetTypeId() == TYPEID_UNIT ? _me->ToCreature()->GetDBTableGUIDLow() : 0), (int32)seatId);
+	if (unit->GetTypeId() == TYPEID_PLAYER && unit->GetMap()->IsBattleArena())
+		return false;
 
     // The seat selection code may kick other passengers off the vehicle.
     // While the validity of the following may be arguable, it is possible that when such a passenger
@@ -510,8 +526,10 @@ bool Vehicle::AddPassenger(Unit* unit, int8 seatId)
         _pendingJoinEvents.push_back(e);
         if (!seat->second.IsEmpty())
         {
-            if (Unit* passenger = ObjectAccessor::GetUnit(*GetBase(), seat->second.Passenger.Guid))
-                passenger->ExitVehicle();
+			if (Unit* passenger = ObjectAccessor::GetUnit(*GetBase(), seat->second.Passenger.Guid))
+				passenger->ExitVehicle();
+			else
+				seat->second.Passenger.Guid = 0;
         }
 
         //        ASSERT(seat->second.IsEmpty());
@@ -543,11 +561,10 @@ void Vehicle::EjectPassenger(Unit* passenger, EjectTargetDirectionTypes dir /*= 
 {
     SeatMap::iterator seat = GetSeatIteratorForPassenger(passenger);
     if (seat == Seats.end())
-    {
-        TC_LOG_ERROR("entities.vehicle", "Vehicle GuidLow: %u, Entry: %u attempts to eject non boarded passenger %s GuidLow: %u",
-            _me->GetGUIDLow(), _me->GetEntry(), passenger->GetName().c_str(), passenger->GetGUIDLow());
+
         return;
-    }
+	if (passenger->GetVehicle() != this)
+		return;
 
     Position ejectPos(*GetBase());
 

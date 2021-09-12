@@ -13431,6 +13431,7 @@ void Unit::Mount(uint32 mount, uint32 VehicleId, uint32 creatureEntry)
         {
             if (CreateVehicleKit(VehicleId, creatureEntry))
             {
+				GetVehicleKit()->Reset();
                 // Send others that we now have a vehicle
                 WorldPacket data(SMSG_PLAYER_VEHICLE_DATA, GetPackGUID().size()+4);
                 data.appendPackGUID(GetGUID());

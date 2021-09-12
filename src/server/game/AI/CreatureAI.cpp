@@ -223,7 +223,7 @@ void CreatureAI::EnterEvadeMode()
         {
             me->GetMotionMaster()->Clear(false);
             me->GetMotionMaster()->MoveFollow(owner, PET_FOLLOW_DIST, me->GetFollowAngle(), MOTION_SLOT_ACTIVE);
-            Reset();
+            //Reset();
         }
         else
         {
@@ -232,11 +232,12 @@ void CreatureAI::EnterEvadeMode()
             me->AddUnitState(UNIT_STATE_EVADE);
             me->GetMotionMaster()->MoveTargetedHome();
         }
-    }
+	}
 
-    Reset();
+	Reset();
 
-    me->SetLastDamagedTime(0);
+	if (me->IsVehicle())
+		me->GetVehicleKit()->Reset(false);
 }
 
 void CreatureAI::JustReachedHome()
