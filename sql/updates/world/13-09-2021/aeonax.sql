@@ -34,3 +34,5 @@ INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `positio
 (8176860, 21, 781.149597, 659.282410, 62.813545, 0, 0, 0, 0, 100, 0),
 (8176860, 22, 770.083435, 607.540649, 94.355408, 0, 0, 0, 0, 100, 0),
 (8176860, 23, 753.484253, 529.927979, 141.668213, 0, 0, 0, 0, 100, 0);
+
+REPLACE INTO `creature_template_addon` (`entry`, `path_id`, `mount`, `bytes1`, `bytes2`, `emote`, `auras`) VALUES (50062, 0, 0, 0, 0, 0, 50195);
