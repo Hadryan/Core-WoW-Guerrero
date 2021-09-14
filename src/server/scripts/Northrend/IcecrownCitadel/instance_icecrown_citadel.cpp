@@ -24,6 +24,7 @@
 #include "PoolMgr.h"
 #include "AccountMgr.h"
 #include "icecrown_citadel.h"
+#include "BattlegroundCrossFaction.h"
 
 enum EventIds
 {
@@ -186,7 +187,58 @@ class instance_icecrown_citadel : public InstanceMapScript
 
                 if (IsDone(DATA_LADY_DEATHWHISPER) && !IsDone(DATA_ICECROWN_GUNSHIP_BATTLE))
                     SpawnGunship(player);
+
+				if (TeamInInstance == ALLIANCE)
+				{
+					if (player->GetTeamId() == TEAM_HORDE)
+					{
+						if (player->getGender() == GENDER_MALE)
+						{
+							player->SetDisplayId(19723);
+							player->SetNativeDisplayId(19723);
+							player->SetFakeRace();
+							player->setFactionForRace(player->getFRace());
+							return;
+						}
+						else
+						{
+							player->SetDisplayId(19724);
+							player->SetNativeDisplayId(19724);
+							player->SetFakeRace();
+							player->setFactionForRace(player->getFRace());
+							return;
+						}
+					}
+				}
+
+				if (TeamInInstance == HORDE)
+				{
+					if (player->GetTeamId() == TEAM_ALLIANCE)
+					{
+						if (player->getGender() == GENDER_MALE)
+						{
+							player->SetDisplayId(20578);
+							player->SetNativeDisplayId(20578);
+							player->SetFakeRace();
+							player->setFactionForRace(player->getFRace());
+							return;
+						}
+						else
+						{
+							player->SetDisplayId(20579);
+							player->SetNativeDisplayId(20579);
+							player->SetFakeRace();
+							player->setFactionForRace(player->getFRace());
+							return;
+						}
+					}
+				}
             }
+
+			void OnPlayerLeave(Player* player)
+			{
+				player->InitDisplayIds();
+			}
 
             void RewardFrostCoin()
             {
