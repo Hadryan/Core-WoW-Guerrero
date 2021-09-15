@@ -355,12 +355,12 @@ void _SendWorldChat(Player* player, string message)
 	string msg;
 	ostringstream chat_string;
 
-	if (player->GetTotalPlayedTime() <= Playedtimetochat) // New If - Played Time Need For Use This Cmd
-	{
-		std::string adStr = secsToTimeString(Playedtimetochat - player->GetTotalPlayedTime());
-		player->GetSession()->SendNotification("You Must %s seconds played To use world chat!", adStr.c_str());
-		return;
-	}
+	//if (player->GetTotalPlayedTime() <= Playedtimetochat) // New If - Played Time Need For Use This Cmd
+	//{
+	//	std::string adStr = secsToTimeString(Playedtimetochat - player->GetTotalPlayedTime());
+	//	player->GetSession()->SendNotification("You Must %s seconds played To use world chat!", adStr.c_str());
+	//	return;
+	//}
 
 	// if you have vip script can enable this option and will work eazy like amdwow
 	/*switch (player->GetSession()->GetVipLevel()) // vip cases aded

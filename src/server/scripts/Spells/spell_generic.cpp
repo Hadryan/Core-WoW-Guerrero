@@ -3717,8 +3717,8 @@ public:
             PreventDefaultAction();
 
             Unit* attacker = eventInfo.GetActor();
-            if (attacker && (attacker->GetTypeId() == TYPEID_PLAYER || (attacker->GetOwner() ? attacker->GetOwner()->GetTypeId() == TYPEID_PLAYER : false)))
-                return;
+			if (attacker && (attacker->GetOwner() ? attacker->GetOwner()->GetTypeId() == TYPEID_PLAYER : false))
+				return;
 
             Unit* target = eventInfo.GetActionTarget();
             if (!target || target->GetTypeId() != TYPEID_PLAYER)

@@ -6681,7 +6681,7 @@ uint32 ObjectMgr::GenerateLowGuid(HighGuid guidhigh)
         }
         case HIGHGUID_UNIT:
         {
-            ASSERT(_hiCreatureGuid < 0x00FFFFFE && "Creature guid overflow!");
+            //ASSERT(_hiCreatureGuid < 0x00FFFFFE && "Creature guid overflow!");
             return _hiCreatureGuid++;
         }
         case HIGHGUID_PET:
@@ -6701,7 +6701,7 @@ uint32 ObjectMgr::GenerateLowGuid(HighGuid guidhigh)
         }
         case HIGHGUID_GAMEOBJECT:
         {
-            ASSERT(_hiGoGuid < 0x00FFFFFE && "Gameobject guid overflow!");
+            //ASSERT(_hiGoGuid < 0x00FFFFFE && "Gameobject guid overflow!");
             return _hiGoGuid++;
         }
         case HIGHGUID_CORPSE:
