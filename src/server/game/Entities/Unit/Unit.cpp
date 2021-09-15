@@ -6791,28 +6791,20 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, uint32 absorbed, uin
             }
             switch (dummySpell->Id)
             {
-            case 77485: // Echo of light
-            {
-                if (triggeredByAura->GetEffIndex() != EFFECT_0)
-                    return false;
+                case 77485: // Echo of light
+                {
+                    if (triggeredByAura->GetEffIndex() != EFFECT_0)
+                        return false;
 
-                triggered_spell_id = 77489; // Echo of Light
-                SpellInfo const* l_Trigger = sSpellMgr->GetSpellInfo(triggered_spell_id);
-                if (!l_Trigger)
-                    return false;
-
-                Player* l_Player = ToPlayer();
-                if (!l_Player)
-                    return false;
-
-                uint32 l_Duration = l_Trigger->GetMaxDuration();             
-                uint32 l_Amplitude = l_Trigger->Effects[EFFECT_0].Amplitude; 
-                float l_Mastery = ToPlayer()->GetMasteryAmount(77485, EFFECT_0);
-
-                basepoints0 = CalculatePct(damage, l_Mastery) / (l_Duration / l_Amplitude); 
-                basepoints0 += victim->GetRemainingPeriodicAmount(GetGUID(), triggered_spell_id, SPELL_AURA_PERIODIC_HEAL) / (l_Duration / l_Amplitude);
-                break;
-            }
+                    triggered_spell_id = 77489;
+                    SpellInfo const* trigger = sSpellMgr->GetSpellInfo(triggered_spell_id);
+                    if (!trigger)
+                        return false;
+                    basepoints0 = int32(CalculatePct(damage, ToPlayer() ? ToPlayer()->GetMasteryAmount(77485, EFFECT_0) : 0) / (trigger->GetMaxDuration() / trigger->Effects[0].Amplitude));
+                    // Add remaining ticks to healing done
+                    basepoints0 += victim->GetRemainingPeriodicAmount(GetGUID(), triggered_spell_id, SPELL_AURA_PERIODIC_HEAL);
+                    break;
+                }
                 case 78202: // Shadowy Apparition
                 case 78203:
                 case 78204:
