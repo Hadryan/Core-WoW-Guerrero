@@ -334,7 +334,7 @@ int32 GetDiminishingReturnsLimitDuration(DiminishingGroup group, SpellInfo const
             return 6 * IN_MILLISECONDS;
         // Hunter's Mark
         if (spellproto->SpellFamilyFlags[0] & 0x400)
-            return 30 * IN_MILLISECONDS;
+            return 300 * IN_MILLISECONDS;
         break;
     }
     case SPELLFAMILY_PALADIN:
@@ -2878,6 +2878,9 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (spellInfo->Id)
         {
+		case 77489: // Echo of Light
+			spellInfo->AttributesCu |= SPELL_ATTR0_CU_BINARY;
+			break;
         case 1776: // Gouge
         case 1777:
         case 8629:

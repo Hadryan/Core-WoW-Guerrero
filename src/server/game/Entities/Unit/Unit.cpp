@@ -6793,17 +6793,13 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, uint32 absorbed, uin
             {
                 case 77485: // Echo of light
                 {
-                    if (triggeredByAura->GetEffIndex() != EFFECT_0)
-                        return false;
+					if (effIndex != 0)
+						return false;
 
-                    triggered_spell_id = 77489;
-                    SpellInfo const* trigger = sSpellMgr->GetSpellInfo(triggered_spell_id);
-                    if (!trigger)
-                        return false;
-                    basepoints0 = int32(CalculatePct(damage, ToPlayer() ? ToPlayer()->GetMasteryAmount(77485, EFFECT_0) : 0) / (trigger->GetMaxDuration() / trigger->Effects[0].Amplitude));
-                    // Add remaining ticks to healing done
-                    basepoints0 += victim->GetRemainingPeriodicAmount(GetGUID(), triggered_spell_id, SPELL_AURA_PERIODIC_HEAL);
-                    break;
+					basepoints0 = int32(CalculatePct(damage, triggerAmount) / 6.0f);
+					triggered_spell_id = 77489;
+					basepoints0 += victim->GetRemainingPeriodicAmount(GetGUID(), triggered_spell_id, SPELL_AURA_PERIODIC_HEAL);
+					break;
                 }
                 case 78202: // Shadowy Apparition
                 case 78203:
@@ -7477,8 +7473,12 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, uint32 absorbed, uin
                 case 53241: // Marked for Death
                 case 53243:
                 {
-                    if (!victim || victim && victim->HasAura(1130)) // Hunter's Mark
-                        return false;
+					// Get old Hunter's Mark
+					if (Aura * aura = target->GetAura(1130))
+					{
+						if (aura->GetDuration() > 15000)
+							return false;
+					}
 
                     triggered_spell_id = 88691;
                     break;
@@ -7488,7 +7488,7 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, uint32 absorbed, uin
                     triggered_spell_id = 89388;
                     break;
                 }
-                case 82898: // Crouching Tiger, Hidden Chimera
+                case 82898: // Crouching Tiger, Hidden Chimera1130
                 case 82899:
                 {
                     if (!ToPlayer() || ToPlayer()->HasSpellCooldown(dummySpell->Id))
