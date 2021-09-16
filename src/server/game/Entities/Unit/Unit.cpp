@@ -7463,12 +7463,8 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, uint32 absorbed, uin
                 case 53241: // Marked for Death
                 case 53243:
                 {
-					// Get old Hunter's Mark
-					if (Aura * aura = target->GetAura(1130))
-					{
-						if (aura->GetDuration() > 15000)
-							return false;
-					}
+					if (!victim || victim && victim->HasAura(1130)) // Hunter's Mark
+						return false;
 
                     triggered_spell_id = 88691;
                     break;
