@@ -573,15 +573,17 @@ class ByteBuffer
         void append(const uint8 *src, size_t cnt)
         {
             if (!cnt)
-                throw ByteBufferSourceException(_wpos, size(), cnt);
+                return;
 
             if (!src)
                 throw ByteBufferSourceException(_wpos, size(), cnt);
 
-            ASSERT(size() < 10000000);
+            if (size() > 10000000)
+                throw ByteBufferSourceException(_wpos, size(), cnt);
 
             if (_storage.size() < _wpos + cnt)
                 _storage.resize(_wpos + cnt);
+			
             memcpy(&_storage[_wpos], src, cnt);
             _wpos += cnt;
         }
