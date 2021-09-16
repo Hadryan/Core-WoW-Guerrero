@@ -6791,16 +6791,6 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, uint32 absorbed, uin
             }
             switch (dummySpell->Id)
             {
-                case 77485: // Echo of light
-                {
-					if (effIndex != 0)
-						return false;
-
-					basepoints0 = int32(CalculatePct(damage, triggerAmount) / 6.0f);
-					triggered_spell_id = 77489;
-					basepoints0 += victim->GetRemainingPeriodicAmount(GetGUID(), triggered_spell_id, SPELL_AURA_PERIODIC_HEAL);
-					break;
-                }
                 case 78202: // Shadowy Apparition
                 case 78203:
                 case 78204:

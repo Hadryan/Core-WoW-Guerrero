@@ -2878,9 +2878,6 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (spellInfo->Id)
         {
-		case 77489: // Echo of Light
-			spellInfo->AttributesCu |= SPELL_ATTR0_CU_BINARY;
-			break;
         case 1776: // Gouge
         case 1777:
         case 8629:
