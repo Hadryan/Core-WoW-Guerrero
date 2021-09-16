@@ -1800,6 +1800,14 @@ void Spell::EffectHeal(SpellEffIndex /*effIndex*/)
         if (unitTarget->HasAura(48920) && (unitTarget->GetHealth() + addhealth >= unitTarget->GetMaxHealth()))
             unitTarget->RemoveAura(48920);
 
+		// Echo of Light
+		if (m_caster->getClass() == CLASS_PRIEST)
+			if (m_caster->HasAura(77485))
+			{
+				int32 bp0 = addhealth * m_caster->GetAura(77485)->GetEffect(0)->GetAmount() / 100;
+				m_caster->CastCustomSpell(unitTarget, 77489, &bp0, NULL, NULL, true);
+			}
+
         m_damage -= addhealth;
     }
 }
