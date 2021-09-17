@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 monsterCore <http://www.monstercore.org/>
+ * Copyright (C) 2016-2018 ForceCore Network <http://force.net.ve/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -23,8 +23,27 @@
 #include "Debugging/Errors.h"
 #include "Log.h"
 #include "Utilities/ByteConverter.h"
+template<uint8 BITS>
+struct WriteAsUnaligned
+{
+    explicit WriteAsUnaligned(uint32 value) : m_value(value) { ASSERT(BITS <= 32); }
+    uint32 m_value;
+};
 
+template<uint8 BITS>
+struct ReadAsUnaligned
+{
+    explicit ReadAsUnaligned(uint32& value) : m_value(&value) { ASSERT(BITS <= 32); }
+    uint32* m_value;
+};
 
+struct WriteBuffer
+{
+    WriteBuffer(uint8 const* buf, uint32 size) : m_buf(buf), m_size(size) { }
+    WriteBuffer(char const* buf, uint32 size) : m_buf((uint8 const*)buf), m_size(size) { }
+    uint8 const* m_buf;
+    uint32 m_size;
+};
 
 class ByteBufferException
 {
@@ -84,7 +103,7 @@ class ByteBufferSourceException : public ByteBufferException
 class ByteBuffer
 {
     public:
-        const static size_t DEFAULT_SIZE = 0x1000;
+        const static size_t DEFAULT_SIZE = 64;
 
         // constructor
         ByteBuffer() : _rpos(0), _wpos(0), _bitpos(8), _curbitval(0)
@@ -102,7 +121,11 @@ class ByteBuffer
             _bitpos(buf._bitpos), _curbitval(buf._curbitval), _storage(buf._storage)
         {
         }
-
+        void ResetBits()
+        {
+            _bitpos = 8;
+        }
+		
         void clear()
         {
             _storage.clear();
@@ -236,7 +259,50 @@ class ByteBuffer
                     _storage[wp] &= ~(1 << (7 - bit));
             }
         }
+        template<uint8 BITS>
+        ByteBuffer &operator<<(WriteAsUnaligned<BITS> value)
+        {
+            return WriteUnaligned<BITS>(value.m_value);
+        }
 
+        template<uint8 BITS>
+        ByteBuffer& WriteUnaligned(uint32 value)
+        {
+            ASSERT(BITS <= 32);
+
+            uint32 bits = BITS;
+
+            while (bits > 0)
+            {
+                if (_bitpos == 8)
+                {
+                    *this << uint8(0);
+                    _bitpos = 0;
+                }
+
+                uint8 writtenThisCycle = 8 - _bitpos;
+                if (writtenThisCycle > bits)
+                    writtenThisCycle = uint8(bits);
+
+                bits -= writtenThisCycle;
+                _bitpos += writtenThisCycle;
+
+                _storage[_wpos - 1] |= ((value >> bits) & ((1 << writtenThisCycle) - 1)) << (8 - _bitpos);
+
+                // End of the extinction cycle
+                // Reapers are back to work
+                // Earth is dead.
+            }
+
+            return *this;
+        }
+
+        ByteBuffer &operator<<(WriteBuffer const& value)
+        {
+            append(value.m_buf, value.m_size);
+            return *this;
+        }
+		
         ByteBuffer &operator<<(uint8 value)
         {
             append<uint8>(value);
@@ -406,6 +472,7 @@ class ByteBuffer
         {
             if (pos >= size())
                 throw ByteBufferPositionException(false, pos, 1, size());
+			
             return _storage[pos];
         }
 
@@ -473,7 +540,25 @@ class ByteBuffer
             memcpy(dest, &_storage[_rpos], len);
             _rpos += len;
         }
+        ByteBuffer& read(std::string& dest, size_t len)
+        {
+            if (_rpos + len > size())
+                throw ByteBufferPositionException(false, _rpos, len, size());
 
+            dest.clear();
+
+            ResetBits();
+
+            if (len)
+            {
+                dest.reserve(len + 1);
+                dest.append((char*)&_storage[_rpos], len);
+                _rpos += len;
+            }
+
+            return *this;
+        }
+		
         void readPackGUID(uint64& guid)
         {
             if (rpos() + 1 > size())
