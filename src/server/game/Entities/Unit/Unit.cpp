@@ -66,7 +66,6 @@
 #include "CreatureTextMgr.h"
 #include "MMapFactory.h"
 #include "../Custom/SpellRegulator.h"
-
 #include <math.h>
 #include "IVMapManager.h"
 

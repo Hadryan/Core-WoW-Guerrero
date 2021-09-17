@@ -87,7 +87,7 @@
 #include "MoveSplineInit.h"
 #include "InfoMgr.h"
 #include <ctime>
-
+#include "../Custom/SpellRegulator.h"
 #include "SmartScript.h"
 #include "SmartScriptMgr.h"
 
