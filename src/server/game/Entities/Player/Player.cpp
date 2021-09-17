@@ -19119,7 +19119,7 @@ bool Player::LoadFromDB(uint32 guid, SQLQueryHolder *holder)
     // check PLAYER_CHOSEN_TITLE compatibility with PLAYER__FIELD_KNOWN_TITLES
     // note: PLAYER__FIELD_KNOWN_TITLES updated at quest status loaded
     uint32 curTitle = fields[43].GetUInt32();
-    if (curTitle && !(HasTitle(curTitle) && IsEligibleTitle(curTitle)))
+	if (curTitle && !(HasTitle(curTitle))) /*&& IsEligibleTitle(curTitle)))*/
         curTitle = 0;
 
     SetUInt32Value(PLAYER_CHOSEN_TITLE, curTitle);
@@ -26439,7 +26439,7 @@ bool Player::HasTitle(uint32 bitIndex)
     return HasFlag(PLAYER__FIELD_KNOWN_TITLES + fieldIndexOffset, flag);
 }
 
-bool Player::IsEligibleTitle(uint32 bitIndex) const
+/*bool Player::IsEligibleTitle(uint32 bitIndex) const
 {
     if (bitIndex >= MAX_TITLE_INDEX)
         return false;
@@ -26523,12 +26523,12 @@ bool Player::IsEligibleTitle(uint32 bitIndex) const
             return HasAchieved(achievementId);
 
     return false;
-}
+}*/
 
-void Player::SetTitle(uint32 bitIndex, bool lost)
+void Player::SetTitle(CharTitlesEntry const* title, bool lost)
 {
-    uint32 fieldIndexOffset = bitIndex / 32;
-    uint32 flag = 1 << (bitIndex % 32);
+	uint32 fieldIndexOffset = title->bit_index / 32;
+	uint32 flag = 1 << (title->bit_index % 32);;
 
     if (lost)
     {
@@ -26542,14 +26542,14 @@ void Player::SetTitle(uint32 bitIndex, bool lost)
         if (HasFlag(PLAYER__FIELD_KNOWN_TITLES + fieldIndexOffset, flag))
             return;
 
-        UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EARNED_PVP_TITLE, bitIndex, 0, 0, NULL);
+        //UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EARNED_PVP_TITLE, bitIndex, 0, 0, NULL);
         SetFlag(PLAYER__FIELD_KNOWN_TITLES + fieldIndexOffset, flag);
     }
 
-    WorldPacket data(SMSG_TITLE_EARNED, 4 + 4);
-    data << uint32(bitIndex);
-    data << uint32(lost ? 0 : 1);                           // 1 - earned, 0 - lost
-    GetSession()->SendPacket(&data);
+	WorldPacket data(SMSG_TITLE_EARNED, 4 + 4);
+	data << uint32(title->bit_index);
+	data << uint32(lost ? 0 : 1);                           // 1 - earned, 0 - lost
+	GetSession()->SendPacket(&data);
 }
 
 bool Player::isTotalImmunity()

@@ -2905,11 +2905,10 @@ class Player : public Unit, public GridObject<Player>
         void CompletedAchievement(uint32 entry);
         void CompletedCriteria(AchievementCriteriaEntry const* entry);
 
-        bool HasTitle(uint32 bitIndex);
-        bool HasTitle(CharTitlesEntry const* title) { return HasTitle(title->bit_index); }
-        bool IsEligibleTitle(uint32 bitIndex) const;
-        void SetTitle(uint32 bitIndex, bool lost = false);
-        void SetTitle(CharTitlesEntry const* title, bool lost = false) { SetTitle(title->bit_index, lost); }
+		bool HasTitle(uint32 bitIndex);
+		bool HasTitle(CharTitlesEntry const* title) { return HasTitle(title->bit_index); }
+
+		void SetTitle(CharTitlesEntry const* title, bool lost = false);
 
         //bool isActiveObject() const { return true; }
         bool canSeeSpellClickOn(Creature const* creature) const;

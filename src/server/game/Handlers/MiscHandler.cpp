@@ -1504,11 +1504,11 @@ void WorldSession::HandleSetTitleOpcode(WorldPacket& recvData)
        if (!GetPlayer()->HasTitle(title))
             return;
 
-       if (!GetPlayer()->IsEligibleTitle(title))
+       /*if (!GetPlayer()->IsEligibleTitle(title))
        {
            GetPlayer()->SetTitle(title, true);
            title = 0;
-       }
+       }*/
     }
     else
         title = 0;
