@@ -1,0 +1,2 @@
+DELETE FROM creature WHERE id = 52028;
+INSERT INTO `creature` (`guid`, `id`, `map`, `zone`, `area`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`, `walkmode`, `saiscriptflag`) VALUES('172260','52028','0','1519','1519','1','1','0','0','-8814.52','354.809','107.05','4.755','500','0','0','0','0','0','0','0','0','0','0');
