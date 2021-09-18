@@ -216,7 +216,7 @@ class instance_dragonsoul : public InstanceMapScript
                         break;
                     case NPC_TRAVEL_TO_THE_MAELSTROM:
                         if (!IsDone(DATA_SPINE_OF_DEATHWING))
-                            creature->SetVisible(true);
+                            creature->SetVisible(false);
                         //npcGroups.emplace(DATA_SPINE_OF_DEATHWING, creature->GetGUID());
                         break;
                     case NPC_MORCHOK:
