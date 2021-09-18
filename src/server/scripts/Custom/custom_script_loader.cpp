@@ -30,7 +30,7 @@ void AddSC_GMItems();
 void AddSC_bug_dual();
 void AddSC_System_Censure();
 void AddSC_CdReset();
-
+void AddSc_npc_tool();
 void AddCustomScripts()
 {
     /* This is where custom scripts should be added. */
@@ -44,4 +44,5 @@ void AddCustomScripts()
 	AddSC_bug_dual();
 	AddSC_System_Censure();
 	AddSC_CdReset();
+	AddSc_npc_tool();
 }

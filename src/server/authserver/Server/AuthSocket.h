@@ -61,12 +61,22 @@ private:
     RealmSocket& socket_;
     RealmSocket& socket(void) { return socket_; }
 
+	enum eStatus
+	{
+		STATUS_CHALLENGE,
+		STATUS_LOGON_PROOF,
+		STATUS_RECON_PROOF,
+		STATUS_PATCH,
+		STATUS_AUTHED,
+		STATUS_CLOSED
+	};
+
     BigNumber N, s, g, v;
     BigNumber b, B;
     BigNumber K;
     BigNumber _reconnectProof;
 
-    bool _authed;
+	eStatus _status; /**< TODO */
 
     std::string _login;
     std::string _tokenKey;
