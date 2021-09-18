@@ -155,9 +155,9 @@ class instance_dragonsoul : public InstanceMapScript
                     case NPC_TWILIGHT_SIEGE_CAPTAIN:
                     case NPC_TWILIGHT_PORTAL:
                     case NPC_EARTHEN_SOLDIER:
-                        /*npcGroups.emplace(DATA_MORCHOK, creature->GetGUID());
+                        //npcGroups.emplace(DATA_MORCHOK, creature->GetGUID());
                         if (IsDone(DATA_MORCHOK) || LfrId == LFR_PART_TWO)
-                            creature->SetPhaseMask(0x2, true);*/
+                            creature->SetPhaseMask(0x2, true);
                         break;
                     case NPC_FLAIL_OF_GORATH_TRASH: // wing trash + bosses
                     case NPC_EYE_OF_GORATH_TRASH:
@@ -216,7 +216,7 @@ class instance_dragonsoul : public InstanceMapScript
                         break;
                     case NPC_TRAVEL_TO_THE_MAELSTROM:
                         if (!IsDone(DATA_SPINE_OF_DEATHWING))
-                            creature->SetVisible(false);
+                            creature->SetVisible(true);
                         //npcGroups.emplace(DATA_SPINE_OF_DEATHWING, creature->GetGUID());
                         break;
                     case NPC_MORCHOK:
