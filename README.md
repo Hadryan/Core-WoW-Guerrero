@@ -1,6 +1,3 @@
-# ![logo](https://github.com/demixitho3/EmuCore4.3.4/blob/master/gitlab.png?raw=true) MonsterCore (master)
-![Discord](https://img.shields.io/discord/802233220954587217?style=for-the-badge)
-
 ## Requirements
 * Cmake 3.3.2
 * Visual Basic 14 2015
