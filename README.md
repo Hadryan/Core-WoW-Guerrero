@@ -12,7 +12,6 @@
 
 ## Links
 
-* [Website](https://www.wow-monster.com)
-* [Discord](https://discord.gg/MWRbuf4KQt)
+* [Website](https://www.wow-guerrero.online/)
 
 ##
